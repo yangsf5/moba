@@ -1,0 +1,12 @@
+<?xml version="2.0" encoding="utf-8"?>
+<clawconfig name="config" version="1.0">
+	<!--isMater(true,false)-->
+	<master listenAddr=":11000" isMaster="false"></master>
+
+	<!--id(current harbor id)-->
+	<harbor id="1"></harbor>
+
+	<gate listenAddr=":9000"></gate>
+
+	<http listenAddr=":2015"></http>
+</clawconfig>
