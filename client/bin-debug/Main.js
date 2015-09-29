@@ -112,22 +112,26 @@ var Main = (function (_super) {
         topMask.width = stageW;
         topMask.height = stageH;
         this.addChild(topMask);
-        var icon = this.createBitmapByName("egretIcon");
-        this.addChild(icon);
-        icon.scaleX = 0.55;
-        icon.scaleY = 0.55;
-        icon.anchorOffsetX = icon.width / 2;
-        icon.anchorOffsetY = icon.height / 2;
-        icon.x = stageW / 2;
-        icon.y = stageH / 2 - 60;
-        var colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.textAlign = "center";
-        colorLabel.text = "Hello Egret";
-        colorLabel.size = 20;
-        colorLabel.x = stageW - colorLabel.width >> 1;
-        colorLabel.y = (stageH - colorLabel.height >> 1) + 50;
-        this.addChild(colorLabel);
+        /*
+            var icon:egret.Bitmap = this.createBitmapByName("egretIcon");
+            this.addChild(icon);
+            icon.scaleX = 0.55;
+            icon.scaleY = 0.55;
+            icon.anchorOffsetX = icon.width / 2;
+            icon.anchorOffsetY = icon.height / 2;
+            icon.x = stageW / 2;
+            icon.y = stageH / 2 - 60;
+        */
+        /*
+            var colorLabel:egret.TextField = new egret.TextField();
+            colorLabel.textColor = 0xffffff;
+            colorLabel.textAlign = "center";
+            colorLabel.text = "Hello Egret";
+            colorLabel.size = 20;
+            colorLabel.x = stageW - colorLabel.width >> 1;
+            colorLabel.y = (stageH - colorLabel.height >> 1) + 50;
+            this.addChild(colorLabel);
+        */
         var textfield = new egret.TextField();
         this.addChild(textfield);
         textfield.alpha = 0;
@@ -138,7 +142,7 @@ var Main = (function (_super) {
         this.textfield = textfield;
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description", this.startAnimation, this);
+        //RES.getResAsync("description", this.startAnimation, this)
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
