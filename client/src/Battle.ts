@@ -32,5 +32,8 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(teammate1);
         this.addChild(teammate2);
         this.addChild(teammate3);
+        
+        var shoot: Shoot = new Shoot({ x: 200,y: 400 },{x:300, y:600}, 0xff0000);
+        this.addChild(shoot);
 	}
 }
