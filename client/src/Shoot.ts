@@ -1,31 +1,34 @@
 class Shoot extends egret.DisplayObjectContainer {
-    public constructor(from:any, to:any, color:number) {
+    private shape: egret.Shape;
+    
+    public constructor() {
         super();
-        
+    }
+    
+    public action(from:any, to:any, color:number):void {        
         var shape:egret.Shape = new egret.Shape();
+        this.shape = shape;
         shape.graphics.beginFill(color);
         shape.graphics.drawCircle(from.x, from.y, 10);
         shape.graphics.endFill();
-        //shape.x = shape.y = 100;
         this.addChild(shape);
         
         egret.Tween.get(shape, {
-            loop: true,
+            loop: false,
             onChange: this.onChange,
             onChangeObj: this
         })
-        .to({x: to.x, y: to.y}, 1000)
-        .wait(1000)
-        .call(this.onComplete, this, ["param1", {key: "key", value: 3}]);
+        .to({x: to.x-from.x, y: to.y-from.y}, 1000)
+        .wait(100)
+        .call(this.onComplete, this);
     }
     
     private onChange():void {
         console.log("onChange");
     }
     
-    private onComplete(param1:string, param2:any):void {
-        console.log("onComplete");
-        console.log(param1);
-        console.log(param2);
+    private onComplete():void {
+        egret.Tween.removeTweens(this.shape);
+        this.removeChild(this.shape);
     }
 }

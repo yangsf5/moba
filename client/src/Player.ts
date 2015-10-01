@@ -1,5 +1,5 @@
 class Player extends egret.DisplayObjectContainer {
-    public constructor(x:number, y:number, color:number) {
+    public constructor(x:number, y:number, color:number, listener) {
         super();
 
         var shape:egret.Shape = new egret.Shape();
@@ -8,8 +8,6 @@ class Player extends egret.DisplayObjectContainer {
         shape.graphics.endFill();
         this.addChild(shape);
         shape.touchEnabled = true;
-        shape.addEventListener(egret.TouchEvent.TOUCH_TAP, function (event) {
-            console.log("点击左侧方块，eventPhase：" + event.eventPhase);
-        }, shape);
+        shape.addEventListener(egret.TouchEvent.TOUCH_TAP, listener, shape);
     }
 }
