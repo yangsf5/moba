@@ -12,6 +12,9 @@
     {
       "name": "egret"
     },
+	{
+	  "name": "socket"
+	},
     {
       "name": "game"
     },

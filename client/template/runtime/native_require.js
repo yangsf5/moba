@@ -13,6 +13,7 @@ var game_file_list = [
 	"bin-debug/Main.js",
 	"bin-debug/Player.js",
 	"bin-debug/Shoot.js",
+	"bin-debug/WebSocket.js",
 	//----auto game_file_list end----
 ];
 
