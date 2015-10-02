@@ -4,6 +4,7 @@ var game_file_list = [
     //----auto game_file_list start----
 	"libs/modules/egret/egret.js",
 	"libs/modules/egret/egret.native.js",
+	"libs/modules/socket/socket.js",
 	"libs/modules/game/game.js",
 	"libs/modules/game/game.native.js",
 	"libs/modules/tween/tween.js",
@@ -11,9 +12,9 @@ var game_file_list = [
 	"bin-debug/Battle.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
+	"bin-debug/Net.js",
 	"bin-debug/Player.js",
 	"bin-debug/Shoot.js",
-	"bin-debug/WebSocket.js",
 	//----auto game_file_list end----
 ];
 

@@ -1,12 +1,16 @@
 class Battle extends egret.DisplayObjectContainer {
+    private myName: string;
     private enemies: Array<Player>;
     private teammates: Array<Player>;
+    private net: Net;
     
 	public constructor() {
         super();
         
         this.enemies = new Array<Player>();
         this.teammates = new Array<Player>();
+        this.net = new Net();
+        this.myName = this.net.connect();
         this.init();
 	}
 	
