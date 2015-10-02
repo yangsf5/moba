@@ -19,7 +19,7 @@ func (u *User) LeaveService(service string) {
 
 func (u *User) LeaveAllService() {
 	for e := u.services.Front(); e != nil; e = u.services.Front() {
-		center.Send("", e.Value.(string), u.sessionId, center.MsgTypeText, nil)
+		center.Send("", e.Value.(string), u.sessionId, center.MsgTypeText, "LEAVE")
 		u.services.Remove(e)
 	}
 }

@@ -31,7 +31,10 @@ func Enter(session int, u User) bool {
 	if ret {
 		u.EnterService("MobaHall")
 		sessions[session] = u
+
+		NotifyHCTeamMember()
 	}
+
 	return ret
 }
 

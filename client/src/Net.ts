@@ -7,7 +7,7 @@ class Net extends egret.DisplayObjectContainer {
     
     public connect():string {
         this.socket = new egret.WebSocket();
-        this.socket.type = egret.WebSocket.TYPE_BINARY;
+        this.socket.type = egret.WebSocket.TYPE_STRING;
         this.socket.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.onReceiveMessage, this);
         this.socket.addEventListener(egret.Event.CONNECT, this.onSocketOpen, this);
         this.socket.addEventListener(egret.Event.CLOSE, this.onSocketClose, this);

@@ -24,7 +24,6 @@ class Shoot extends egret.DisplayObjectContainer {
     }
     
     private onChange():void {
-        console.log("onChange");
     }
     
     private onComplete():void {
