@@ -1,8 +1,13 @@
 class Net extends egret.DisplayObjectContainer {
     private socket:egret.WebSocket;
     
-    public constructor() {
+    private battle: Battle;
+    
+    public constructor(battle:Battle) {
         super();
+        this.battle = battle;
+        
+        MessageCenter.setNet(this);
     }
     
     public connect():string {
@@ -16,7 +21,7 @@ class Net extends egret.DisplayObjectContainer {
         var chars = "abcdefghijklmnopqrstuvwzxy1234567890";
         var name: string = "";
         for(var i = 0;i < 10;i++) {
-            var index = Math.round(Math.random() * 36);
+            var index = Math.round(Math.random() * 35);
             name += chars[index];
         }
         
@@ -42,6 +47,14 @@ class Net extends egret.DisplayObjectContainer {
     
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
+        var msgObj = JSON.parse(msg);
+        if(msgObj.Type == "HCChat") {
+            var name = msgObj.Data.Members[0];
+            console.log(name);
+        } else if(msgObj.Type == "HCShoot") {
+            console.log(msgObj.Data);
+        }
+        //this.battle.T
         console.log(msg);
     }
 }

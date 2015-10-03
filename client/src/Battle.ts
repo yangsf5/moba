@@ -9,15 +9,16 @@ class Battle extends egret.DisplayObjectContainer {
         
         this.enemies = new Array<Player>();
         this.teammates = new Array<Player>();
-        this.net = new Net();
+        this.net = new Net(this);
         this.myName = this.net.connect();
         this.init();
 	}
 	
 	public init() {
-        var enemy1: Player = new Player(100,150,0xff0000, this.onPlayerAttacked);
-        var enemy2: Player = new Player(200,150,0xff0000, this.onPlayerAttacked);
-        var enemy3: Player = new Player(300,150,0xff0000, this.onPlayerAttacked);
+        var enemy1: Player = new Player(100,250,0xff0000, this.onPlayerAttacked);
+        var enemy2: Player = new Player(200,250,0xff0000, this.onPlayerAttacked);
+        var enemy3: Player = new Player(300,250,0xff0000, this.onPlayerAttacked);
+        enemy1.setPlayerName(this.myName);
         
         this.enemies.push(enemy1);
         this.enemies.push(enemy2);
@@ -25,6 +26,7 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(enemy1);
         this.addChild(enemy2);
         this.addChild(enemy3);
+        
          
         var teammate1: Player = new Player(100,600,0x00ff00, this.onPlayerAttacked);
         var teammate2: Player = new Player(200,600,0x00ff00, this.onPlayerAttacked);

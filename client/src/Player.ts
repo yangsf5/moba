@@ -1,6 +1,6 @@
 class Player extends egret.DisplayObjectContainer {
     private hpBar:eui.ProgressBar;
-    private nameText;
+    private nameText:egret.TextField;
     
     public constructor(x:number, y:number, color:number, listener) {
         super();
@@ -12,11 +12,22 @@ class Player extends egret.DisplayObjectContainer {
         this.addChild(shape);
         shape.touchEnabled = true;
         shape.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {
+            MessageCenter.sendShoot({Service:"MobaHall", Type:"shoot", Data: this.nameText.text});
             listener(event);
-            this.hpBar.value -= 1;
         }, this);
         
+        this.initNameText(x, y, color);
         this.initHPBar(x, y, color);
+    }
+    
+    private initNameText(x:number, y:number, color:number):void {
+        this.nameText = new egret.TextField();
+        this.nameText.textColor = color;
+        this.nameText.text = "";
+        this.nameText.size = 20;
+        this.nameText.x = x;
+        this.nameText.y = y - 50;
+        this.addChild(this.nameText);
     }
     
     private initHPBar(x:number, y:number, color:number):void {
@@ -37,5 +48,9 @@ class Player extends egret.DisplayObjectContainer {
         this.hpBar.y = y-25;
         this.addChild(this.hpBar);
         this.hpBar.value = 9;
+    }
+    
+    public setPlayerName(name:string):void {
+        this.nameText.text = name;
     }
 }
