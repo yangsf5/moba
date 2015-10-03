@@ -11,7 +11,10 @@ class Player extends egret.DisplayObjectContainer {
         shape.graphics.endFill();
         this.addChild(shape);
         shape.touchEnabled = true;
-        shape.addEventListener(egret.TouchEvent.TOUCH_TAP, listener, shape);
+        shape.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {
+            listener(event);
+            this.hpBar.value -= 1;
+        }, this);
         
         this.initHPBar(x, y, color);
     }

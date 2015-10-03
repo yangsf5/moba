@@ -43,6 +43,6 @@ class Battle extends egret.DisplayObjectContainer {
 	private onPlayerAttacked(event) {
         var shoot: Shoot = new Shoot();
         shoot.action({ x: 200,y: 400 },{x:event.stageX, y:event.stageY}, 0xff0000);
-        this.stage.addChild(shoot);
+        event.target.stage.addChild(shoot);
 	}
 }
