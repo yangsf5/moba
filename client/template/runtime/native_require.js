@@ -16,6 +16,7 @@ var game_file_list = [
 	"bin-debug/MessageCenter.js",
 	"bin-debug/Net.js",
 	"bin-debug/Player.js",
+	"bin-debug/PlayerGroup.js",
 	"bin-debug/Shoot.js",
 	//----auto game_file_list end----
 ];
@@ -50,7 +51,7 @@ egret_native.egretStart = function () {
 		contentWidth: 480,
 		contentHeight: 800,
 		showPaintRect: false,
-		showFPS: true,
+		showFPS: flase,
 		fpsStyles: "x:0,y:0,size:30",
 		showLog: true,
 		logFilter: "",

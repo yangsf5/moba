@@ -48,11 +48,15 @@ class Net extends egret.DisplayObjectContainer {
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
-        if(msgObj.Type == "HCChat") {
-            var name = msgObj.Data.Members[0];
-            console.log(name);
+        if(msgObj.Type == "HCTeamMember") {
+            for(var i = 0;i < 6; i++) {
+                var name = msgObj.Data.Members[i];
+                this.battle.getPlayerGroup().setName(i, name);
+            }
         } else if(msgObj.Type == "HCShoot") {
             console.log(msgObj.Data);
+        } else if(msgObj.Type == "HCBattleStatus") {
+            this.battle.setBattleStatus(msgObj.Data.Status);
         }
         //this.battle.T
         console.log(msg);
