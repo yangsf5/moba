@@ -24,6 +24,9 @@ func HandleClientMessage(session int, msgType string, msgData interface{}) {
 		if targetUser == nil {
 			break
 		}
+		if battleStatus != "firing" {
+			break
+		}
 		shootMsg := &proto.HCShoot{u.Name(), targetName, rand.Intn(3)}
 		Broadcast(proto.Encode("MobaHall", shootMsg))
 	}

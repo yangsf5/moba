@@ -12,3 +12,8 @@ func NotifyHCTeamMember() {
 	msg := &proto.HCTeamMember{members}
 	Broadcast(proto.Encode("MobaHall", msg))
 }
+
+func NotifyHCBattleStatus() {
+	msg := &proto.HCBattleStatus{battleStatus}
+	Broadcast(proto.Encode("MobaHall", msg))
+}

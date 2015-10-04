@@ -19,11 +19,13 @@ type User interface {
 var (
 	group *net.Group
 	sessions map[int]User
+	battleStatus string // firing or waiting or finished
 )
 
 func init() {
 	group = net.NewGroup()
 	sessions = make(map[int]User)
+	battleStatus = "waiting"
 }
 
 func Enter(session int, u User) bool {
@@ -33,6 +35,10 @@ func Enter(session int, u User) bool {
 		sessions[session] = u
 
 		NotifyHCTeamMember()
+		if(len(sessions) >= 4) {
+			battleStatus = "firing"
+			NotifyHCBattleStatus()
+		}
 	}
 
 	return ret

@@ -16,3 +16,7 @@ type HCShoot struct {
 	Target string
 	Harm int
 }
+
+type HCBattleStatus struct {
+	Status string
+}
