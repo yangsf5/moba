@@ -14,6 +14,9 @@ type User interface {
 	Kick(reason string)
 
 	EnterService(service string)
+
+	GetHP() int
+	SetHP(hp int)
 }
 
 var (

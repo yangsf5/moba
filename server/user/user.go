@@ -18,8 +18,9 @@ type User struct {
 
 	disconnected bool
 
-
 	services *list.List
+
+	hp int
 }
 
 func NewUser(sessionId int, name string, recv <-chan string,  send chan<- string, recvErr, sendErr <-chan error) *User {
@@ -28,6 +29,7 @@ func NewUser(sessionId int, name string, recv <-chan string,  send chan<- string
 	u.name, u.RecvMsg, u.SendMsg = name, recv, send
 	u.recvErr, u.sendErr = recvErr, sendErr
 	u.services = list.New()
+	u.hp = 9
 	return u
 }
 
@@ -94,4 +96,12 @@ func (u *User) handle(service, msgType string, msgData interface{}) {
 		case "pve":
 		}
 	}
+}
+
+func (u *User) GetHP() int {
+	return u.hp
+}
+
+func (u *User) SetHP(hp int) {
+	u.hp = hp
 }
