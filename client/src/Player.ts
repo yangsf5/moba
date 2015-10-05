@@ -49,11 +49,7 @@ class Player extends egret.DisplayObjectContainer {
         this.hpBar.value = 0;
     }
     
-    public setPlayerName(name:string):void {
-        this.nameText.text = name;
-    }
-    
-    public setPosition(x:number, y:number):void {
+    private setPosition(x:number, y:number):void {
         this.shape.x = x;
         this.shape.y = y;
         this.nameText.x = x;
@@ -62,11 +58,10 @@ class Player extends egret.DisplayObjectContainer {
         this.hpBar.y = y - 25;
     }
     
-    public setColor(color:number) {
+    public update(item:any):void {
+        this.nameText.text = item.name;
+        this.hpBar.value = item.hp;
         
-    }
-    
-    public setHP(hp: number): void {
-        this.hpBar.value = hp;
+        this.setPosition(item.x, item.y);
     }
 }

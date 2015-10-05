@@ -50,10 +50,7 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.addChild(this.playerWidget);
     }
     protected dataChanged():void{
-        this.playerWidget.setPlayerName(this.data.name);
-        this.playerWidget.setPosition(this.data.x, this.data.y);
-        this.playerWidget.setColor(this.data.color);
-        this.playerWidget.setHP(this.data.hp);
+        this.playerWidget.update(this.data);
     }
     
     private onPlayerAttacked(event) {
