@@ -29,7 +29,7 @@ func NewUser(sessionId int, name string, recv <-chan string,  send chan<- string
 	u.name, u.RecvMsg, u.SendMsg = name, recv, send
 	u.recvErr, u.sendErr = recvErr, sendErr
 	u.services = list.New()
-	u.hp = 9
+	u.hp = 99
 	return u
 }
 

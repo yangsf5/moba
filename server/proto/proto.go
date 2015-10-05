@@ -7,8 +7,13 @@ type Chat struct {
 
 type HCChat Chat
 
-type HCTeamMember struct {
-	Members []string
+type PlayerInfo struct {
+	Name string
+	CurrentHP int
+}
+
+type HCPlayerInfos struct {
+	Players []PlayerInfo
 }
 
 type HCShoot struct {

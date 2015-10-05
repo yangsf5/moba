@@ -8,7 +8,7 @@ class PlayerGroup extends eui.Group {
         this.sourceData = [];
         
         for (var i:number = 1; i < 7; i++){
-            this.sourceData.push({name:"", x:0, y:0, color:0, hp:9});
+            this.sourceData.push({name:"", x:0, y:0, color:0, hp:99});
         }
 	}
 	
@@ -27,9 +27,9 @@ class PlayerGroup extends eui.Group {
     }
     
     public refixPosition():void {
-        this.sourceData[0].x = this.sourceData[3].x = 100;
+        this.sourceData[0].x = this.sourceData[3].x = 50;
         this.sourceData[1].x = this.sourceData[4].x = 200;
-        this.sourceData[2].x = this.sourceData[5].x = 300;
+        this.sourceData[2].x = this.sourceData[5].x = 350;
         this.sourceData[0].y = this.sourceData[1].y = this.sourceData[2].y = 250;
         this.sourceData[3].y = this.sourceData[4].y = this.sourceData[5].y = 600;
     }

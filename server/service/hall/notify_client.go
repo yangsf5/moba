@@ -4,12 +4,16 @@ import (
 	"github.com/yangsf5/moba/server/proto"
 )
 
-func NotifyHCTeamMember() {
-	members := []string{}
+func NotifyHCPlayerInfos() {
+	players := []proto.PlayerInfo{}
 	for _, user := range sessions {
-		members = append(members, user.Name())
+		player := proto.PlayerInfo{
+			Name: user.Name(),
+			CurrentHP: user.GetHP(),
+		}
+		players = append(players, player)
 	}
-	msg := &proto.HCTeamMember{members}
+	msg := &proto.HCPlayerInfos{players}
 	Broadcast(proto.Encode("MobaHall", msg))
 }
 

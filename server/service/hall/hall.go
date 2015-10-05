@@ -37,7 +37,7 @@ func Enter(session int, u User) bool {
 		u.EnterService("MobaHall")
 		sessions[session] = u
 
-		NotifyHCTeamMember()
+		NotifyHCPlayerInfos()
 		if(len(sessions) >= 2) {
 			battleStatus = "firing"
 			NotifyHCBattleStatus()

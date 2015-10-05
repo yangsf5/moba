@@ -44,9 +44,9 @@ class Player extends egret.DisplayObjectContainer {
             </s:ProgressBar>`;
         var clazz = EXML.parse(exml);
         this.hpBar = new clazz();
-        this.hpBar.maximum = 9;
+        this.hpBar.maximum = 99;
         this.hpBar.minimum = 0;
-        this.hpBar.width = 50;
+        this.hpBar.width = 100;
         this.hpBar.height = 20;
         this.addChild(this.hpBar);
         this.hpBar.value = 0;
