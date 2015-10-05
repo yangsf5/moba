@@ -15,6 +15,7 @@ class Battle extends egret.DisplayObjectContainer {
         this.initPlayers();
         
         this.net = new Net(this);
+        this.addChild(this.net);
         Battle.myName = this.net.connect();
         this.initBattleStatusText();
 	}

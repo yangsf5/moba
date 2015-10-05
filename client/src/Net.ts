@@ -57,10 +57,23 @@ class Net extends egret.DisplayObjectContainer {
                 this.indexs[name] = i;
             }
         } else if(msgObj.Type == "HCShoot") {
-            var name = msgObj.Data.Target;
-            var index = this.indexs[name];
-            if(index != null) {
-                this.battle.getPlayerGroup().updateField(index, "hp", msgObj.Data.Harm);
+            var targetIndex = this.indexs[msgObj.Data.Target];
+            var targetX, targetY = 0;
+            if(targetIndex != null) {
+                this.battle.getPlayerGroup().updateField(targetIndex, "hp", msgObj.Data.Harm);
+                targetX = this.battle.getPlayerGroup().getField(targetIndex, "x");
+                targetY = this.battle.getPlayerGroup().getField(targetIndex, "y");
+                
+            }
+            
+            var sourceIndex = this.indexs[msgObj.Data.Source];
+            if(sourceIndex != null) {
+                var sourceX = this.battle.getPlayerGroup().getField(sourceIndex, "x");
+                var sourceY = this.battle.getPlayerGroup().getField(sourceIndex, "y");
+                
+                var shoot: Shoot = new Shoot();
+                shoot.action({x: sourceX+25, y: sourceY+25},{x: targetX+25, y: targetY+25}, 0xff0000);
+                this.addChild(shoot);
             }
         } else if(msgObj.Type == "HCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);

@@ -3,24 +3,27 @@ class Player extends egret.DisplayObjectContainer {
     private nameText:egret.TextField;
     private shape: egret.Shape;
     
-    public constructor(listener) {
+    public constructor() {
         super();
 
         var shape:egret.Shape = new egret.Shape();
-        shape.graphics.beginFill(0x00ff00);
-        shape.graphics.drawRect(0,0,50,50);
-        shape.graphics.endFill();
         this.addChild(shape);
         shape.touchEnabled = true;
         shape.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {
             MessageCenter.sendShoot({Service:"MobaHall", Type:"shoot", Data: this.nameText.text});
-            listener(event);
         }, this);
         
         this.shape = shape;
         
         this.initNameText();
         this.initHPBar();
+    }
+    
+    private reDrawShape(color:number):void {
+        this.shape.graphics.clear();
+        this.shape.graphics.beginFill(color);
+        this.shape.graphics.drawRect(0, 0, 50, 50);
+        this.shape.graphics.endFill();
     }
     
     private initNameText():void {
@@ -62,12 +65,11 @@ class Player extends egret.DisplayObjectContainer {
         this.nameText.text = item.name;
         if(item.name == Battle.myName) {
             // 高亮显示自己那个控件
-            this.shape.graphics.clear();
-            this.shape.graphics.beginFill(0xff0000);
-            this.shape.graphics.drawRect(0, 0, 50, 50);
-            this.shape.graphics.endFill();
+            this.reDrawShape(0xff0000);
             Battle.myX = item.x;
             Battle.myY = item.y;
+        } else {
+            this.reDrawShape(0x00ff00);
         }
         
         this.hpBar.value = item.hp;

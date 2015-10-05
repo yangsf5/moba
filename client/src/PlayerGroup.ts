@@ -39,6 +39,11 @@ class PlayerGroup extends eui.Group {
         item[key] = value;
         this.collection.replaceItemAt(item, index);
     }
+    
+    public getField(index:number, key:string):any {
+        var item = this.collection.getItemAt(index);
+        return item[key];
+    }
 }
 
 class PlayerRenderer extends eui.ItemRenderer {
@@ -46,16 +51,10 @@ class PlayerRenderer extends eui.ItemRenderer {
     public constructor(){
         super();
         this.touchChildren = true;
-        this.playerWidget = new Player(this.onPlayerAttacked);
+        this.playerWidget = new Player();
         this.addChild(this.playerWidget);
     }
     protected dataChanged():void {
         this.playerWidget.update(this.data);
-    }
-    
-    private onPlayerAttacked(event) {
-        var shoot: Shoot = new Shoot();
-        shoot.action({ x: Battle.myX+25,y: Battle.myY+25 },{x:event.stageX, y:event.stageY}, 0xff0000);
-        event.target.stage.addChild(shoot);
     }
 }
