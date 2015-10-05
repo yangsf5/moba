@@ -49,14 +49,13 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.playerWidget = new Player(this.onPlayerAttacked);
         this.addChild(this.playerWidget);
     }
-    protected dataChanged():void{
+    protected dataChanged():void {
         this.playerWidget.update(this.data);
     }
     
     private onPlayerAttacked(event) {
         var shoot: Shoot = new Shoot();
-        // TODO from my position
-        shoot.action({ x: 200,y: 400 },{x:event.stageX, y:event.stageY}, 0xff0000);
+        shoot.action({ x: Battle.myX+25,y: Battle.myY+25 },{x:event.stageX, y:event.stageY}, 0xff0000);
         event.target.stage.addChild(shoot);
     }
 }

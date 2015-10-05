@@ -1,5 +1,8 @@
 class Battle extends egret.DisplayObjectContainer {
-    private myName: string;
+    public static myName: string;
+    public static myX: number;
+    public static myY: number;
+    
     private net: Net;
     
     private playerGroup: PlayerGroup;
@@ -12,7 +15,7 @@ class Battle extends egret.DisplayObjectContainer {
         this.initPlayers();
         
         this.net = new Net(this);
-        this.myName = this.net.connect();
+        Battle.myName = this.net.connect();
         this.initBattleStatusText();
 	}
 	

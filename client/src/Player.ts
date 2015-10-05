@@ -60,6 +60,16 @@ class Player extends egret.DisplayObjectContainer {
     
     public update(item:any):void {
         this.nameText.text = item.name;
+        if(item.name == Battle.myName) {
+            // 高亮显示自己那个控件
+            this.shape.graphics.clear();
+            this.shape.graphics.beginFill(0xff0000);
+            this.shape.graphics.drawRect(0, 0, 50, 50);
+            this.shape.graphics.endFill();
+            Battle.myX = item.x;
+            Battle.myY = item.y;
+        }
+        
         this.hpBar.value = item.hp;
         
         this.setPosition(item.x, item.y);

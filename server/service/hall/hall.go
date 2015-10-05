@@ -38,7 +38,7 @@ func Enter(session int, u User) bool {
 		sessions[session] = u
 
 		NotifyHCTeamMember()
-		if(len(sessions) >= 4) {
+		if(len(sessions) >= 2) {
 			battleStatus = "firing"
 			NotifyHCBattleStatus()
 		}
