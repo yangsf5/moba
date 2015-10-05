@@ -2,7 +2,6 @@ class Battle extends egret.DisplayObjectContainer {
     private myName: string;
     private net: Net;
     
-    private players: Array<Player>;
     private playerGroup: PlayerGroup;
     
     private battleStatusText: egret.TextField;
@@ -10,11 +9,11 @@ class Battle extends egret.DisplayObjectContainer {
 	public constructor() {
         super();
         
-        this.players = new Array<Player>();
+        this.initPlayers();
+        
         this.net = new Net(this);
         this.myName = this.net.connect();
         this.initBattleStatusText();
-        this.initPlayers();
 	}
 	
 	private initBattleStatusText():void {
@@ -29,7 +28,6 @@ class Battle extends egret.DisplayObjectContainer {
         this.playerGroup = new PlayerGroup();
         this.playerGroup.refixPosition();
         this.addChild(this.playerGroup);
-        
 	}
 	
 	private onPlayerAttacked(event) {

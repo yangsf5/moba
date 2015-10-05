@@ -20,7 +20,7 @@ class Net extends egret.DisplayObjectContainer {
         
         var chars = "abcdefghijklmnopqrstuvwzxy1234567890";
         var name: string = "";
-        for(var i = 0;i < 10;i++) {
+        for(var i = 0;i < 5;i++) {
             var index = Math.round(Math.random() * 35);
             name += chars[index];
         }
@@ -45,20 +45,26 @@ class Net extends egret.DisplayObjectContainer {
         console.log("WebSocketError");
     }
     
+    private indexs: any[];
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
         if(msgObj.Type == "HCTeamMember") {
+            this.indexs = [];
             for(var i = 0;i < 6; i++) {
                 var name = msgObj.Data.Members[i];
-                this.battle.getPlayerGroup().setName(i, name);
+                this.battle.getPlayerGroup().updateField(i, "name", name);
+                this.indexs[name] = i;
             }
         } else if(msgObj.Type == "HCShoot") {
-            console.log(msgObj.Data);
+            var name = msgObj.Data.Target;
+            var index = this.indexs[name];
+            if(index != null) {
+                this.battle.getPlayerGroup().updateField(index, "hp", msgObj.Data.Harm);
+            }
         } else if(msgObj.Type == "HCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);
         }
-        //this.battle.T
         console.log(msg);
     }
 }

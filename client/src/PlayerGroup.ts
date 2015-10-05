@@ -1,11 +1,14 @@
 class PlayerGroup extends eui.Group {
     private sourceData: any[];
+    private dataGroup: eui.DataGroup;
+    private collection: eui.ArrayCollection;
+    
 	public constructor() {
         super();
         this.sourceData = [];
         
         for (var i:number = 1; i < 7; i++){
-            this.sourceData.push({name:"", x:0, y:0, color:0});
+            this.sourceData.push({name:"", x:0, y:0, color:0, hp:9});
         }
 	}
 	
@@ -19,6 +22,8 @@ class PlayerGroup extends eui.Group {
         this.addChild(dataGroup);
         
         dataGroup.itemRenderer = PlayerRenderer;
+        this.dataGroup = dataGroup;
+        this.collection = myCollection;
     }
     
     public refixPosition():void {
@@ -29,8 +34,10 @@ class PlayerGroup extends eui.Group {
         this.sourceData[3].y = this.sourceData[4].y = this.sourceData[5].y = 600;
     }
     
-    public setName(index:number, name:string):void {
-        this.sourceData[index].name = name;
+    public updateField(index:number, key:string, value:any):void {
+        var item = this.collection.getItemAt(index);
+        item[key] = value;
+        this.collection.replaceItemAt(item, index);
     }
 }
 
@@ -46,6 +53,7 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.playerWidget.setPlayerName(this.data.name);
         this.playerWidget.setPosition(this.data.x, this.data.y);
         this.playerWidget.setColor(this.data.color);
+        this.playerWidget.setHP(this.data.hp);
     }
     
     private onPlayerAttacked(event) {
