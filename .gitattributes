@@ -1,1 +1,3 @@
 client/libs/* linguist-vendored
+client/template/runtime/* linguist-vendored
+client/index.html linguist-vendored
