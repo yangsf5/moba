@@ -3,8 +3,9 @@ package handler
 import (
 	"time"
 
-	"github.com/golang/net/websocket"
 	"github.com/golang/glog"
+	"golang.org/x/net/websocket"
+
 	"github.com/yangsf5/claw/center"
 )
 

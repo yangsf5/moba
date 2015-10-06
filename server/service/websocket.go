@@ -1,9 +1,10 @@
 package service
 
 import (
-	"github.com/golang/net/websocket"
 	"github.com/golang/glog"
 	"github.com/yangsf5/claw/center"
+
+	"golang.org/x/net/websocket"
 
 	"github.com/yangsf5/moba/server/user"
 )

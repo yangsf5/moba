@@ -1,4 +1,4 @@
-<?xml version="2.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <clawconfig name="config" version="1.0">
 	<!--isMater(true,false)-->
 	<master listenAddr=":11000" isMaster="false"></master>
