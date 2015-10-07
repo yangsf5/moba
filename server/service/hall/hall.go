@@ -2,6 +2,8 @@ package hall
 
 import (
 	"github.com/yangsf5/claw/engine/net"
+
+	"github.com/yangsf5/moba/server/script"
 )
 
 type User interface {
@@ -29,6 +31,9 @@ func init() {
 	group = net.NewGroup()
 	sessions = make(map[int]User)
 	battleStatus = "waiting"
+
+	//TODO temp
+	script.ExecPythonFile("./server/script/python/1.py")
 }
 
 func Enter(session int, u User) bool {
