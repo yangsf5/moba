@@ -19,4 +19,3 @@ func socketHandler(ws *websocket.Conn) {
 		time.Sleep(100 * time.Millisecond)
 	}
 }
-

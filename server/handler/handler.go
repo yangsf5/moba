@@ -5,5 +5,6 @@ import (
 )
 
 func RegisterHandler() {
-	web.RegisterWebSocketHandler("/", socketHandler)
+	web.RegisterWebSocketHandler("/socket", socketHandler)
+	web.StaticDirHandler("/", "./public/")
 }
