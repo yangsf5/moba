@@ -25,7 +25,7 @@ class Net extends egret.DisplayObjectContainer {
             name += chars[index];
         }
         
-        this.socket.connectByUrl("ws://192.168.1.112:2015?user=" + name);
+        this.socket.connectByUrl("ws://127.0.0.1:2015?user=" + name);
         return name;
     }
     
