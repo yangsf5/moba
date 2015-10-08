@@ -1,3 +1,4 @@
 *.swp
 client/bin-debug/*
 client/bin-release/*
+public/*
