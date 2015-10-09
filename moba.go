@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/golang/glog"
@@ -9,10 +10,10 @@ import (
 
 	"github.com/yangsf5/moba/server/handler"
 	myService "github.com/yangsf5/moba/server/service"
+	"github.com/yangsf5/moba/server/service/room"
 )
 
-var (
-)
+var ()
 
 func main() {
 	glog.Info("MOBA server start!")
@@ -22,7 +23,13 @@ func main() {
 
 	handler.RegisterHandler()
 
-	center.Use([]string{"Error", "Web", "MobaWebsocket", "MobaHall"})
+	willUseServices := []string{"Error", "Web", "MobaWebsocket", "MobaHall"}
+
+	for i := 1; i <= room.RoomCount; i++ {
+		name := fmt.Sprintf("MobaRoom%d", i)
+		willUseServices = append(willUseServices, name)
+	}
+	center.Use(willUseServices)
 
 	for {
 		time.Sleep(100 * time.Millisecond)
@@ -31,4 +38,3 @@ func main() {
 	glog.Info("MOBA server exit!")
 	glog.Flush()
 }
-

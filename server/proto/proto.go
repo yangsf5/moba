@@ -1,14 +1,18 @@
 package proto
 
 type Chat struct {
-	Name string
+	Name    string
 	Content string
 }
 
 type HCChat Chat
 
+type HCRoomCount struct {
+	Count int
+}
+
 type PlayerInfo struct {
-	Name string
+	Name      string
 	CurrentHP int
 }
 
@@ -19,7 +23,7 @@ type HCPlayerInfos struct {
 type HCShoot struct {
 	Source string
 	Target string
-	Harm int
+	Harm   int
 }
 
 type HCBattleStatus struct {

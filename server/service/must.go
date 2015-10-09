@@ -1,14 +1,22 @@
 package service
 
 import (
+	"fmt"
 	"github.com/yangsf5/claw/center"
-)
 
+	"github.com/yangsf5/moba/server/service/room"
+)
 
 func Register() {
 	services := map[string]center.Service{
 		"MobaWebsocket": &Websocket{},
-		"MobaHall": &Hall{},
+		"MobaHall":      &Hall{},
+	}
+
+	for i := 1; i <= room.RoomCount; i++ {
+		roomServiceName := fmt.Sprintf("MobaRoom%d", i)
+		s := NewRoomService(i, roomServiceName)
+		services[roomServiceName] = s
 	}
 
 	for name, cb := range services {

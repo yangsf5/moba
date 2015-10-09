@@ -1,8 +1,8 @@
 package hall
 
 import (
-	"math/rand"
 	"github.com/golang/glog"
+	"math/rand"
 
 	"github.com/yangsf5/moba/server/proto"
 )

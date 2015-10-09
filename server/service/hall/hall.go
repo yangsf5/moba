@@ -3,7 +3,9 @@ package hall
 import (
 	"github.com/yangsf5/claw/engine/net"
 
+	"github.com/yangsf5/moba/server/proto"
 	"github.com/yangsf5/moba/server/script"
+	"github.com/yangsf5/moba/server/service/room"
 )
 
 type User interface {
@@ -22,8 +24,8 @@ type User interface {
 }
 
 var (
-	group *net.Group
-	sessions map[int]User
+	group        *net.Group
+	sessions     map[int]User
 	battleStatus string // firing or waiting or finished
 )
 
@@ -42,8 +44,12 @@ func Enter(session int, u User) bool {
 		u.EnterService("MobaHall")
 		sessions[session] = u
 
+		msg := proto.Encode("MobaHall", proto.HCRoomCount{room.RoomCount})
+		u.Send([]byte(msg))
+
+		// TODO notify room count
 		NotifyHCPlayerInfos()
-		if(len(sessions) >= 2) {
+		if len(sessions) >= 2 {
 			battleStatus = "firing"
 			NotifyHCBattleStatus()
 		}
@@ -62,4 +68,3 @@ func Leave(session int) {
 func Broadcast(msg string) {
 	group.Broadcast([]byte(msg))
 }
-

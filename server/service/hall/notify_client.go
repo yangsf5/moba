@@ -8,7 +8,7 @@ func NotifyHCPlayerInfos() {
 	players := []proto.PlayerInfo{}
 	for _, user := range sessions {
 		player := proto.PlayerInfo{
-			Name: user.Name(),
+			Name:      user.Name(),
 			CurrentHP: user.GetHP(),
 		}
 		players = append(players, player)

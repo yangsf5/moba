@@ -7,8 +7,8 @@ import (
 
 type Pack struct {
 	Service string
-	Type string
-	Data interface{}
+	Type    string
+	Data    interface{}
 }
 
 func Encode(service string, v interface{}) string {
@@ -18,6 +18,7 @@ func Encode(service string, v interface{}) string {
 	pack := &Pack{service, msgName, v}
 	b, err := json.Marshal(pack)
 	if err != nil {
+		// TODO
 		panic(err)
 	}
 	return string(b)
