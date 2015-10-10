@@ -3,6 +3,8 @@ class Battle extends egret.DisplayObjectContainer {
     public static myX: number;
     public static myY: number;
     
+    private roomList: RoomList;
+    
     private net: Net;
     
     private playerGroup: PlayerGroup;
@@ -11,6 +13,7 @@ class Battle extends egret.DisplayObjectContainer {
     
 	public constructor() {
         super();
+
         
         this.initPlayers();
         
@@ -18,6 +21,10 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.net);
         Battle.myName = this.net.connect();
         this.initBattleStatusText();
+        
+                
+        this.roomList = new RoomList();
+        this.addChild(this.roomList);
 	}
 	
 	private initBattleStatusText():void {

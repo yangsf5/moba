@@ -53,7 +53,11 @@ class Net extends egret.DisplayObjectContainer {
             
         } else if(msgObj.Type == "HCPlayerInfos") {
             this.indexs = [];
-            for(var i = 0;i < 6; i++) {
+            var cnt = msgObj.Data.Players.length;
+            if(cnt > 6) {
+                cnt = 6;
+            }
+            for(var i = 0;i < cnt; i++) {
                 var player = msgObj.Data.Players[i];
                 this.battle.getPlayerGroup().updateField(i, "name", player.Name);
                 this.battle.getPlayerGroup().updateField(i, "hp", player.CurrentHP);
