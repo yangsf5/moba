@@ -14,14 +14,14 @@ class Battle extends egret.DisplayObjectContainer {
 	public constructor() {
         super();
 
-        /*
+        
         this.initPlayers();
         
         this.net = new Net(this);
         this.addChild(this.net);
         Battle.myName = this.net.connect();
         this.initBattleStatusText();
-        */
+        
                 
         this.roomList = new RoomList();
         this.addChild(this.roomList);
