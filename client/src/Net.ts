@@ -49,7 +49,9 @@ class Net extends egret.DisplayObjectContainer {
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
-        if(msgObj.Type == "HCPlayerInfos") {
+        if(msgObj.Type == "HCRoomCount") {
+            
+        } else if(msgObj.Type == "HCPlayerInfos") {
             this.indexs = [];
             for(var i = 0;i < 6; i++) {
                 var player = msgObj.Data.Players[i];
