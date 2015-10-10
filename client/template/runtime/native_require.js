@@ -11,7 +11,6 @@ var game_file_list = [
 	"libs/modules/res/res.js",
 	"libs/modules/eui/eui.js",
 	"bin-debug/Battle.js",
-	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
 	"bin-debug/MessageCenter.js",
 	"bin-debug/Net.js",
