@@ -10,10 +10,10 @@ import (
 )
 
 type User struct {
-	sessionId int
-	name string
-	RecvMsg <-chan string
-	SendMsg chan<- string
+	sessionId        int
+	name             string
+	RecvMsg          <-chan string
+	SendMsg          chan<- string
 	recvErr, sendErr <-chan error
 
 	disconnected bool
@@ -23,7 +23,7 @@ type User struct {
 	hp int
 }
 
-func NewUser(sessionId int, name string, recv <-chan string,  send chan<- string, recvErr, sendErr <-chan error) *User {
+func NewUser(sessionId int, name string, recv <-chan string, send chan<- string, recvErr, sendErr <-chan error) *User {
 	u := &User{}
 	u.sessionId = sessionId
 	u.name, u.RecvMsg, u.SendMsg = name, recv, send
@@ -51,7 +51,6 @@ func (u *User) Tick() {
 			}
 			pack := proto.Decode(msg)
 			glog.Infof("User recv, service=%s type=%s data=%v", pack.Service, pack.Type, pack.Data)
-			//u.handle(pack.Service, pack.Type, pack.Data)
 			center.Send("", pack.Service, u.sessionId, center.MsgTypeClient, pack)
 		case err, _ := <-u.recvErr:
 			u.Logout(err.Error())
@@ -85,17 +84,6 @@ func (u *User) Logout(reason string) {
 
 func (u *User) Kick(reason string) {
 	u.Logout(reason)
-}
-
-//TODO remove
-func (u *User) handle(service, msgType string, msgData interface{}) {
-	switch msgType {
-	case "enterRoom":
-		switch msgData.(string) {
-		case "pvp":
-		case "pve":
-		}
-	}
 }
 
 func (u *User) GetHP() int {
