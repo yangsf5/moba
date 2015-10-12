@@ -50,7 +50,7 @@ class Net extends egret.DisplayObjectContainer {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
         if(msgObj.Type == "HCRoomCount") {
-            
+            this.battle.switchToHall();
         } else if(msgObj.Type == "HCPlayerInfos") {
             this.indexs = [];
             var cnt = msgObj.Data.Players.length;

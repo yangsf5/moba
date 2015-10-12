@@ -44,11 +44,9 @@ func Enter(session int, u User) bool {
 		u.EnterService("MobaHall")
 		sessions[session] = u
 
-		msg := proto.Encode("MobaHall", proto.HCRoomCount{room.RoomCount})
+		msg := proto.Encode("MobaHall", &proto.HCRoomCount{room.RoomCount})
 		u.Send([]byte(msg))
 
-		// TODO notify room count
-		NotifyHCPlayerInfos()
 		if len(sessions) >= 2 {
 			battleStatus = "firing"
 			NotifyHCBattleStatus()
