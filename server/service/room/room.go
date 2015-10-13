@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	RoomCount = 50 // config to xml
+	RoomCount = 25 // config to xml
 )
 
 type RoomUser interface {
