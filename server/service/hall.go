@@ -4,14 +4,14 @@ import (
 	"github.com/golang/glog"
 	"github.com/yangsf5/claw/center"
 
-	"github.com/yangsf5/moba/server/service/hall"
 	"github.com/yangsf5/moba/server/proto"
+	"github.com/yangsf5/moba/server/service/hall"
 )
 
 type Hall struct {
 }
 
-func (s* Hall) ClawCallback(session int, source string, msgType int, msg interface{}) {
+func (s *Hall) ClawCallback(session int, source string, msgType int, msg interface{}) {
 	glog.Infof("Service.MobaHall recv session=%d type=%v msg=%v", session, msgType, msg)
 	switch msgType {
 	case center.MsgTypeSystem:
@@ -23,8 +23,10 @@ func (s* Hall) ClawCallback(session int, source string, msgType int, msg interfa
 			}
 			user.Login()
 			go user.Tick()
+		} else if roomInfo, ok := msg.(*proto.RoomInfo); ok {
+			hall.UpdateRoomInfo(source, roomInfo)
 		} else {
-			glog.Info("Service.MobaHall msg is not a net.Peer")
+			glog.Info("Service.MobaHall msg is undefined")
 		}
 	case center.MsgTypeText:
 		if msg, ok := msg.(string); ok {
@@ -41,6 +43,5 @@ func (s* Hall) ClawCallback(session int, source string, msgType int, msg interfa
 	}
 }
 
-func (s* Hall) ClawStart() {
+func (s *Hall) ClawStart() {
 }
-

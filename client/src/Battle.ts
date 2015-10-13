@@ -43,7 +43,7 @@ class Battle extends egret.DisplayObjectContainer {
         event.target.stage.addChild(shoot);
 	}
 	
-	public switchToHall(roomCount:number):void {
+	public switchToHall(roomInfos:any):void {
     	  if(this.playerGroup.parent) {
             this.playerGroup.parent.removeChild(this.playerGroup);
         }
@@ -51,8 +51,8 @@ class Battle extends egret.DisplayObjectContainer {
             this.battleStatusText.parent.removeChild(this.battleStatusText);
         }
              
-        this.roomCount = roomCount;
-        this.roomList = new RoomList(this);
+        this.roomCount = Object.keys(roomInfos).length;
+        this.roomList = new RoomList(this, roomInfos);
         this.addChild(this.roomList);
    	}
 	

@@ -1,9 +1,10 @@
 class RoomList extends egret.Sprite {
     private battle: Battle;
+    private roomInfos: any;
     
     private skin;
     
-	public constructor(battle:Battle) {
+	public constructor(battle:Battle, roomInfos:any) {
         super();
         
         var skinExml =
@@ -17,18 +18,21 @@ class RoomList extends egret.Sprite {
         this.skin = EXML.parse(skinExml);
         
         this.battle = battle;
+        
+        this.roomInfos = roomInfos;
         this.initRadioButtonWithGroup();
 	}
 	
-    private initRadioButtonWithGroup():void {
+    private initRadioButtonWithGroup(): void {
         var radioGroup: eui.RadioButtonGroup = new eui.RadioButtonGroup();
         radioGroup.addEventListener(eui.UIEvent.CHANGE, this.radioChangeHandler, this);
         
         for(var i = 1;i <= this.battle.getRoomCount(); i++) {
+            var roomInfo: any = this.roomInfos["MobaRoom" + i];
             var item: eui.RadioButton = new eui.RadioButton();
             item.x = 50;
             item.y = i * 30;
-            item.label = "room" + i;
+            item.label = "room" + i + "  (" + roomInfo.CurrentCount + "/" + roomInfo.MaxCount + ")";
             item.skinName = this.skin;
             item.value = i;
             item.group = radioGroup;

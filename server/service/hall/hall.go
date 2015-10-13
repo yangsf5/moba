@@ -5,7 +5,6 @@ import (
 
 	"github.com/yangsf5/moba/server/proto"
 	"github.com/yangsf5/moba/server/script"
-	"github.com/yangsf5/moba/server/service/room"
 )
 
 type User interface {
@@ -26,11 +25,15 @@ type User interface {
 var (
 	group    *net.Group
 	sessions map[int]User
+
+	roomInfos map[string]*proto.RoomInfo
 )
 
 func init() {
 	group = net.NewGroup()
 	sessions = make(map[int]User)
+
+	roomInfos = make(map[string]*proto.RoomInfo)
 
 	//TODO temp
 	script.ExecPythonFile("./server/script/python/1.py")
@@ -42,7 +45,7 @@ func Enter(session int, u User) bool {
 		u.EnterService("MobaHall")
 		sessions[session] = u
 
-		msg := proto.Encode("MobaHall", &proto.HCRoomCount{room.RoomCount})
+		msg := proto.Encode("MobaHall", &proto.HCRoomInfos{roomInfos})
 		u.Send([]byte(msg))
 	}
 
@@ -58,4 +61,12 @@ func Leave(session int) {
 
 func Broadcast(msg string) {
 	group.Broadcast([]byte(msg))
+}
+
+func GetRoomInfos() map[string]*proto.RoomInfo {
+	return roomInfos
+}
+
+func UpdateRoomInfo(roomServiceName string, roomInfo *proto.RoomInfo) {
+	roomInfos[roomServiceName] = roomInfo
 }

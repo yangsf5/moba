@@ -22,7 +22,7 @@ func (s *Room) ClawCallback(session int, source string, msgType int, msg interfa
 				glog.Infof("Service.%s enter room failed", s.name)
 				return
 			}
-			center.Send(s.name, "MobaHall", session, center.MsgTypeSystem, &proto.RHPlayerCount{s.logicRoom.GetMaxPlayerCount(), s.logicRoom.GetCurrentPlayerCount()})
+			center.Send(s.name, "MobaHall", session, center.MsgTypeSystem, &proto.RoomInfo{s.logicRoom.GetMaxPlayerCount(), s.logicRoom.GetCurrentPlayerCount()})
 			glog.Infof("Service.%s enter room userName=%s", s.name, user.Name())
 		} else {
 			glog.Infof("Service.%s msg is not a net.Peer", s.name)
@@ -44,6 +44,8 @@ func (s *Room) ClawCallback(session int, source string, msgType int, msg interfa
 
 func (s *Room) ClawStart() {
 	glog.Infof("%s service start", s.name)
+	// 向Hall汇报自己的初始信息
+	center.Send(s.name, "MobaHall", 0, center.MsgTypeSystem, &proto.RoomInfo{s.logicRoom.GetMaxPlayerCount(), 0})
 }
 
 func NewRoomService(roomID int, roomServiceName string) *Room {

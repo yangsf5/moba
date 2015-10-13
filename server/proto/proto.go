@@ -1,8 +1,12 @@
 package proto
 
-type RHPlayerCount struct {
+type RoomInfo struct {
 	MaxCount     int
 	CurrentCount int
+}
+
+type RHRoomInfo struct {
+	RoomInfo
 }
 
 type Chat struct {
@@ -12,8 +16,8 @@ type Chat struct {
 
 type HCChat Chat
 
-type HCRoomCount struct {
-	Count int
+type HCRoomInfos struct {
+	Rooms map[string]*RoomInfo
 }
 
 type PlayerInfo struct {
