@@ -17,10 +17,24 @@ func (s *Room) ClawCallback(session int, source string, msgType int, msg interfa
 	glog.Infof("Service.%s recv session=%d type=%v msg=%v", s.name, session, msgType, msg)
 	switch msgType {
 	case center.MsgTypeSystem:
+		if user, ok := msg.(room.User); ok {
+			if ret := s.logicRoom.Enter(session, user); !ret {
+				glog.Infof("Service.%s enter room failed", s.name)
+				return
+			}
+			glog.Infof("Service.%s enter room userName=%s", s.name, user.Name())
+		} else {
+			glog.Infof("Service.%s msg is not a net.Peer", s.name)
+		}
 	case center.MsgTypeText:
+		if msg, ok := msg.(string); ok {
+			if msg == "LEAVE" {
+				s.logicRoom.Leave(session)
+			}
+		}
 	case center.MsgTypeClient:
 		if pack, ok := msg.(*proto.Pack); ok {
-			room.HandleClientMessage(session, pack.Type, pack.Data)
+			s.logicRoom.HandleClientMessage(session, pack.Type, pack.Data)
 		} else {
 			glog.Errorf("Service.%s MsgTypeClient msg is not a *proto.Pack", s.name)
 		}
@@ -33,7 +47,7 @@ func (s *Room) ClawStart() {
 
 func NewRoomService(roomID int, roomServiceName string) *Room {
 	roomService := &Room{}
-	r := room.NewRoom(roomID)
+	r := room.NewRoom(roomID, roomServiceName)
 	roomService.logicRoom = r
 	roomService.name = roomServiceName
 	return roomService

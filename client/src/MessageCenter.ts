@@ -1,4 +1,6 @@
 class MessageCenter {
+    public static battle: Battle;
+    
     private static net: Net;
     
     public constructor() {

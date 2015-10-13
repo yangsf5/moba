@@ -48,7 +48,7 @@ class PlayerGroup extends eui.Group {
 
 class PlayerRenderer extends eui.ItemRenderer {
     private playerWidget: Player;
-    public constructor(){
+    public constructor() {
         super();
         this.touchChildren = true;
         this.playerWidget = new Player();

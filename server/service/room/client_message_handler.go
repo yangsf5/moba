@@ -1,21 +1,33 @@
 package room
 
 import (
-//	"github.com/golang/glog"
+	"github.com/golang/glog"
+	"math/rand"
 
-//"github.com/yangsf5/moba/server/proto"
+	"github.com/yangsf5/moba/server/proto"
 )
 
-func HandleClientMessage(session int, msgType string, msgData interface{}) {
-	/*
-		u, ok := sessions[session]
-		if !ok {
-			glog.Errorf("HallClientMessage session not in room, sessionId=%d", session)
-			return
-		}
-	*/
+func (r *Room) HandleClientMessage(session int, msgType string, msgData interface{}) {
+	u, ok := r.sessions[session]
+	if !ok {
+		glog.Errorf("RoomService-%s HallClientMessage session not in room, sessionId=%d", r.serviceName, session)
+		return
+	}
 
 	switch msgType {
-	//TODO
+	case "shoot":
+		targetName := msgData.(string)
+		targetUser := r.group.GetPeer(targetName)
+		if targetUser == nil {
+			break
+		}
+		if r.battleStatus != "firing" {
+			break
+		}
+		mobaUser := targetUser.(User)
+		hp := mobaUser.GetHP() - rand.Intn(3)
+		mobaUser.SetHP(hp)
+		shootMsg := &proto.HCShoot{u.Name(), targetName, hp}
+		r.Broadcast(proto.Encode("MobaHall", shootMsg))
 	}
 }

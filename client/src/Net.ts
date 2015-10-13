@@ -52,6 +52,7 @@ class Net extends egret.DisplayObjectContainer {
         if(msgObj.Type == "HCRoomCount") {
             this.battle.switchToHall(msgObj.Data.Count);
         } else if(msgObj.Type == "HCPlayerInfos") {
+            this.battle.switchToRoom();
             this.indexs = [];
             var cnt = msgObj.Data.Players.length;
             if(cnt > 6) {

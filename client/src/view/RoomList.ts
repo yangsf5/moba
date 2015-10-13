@@ -37,7 +37,8 @@ class RoomList extends egret.Sprite {
     }
     
     private radioChangeHandler(evt:eui.UIEvent):void {
-        var radioGroup: eui.RadioButtonGroup = evt.target;
-        console.log(radioGroup.selectedValue);
+        var roomService = "MobaRoom" + evt.target.selectedValue;
+        this.battle.setRoomService(roomService);
+        MessageCenter.sendShoot({Service:"MobaHall", Type:"enterRoom", Data: roomService});
     }
 }

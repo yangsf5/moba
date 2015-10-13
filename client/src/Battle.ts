@@ -5,6 +5,7 @@ class Battle extends egret.DisplayObjectContainer {
     
     private roomList: RoomList;
     private roomCount: number;
+    private roomService: string;
     
     private net: Net;
     
@@ -14,6 +15,8 @@ class Battle extends egret.DisplayObjectContainer {
     
 	public constructor() {
         super();
+        
+        MessageCenter.battle = this;
 
         this.initPlayers();
         this.net = new Net(this);
@@ -68,6 +71,14 @@ class Battle extends egret.DisplayObjectContainer {
 	
 	public setBattleStatus(status:string):void {
         this.battleStatusText.text = status;
+	}
+	
+	public setRoomService(service:string):void {
+        this.roomService = service;
+	}
+	
+	public getRoomService():string {
+        return this.roomService;
 	}
 	
 	public getPlayerGroup():PlayerGroup {

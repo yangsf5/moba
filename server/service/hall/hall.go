@@ -24,15 +24,13 @@ type User interface {
 }
 
 var (
-	group        *net.Group
-	sessions     map[int]User
-	battleStatus string // firing or waiting or finished
+	group    *net.Group
+	sessions map[int]User
 )
 
 func init() {
 	group = net.NewGroup()
 	sessions = make(map[int]User)
-	battleStatus = "waiting"
 
 	//TODO temp
 	script.ExecPythonFile("./server/script/python/1.py")
@@ -46,11 +44,6 @@ func Enter(session int, u User) bool {
 
 		msg := proto.Encode("MobaHall", &proto.HCRoomCount{room.RoomCount})
 		u.Send([]byte(msg))
-
-		if len(sessions) >= 2 {
-			battleStatus = "firing"
-			NotifyHCBattleStatus()
-		}
 	}
 
 	return ret

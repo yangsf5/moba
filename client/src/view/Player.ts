@@ -10,7 +10,7 @@ class Player extends egret.DisplayObjectContainer {
         this.addChild(shape);
         shape.touchEnabled = true;
         shape.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {
-            MessageCenter.sendShoot({Service:"MobaHall", Type:"shoot", Data: this.nameText.text});
+            MessageCenter.sendShoot({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: this.nameText.text});
         }, this);
         
         this.shape = shape;
