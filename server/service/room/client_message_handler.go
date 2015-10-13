@@ -28,6 +28,6 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		hp := mobaUser.GetHP() - rand.Intn(3)
 		mobaUser.SetHP(hp)
 		shootMsg := &proto.HCShoot{u.Name(), targetName, hp}
-		r.Broadcast(proto.Encode("MobaHall", shootMsg))
+		r.Broadcast(proto.Encode(r.serviceName, shootMsg))
 	}
 }
