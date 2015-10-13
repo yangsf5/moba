@@ -1,5 +1,10 @@
 package proto
 
+type RHPlayerCount struct {
+	MaxCount     int
+	CurrentCount int
+}
+
 type Chat struct {
 	Name    string
 	Content string
@@ -16,16 +21,16 @@ type PlayerInfo struct {
 	CurrentHP int
 }
 
-type HCPlayerInfos struct {
+type RCPlayerInfos struct {
 	Players []PlayerInfo
 }
 
-type HCShoot struct {
+type RCShoot struct {
 	Source string
 	Target string
 	Harm   int
 }
 
-type HCBattleStatus struct {
+type RCBattleStatus struct {
 	Status string
 }

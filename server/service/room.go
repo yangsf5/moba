@@ -22,6 +22,7 @@ func (s *Room) ClawCallback(session int, source string, msgType int, msg interfa
 				glog.Infof("Service.%s enter room failed", s.name)
 				return
 			}
+			center.Send(s.name, "MobaHall", session, center.MsgTypeSystem, &proto.RHPlayerCount{s.logicRoom.GetMaxPlayerCount(), s.logicRoom.GetCurrentPlayerCount()})
 			glog.Infof("Service.%s enter room userName=%s", s.name, user.Name())
 		} else {
 			glog.Infof("Service.%s msg is not a net.Peer", s.name)

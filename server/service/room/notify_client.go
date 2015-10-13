@@ -13,11 +13,11 @@ func (r *Room) NotifyHCPlayerInfos() {
 		}
 		players = append(players, player)
 	}
-	msg := &proto.HCPlayerInfos{players}
+	msg := &proto.RCPlayerInfos{players}
 	r.Broadcast(proto.Encode(r.serviceName, msg))
 }
 
 func (r *Room) NotifyHCBattleStatus() {
-	msg := &proto.HCBattleStatus{r.battleStatus}
+	msg := &proto.RCBattleStatus{r.battleStatus}
 	r.Broadcast(proto.Encode(r.serviceName, msg))
 }

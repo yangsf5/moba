@@ -51,7 +51,7 @@ class Net extends egret.DisplayObjectContainer {
         var msgObj = JSON.parse(msg);
         if(msgObj.Type == "HCRoomCount") {
             this.battle.switchToHall(msgObj.Data.Count);
-        } else if(msgObj.Type == "HCPlayerInfos") {
+        } else if(msgObj.Type == "RCPlayerInfos") {
             this.battle.switchToRoom();
             this.indexs = [];
             var cnt = msgObj.Data.Players.length;
@@ -64,7 +64,7 @@ class Net extends egret.DisplayObjectContainer {
                 this.battle.getPlayerGroup().updateField(i, "hp", player.CurrentHP);
                 this.indexs[player.Name] = i;
             }
-        } else if(msgObj.Type == "HCShoot") {
+        } else if(msgObj.Type == "RCShoot") {
             var targetIndex = this.indexs[msgObj.Data.Target];
             var targetX, targetY = 0;
             if(targetIndex != null) {
@@ -83,7 +83,7 @@ class Net extends egret.DisplayObjectContainer {
                 shoot.action({x: sourceX+25, y: sourceY+25},{x: targetX+25, y: targetY+25}, 0xff0000);
                 this.addChild(shoot);
             }
-        } else if(msgObj.Type == "HCBattleStatus") {
+        } else if(msgObj.Type == "RCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);
         }
         console.log(msg);

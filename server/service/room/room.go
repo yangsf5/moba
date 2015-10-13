@@ -31,6 +31,8 @@ type Room struct {
 	ID          int
 	serviceName string
 
+	maxPlayerCount int
+
 	group    *net.Group
 	sessions map[int]User
 
@@ -41,10 +43,19 @@ func NewRoom(ID int, serviceName string) *Room {
 	r := &Room{}
 	r.ID = ID
 	r.serviceName = serviceName
+	r.maxPlayerCount = 6
 	r.group = net.NewGroup()
 	r.sessions = make(map[int]User)
 	r.battleStatus = "waiting"
 	return r
+}
+
+func (r *Room) GetMaxPlayerCount() int {
+	return r.maxPlayerCount
+}
+
+func (r *Room) GetCurrentPlayerCount() int {
+	return len(r.sessions)
 }
 
 func (r *Room) Enter(session int, u User) bool {
