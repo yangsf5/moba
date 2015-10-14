@@ -11,6 +11,7 @@ class Battle extends egret.DisplayObjectContainer {
     
     private playerGroup: PlayerGroup;
     
+    private currentRoomText: egret.TextField;
     private battleStatusText: egret.TextField;
     
 	public constructor() {
@@ -22,7 +23,14 @@ class Battle extends egret.DisplayObjectContainer {
         this.net = new Net(this);
         this.addChild(this.net);
         Battle.myName = this.net.connect();
+        
+        this.initCurrentRoomText();
         this.initBattleStatusText();
+	}
+	
+	private initCurrentRoomText():void {
+        this.currentRoomText = new egret.TextField();
+        this.currentRoomText.text = "";
 	}
 	
 	private initBattleStatusText():void {
@@ -44,11 +52,14 @@ class Battle extends egret.DisplayObjectContainer {
 	}
 	
 	public switchToHall(roomInfos:any):void {
-    	  if(this.playerGroup.parent) {
-            this.playerGroup.parent.removeChild(this.playerGroup);
+        if(this.currentRoomText.parent) {
+            this.currentRoomText.parent.removeChild(this.currentRoomText);
         }
         if(this.battleStatusText.parent) {
             this.battleStatusText.parent.removeChild(this.battleStatusText);
+        }
+    	  if(this.playerGroup.parent) {
+            this.playerGroup.parent.removeChild(this.playerGroup);
         }
              
         this.roomCount = Object.keys(roomInfos).length;
@@ -61,8 +72,10 @@ class Battle extends egret.DisplayObjectContainer {
             this.roomList.parent.removeChild(this.roomList);
         }
         
-        this.addChild(this.playerGroup);
+        this.currentRoomText.text = this.roomService;
+        this.addChild(this.currentRoomText);
         this.addChild(this.battleStatusText);
+        this.addChild(this.playerGroup);
 	}
 	
 	public getRoomCount():number {
