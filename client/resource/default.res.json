@@ -1,15 +1,35 @@
 {
 	"resources": [
 		{
-			"name": "description",
-			"type": "json",
-			"url": "config/description.json"
+			"name": "tank1",
+			"type": "image",
+			"url": "assets/tank/tank1.jpg"
+		},
+		{
+			"name": "tank2",
+			"type": "image",
+			"url": "assets/tank/tank2.jpg"
+		},
+		{
+			"name": "tank3",
+			"type": "image",
+			"url": "assets/tank/tank3.jpg"
+		},
+		{
+			"name": "tank4",
+			"type": "image",
+			"url": "assets/tank/tank4.jpg"
+		},
+		{
+			"name": "tank5",
+			"type": "image",
+			"url": "assets/tank/tank5.jpg"
 		}
 	],
 	"groups": [
 		{
-			"name": "preload",
-			"keys": ""
+			"name": "tank",
+			"keys": "tank1,tank2,tank3,tank4,tank5"
 		}
 	]
 }

@@ -1,29 +1,27 @@
 class Player extends egret.DisplayObjectContainer {
     private hpBar:eui.ProgressBar;
     private nameText:egret.TextField;
-    private shape: egret.Shape;
+    private tank:egret.Bitmap = new egret.Bitmap();
     
     public constructor() {
         super();
 
-        var shape:egret.Shape = new egret.Shape();
-        this.addChild(shape);
-        shape.touchEnabled = true;
-        shape.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {
-            MessageCenter.sendShoot({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: this.nameText.text});
-        }, this);
-        
-        this.shape = shape;
-        
         this.initNameText();
         this.initHPBar();
+        
+        this.initTank();
     }
     
-    private reDrawShape(color:number):void {
-        this.shape.graphics.clear();
-        this.shape.graphics.beginFill(color);
-        this.shape.graphics.drawRect(0, 0, 50, 50);
-        this.shape.graphics.endFill();
+    private initTank():void {
+        this.tank.texture = RES.getRes("tank2");
+        this.tank.fillMode = egret.BitmapFillMode.SCALE;
+        this.tank.width = 50;
+        this.tank.height = 50;
+        this.addChild(this.tank);
+        this.tank.touchEnabled = true;
+        this.tank.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {
+            MessageCenter.sendShoot({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: this.nameText.text});
+        }, this);
     }
     
     private initNameText():void {
@@ -53,8 +51,8 @@ class Player extends egret.DisplayObjectContainer {
     }
     
     private setPosition(x:number, y:number):void {
-        this.shape.x = x;
-        this.shape.y = y;
+        this.tank.x = x;
+        this.tank.y = y;
         this.nameText.x = x;
         this.nameText.y = y - 50;
         this.hpBar.x = x;
@@ -64,12 +62,10 @@ class Player extends egret.DisplayObjectContainer {
     public update(item:any):void {
         this.nameText.text = item.name;
         if(item.name == Battle.myName) {
-            // 高亮显示自己那个控件
-            this.reDrawShape(0xff0000);
+            // TODO 高亮显示自己那个坦克
             Battle.myX = item.x;
             Battle.myY = item.y;
         } else {
-            this.reDrawShape(0x00ff00);
         }
         
         this.hpBar.value = item.hp;
