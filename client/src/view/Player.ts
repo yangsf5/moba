@@ -13,10 +13,10 @@ class Player extends egret.DisplayObjectContainer {
     }
     
     private initTank():void {
-        this.tank.texture = RES.getRes("tank2");
+        this.tank.texture = RES.getRes("tank5");
         this.tank.fillMode = egret.BitmapFillMode.SCALE;
-        this.tank.width = 50;
-        this.tank.height = 50;
+        this.tank.width = 100;
+        this.tank.height = 100;
         this.addChild(this.tank);
         this.tank.touchEnabled = true;
         this.tank.addEventListener(egret.TouchEvent.TOUCH_TAP,function(event) {

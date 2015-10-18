@@ -3,27 +3,27 @@
 		{
 			"name": "tank1",
 			"type": "image",
-			"url": "assets/tank/tank1.jpg"
+			"url": "assets/tank/tank1.png"
 		},
 		{
 			"name": "tank2",
 			"type": "image",
-			"url": "assets/tank/tank2.jpg"
+			"url": "assets/tank/tank2.png"
 		},
 		{
 			"name": "tank3",
 			"type": "image",
-			"url": "assets/tank/tank3.jpg"
+			"url": "assets/tank/tank3.png"
 		},
 		{
 			"name": "tank4",
 			"type": "image",
-			"url": "assets/tank/tank4.jpg"
+			"url": "assets/tank/tank4.png"
 		},
 		{
 			"name": "tank5",
 			"type": "image",
-			"url": "assets/tank/tank5.jpg"
+			"url": "assets/tank/tank5.png"
 		}
 	],
 	"groups": [
