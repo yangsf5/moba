@@ -7,9 +7,12 @@ import (
 func (r *Room) NotifyHCPlayerInfos() {
 	players := []proto.PlayerInfo{}
 	for _, user := range r.sessions {
+		x, y := user.GetPosition()
 		player := proto.PlayerInfo{
 			Name:      user.Name(),
 			CurrentHP: user.GetHP(),
+			X:         x,
+			Y:         y,
 		}
 		players = append(players, player)
 	}

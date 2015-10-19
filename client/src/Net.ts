@@ -62,6 +62,8 @@ class Net extends egret.DisplayObjectContainer {
                 var player = msgObj.Data.Players[i];
                 this.battle.getPlayerGroup().updateField(i, "name", player.Name);
                 this.battle.getPlayerGroup().updateField(i, "hp", player.CurrentHP);
+                this.battle.getPlayerGroup().updateField(i, "x", player.X);
+                this.battle.getPlayerGroup().updateField(i, "y", player.Y);
                 this.indexs[player.Name] = i;
             }
         } else if(msgObj.Type == "RCShoot") {

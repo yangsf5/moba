@@ -1,6 +1,8 @@
 package room
 
 import (
+	"math/rand"
+
 	"github.com/yangsf5/claw/engine/net"
 )
 
@@ -12,15 +14,13 @@ type User interface {
 	net.Peer
 	Name() string
 
-	//TODO remove
-	Login()
-	Tick()
-	Kick(reason string)
-
 	EnterService(service string)
 
 	GetHP() int
 	SetHP(hp int)
+
+	GetPosition() (x, y int)
+	SetPosition(x, y int)
 }
 
 type RoomUser interface {
@@ -61,6 +61,8 @@ func (r *Room) GetCurrentPlayerCount() int {
 func (r *Room) Enter(session int, u User) bool {
 	ret := r.group.AddPeer(u.Name(), u)
 	if ret {
+		u.SetPosition(101+rand.Intn(200), 100+rand.Intn(200))
+
 		u.EnterService(r.serviceName)
 		r.sessions[session] = u
 

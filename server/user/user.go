@@ -20,7 +20,8 @@ type User struct {
 
 	services *list.List
 
-	hp int
+	hp   int
+	x, y int
 }
 
 func NewUser(sessionId int, name string, recv <-chan string, send chan<- string, recvErr, sendErr <-chan error) *User {
@@ -92,4 +93,13 @@ func (u *User) GetHP() int {
 
 func (u *User) SetHP(hp int) {
 	u.hp = hp
+}
+
+func (u *User) GetPosition() (x, y int) {
+	return u.x, u.y
+}
+
+func (u *User) SetPosition(x, y int) {
+	u.x = x
+	u.y = y
 }

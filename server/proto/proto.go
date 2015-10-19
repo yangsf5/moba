@@ -23,6 +23,7 @@ type HCRoomInfos struct {
 type PlayerInfo struct {
 	Name      string
 	CurrentHP int
+	X, Y      int
 }
 
 type RCPlayerInfos struct {
