@@ -45,7 +45,6 @@ class Net extends egret.DisplayObjectContainer {
         console.log("WebSocketError");
     }
     
-    private indexs: any[];
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
@@ -53,7 +52,6 @@ class Net extends egret.DisplayObjectContainer {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
             this.battle.switchToRoom();
-            this.indexs = [];
             var cnt = msgObj.Data.Players.length;
             if(cnt > 6) {
                 cnt = 6;
@@ -63,7 +61,6 @@ class Net extends egret.DisplayObjectContainer {
                 this.battle.getPlayerGroup().updateField(player.Name, "hp", player.CurrentHP);
                 this.battle.getPlayerGroup().updateField(player.Name, "x", player.X);
                 this.battle.getPlayerGroup().updateField(player.Name, "y", player.Y);
-                this.indexs[player.Name] = i;
             }
         } else if(msgObj.Type == "RCShoot") {
             var targetName = msgObj.Data.Target;

@@ -62,9 +62,10 @@ class Player extends egret.DisplayObjectContainer {
     public update(item:any):void {
         this.nameText.text = item.name;
         if(item.name == Battle.myName) {
-            // TODO 高亮显示自己那个坦克
+            // 高亮自己的名字
             Battle.myX = item.x;
             Battle.myY = item.y;
+            this.nameText.textColor = 0xff0000;
         } else {
         }
         

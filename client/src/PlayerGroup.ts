@@ -27,6 +27,7 @@ class PlayerGroup extends eui.Group {
             item[key] = value;
             this.collection.addItem(item);
             this.playerIndexes[playerName] = this.collection.length - 1;
+            console.log(this.collection.length);
         } else {
             var item = this.collection.getItemAt(this.playerIndexes[playerName]);
             item[key] = value;
