@@ -42,7 +42,6 @@ class Battle extends egret.DisplayObjectContainer {
 	
 	private initPlayers():void {
         this.playerGroup = new PlayerGroup();
-        this.playerGroup.refixPosition();
 	}
 	
 	private onPlayerAttacked(event) {

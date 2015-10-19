@@ -1,47 +1,45 @@
 class PlayerGroup extends eui.Group {
-    private sourceData: any[];
-    private dataGroup: eui.DataGroup;
     private collection: eui.ArrayCollection;
+    
+    private playerIndexes: any;
     
 	public constructor() {
         super();
-        this.sourceData = [];
         
-        for (var i:number = 1; i < 7; i++){
-            this.sourceData.push({name:"", x:0, y:0, color:0, hp:99});
-        }
+        this.playerIndexes = {};
 	}
 	
     protected createChildren():void {
-        var myCollection:eui.ArrayCollection = new eui.ArrayCollection(this.sourceData);
+        this.collection = new eui.ArrayCollection();
         
         var dataGroup:eui.DataGroup = new eui.DataGroup();
-        dataGroup.dataProvider = myCollection;
+        dataGroup.dataProvider = this.collection;
         dataGroup.percentWidth = 100;
         dataGroup.percentHeight = 100;
         this.addChild(dataGroup);
         
         dataGroup.itemRenderer = PlayerRenderer;
-        this.dataGroup = dataGroup;
-        this.collection = myCollection;
     }
     
-    public refixPosition():void {
-        this.sourceData[0].x = this.sourceData[3].x = 50;
-        this.sourceData[1].x = this.sourceData[4].x = 200;
-        this.sourceData[2].x = this.sourceData[5].x = 350;
-        this.sourceData[0].y = this.sourceData[1].y = this.sourceData[2].y = 250;
-        this.sourceData[3].y = this.sourceData[4].y = this.sourceData[5].y = 600;
+    public updateField(playerName:string, key:string, value:any):void {
+        if(this.playerIndexes[playerName] == null) {
+            var item:any = { name: playerName,x: 0,y: 0,color: 0,hp: 99, flee:false};
+            item[key] = value;
+            this.collection.addItem(item);
+            this.playerIndexes[playerName] = this.collection.length - 1;
+        } else {
+            var item = this.collection.getItemAt(this.playerIndexes[playerName]);
+            item[key] = value;
+            this.collection.replaceItemAt(item, this.playerIndexes[playerName]);
+        }
     }
     
-    public updateField(index:number, key:string, value:any):void {
-        var item = this.collection.getItemAt(index);
-        item[key] = value;
-        this.collection.replaceItemAt(item, index);
-    }
-    
-    public getField(index:number, key:string):any {
-        var item = this.collection.getItemAt(index);
+    public getField(playerName:number, key:string):any {
+        if(this.playerIndexes[playerName] == null) {
+            return null;
+        }
+        
+        var item = this.collection.getItemAt(this.playerIndexes[playerName]);
         return item[key];
     }
 }

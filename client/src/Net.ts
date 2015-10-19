@@ -60,26 +60,25 @@ class Net extends egret.DisplayObjectContainer {
             }
             for(var i = 0;i < cnt; i++) {
                 var player = msgObj.Data.Players[i];
-                this.battle.getPlayerGroup().updateField(i, "name", player.Name);
-                this.battle.getPlayerGroup().updateField(i, "hp", player.CurrentHP);
-                this.battle.getPlayerGroup().updateField(i, "x", player.X);
-                this.battle.getPlayerGroup().updateField(i, "y", player.Y);
+                this.battle.getPlayerGroup().updateField(player.Name, "hp", player.CurrentHP);
+                this.battle.getPlayerGroup().updateField(player.Name, "x", player.X);
+                this.battle.getPlayerGroup().updateField(player.Name, "y", player.Y);
                 this.indexs[player.Name] = i;
             }
         } else if(msgObj.Type == "RCShoot") {
-            var targetIndex = this.indexs[msgObj.Data.Target];
+            var targetName = msgObj.Data.Target;
             var targetX, targetY = 0;
-            if(targetIndex != null) {
-                this.battle.getPlayerGroup().updateField(targetIndex, "hp", msgObj.Data.Harm);
-                targetX = this.battle.getPlayerGroup().getField(targetIndex, "x");
-                targetY = this.battle.getPlayerGroup().getField(targetIndex, "y");
+            if(targetName != null) {
+                this.battle.getPlayerGroup().updateField(targetName, "hp", msgObj.Data.Harm);
+                targetX = this.battle.getPlayerGroup().getField(targetName, "x");
+                targetY = this.battle.getPlayerGroup().getField(targetName, "y");
                 
             }
             
-            var sourceIndex = this.indexs[msgObj.Data.Source];
-            if(sourceIndex != null) {
-                var sourceX = this.battle.getPlayerGroup().getField(sourceIndex, "x");
-                var sourceY = this.battle.getPlayerGroup().getField(sourceIndex, "y");
+            var sourceName = msgObj.Data.Source;
+            if(sourceName != null) {
+                var sourceX = this.battle.getPlayerGroup().getField(sourceName, "x");
+                var sourceY = this.battle.getPlayerGroup().getField(sourceName, "y");
                 
                 var shoot: Shoot = new Shoot();
                 shoot.action({x: sourceX+25, y: sourceY+25},{x: targetX+25, y: targetY+25}, 0xff0000);
