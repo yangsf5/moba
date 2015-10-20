@@ -21,17 +21,26 @@ class PlayerGroup extends eui.Group {
         dataGroup.itemRenderer = PlayerRenderer;
     }
     
-    public updateField(playerName:string, key:string, value:any):void {
+    public updateField(playerName:string, keyValues:any[]):void {
         if(this.playerIndexes[playerName] == null) {
             var item:any = { name: playerName,x: 0,y: 0,color: 0,hp: 99, flee:false};
-            item[key] = value;
-            this.collection.addItem(item);
+            for(var i in keyValues) {
+                var kv: any = keyValues[i];
+                item[kv.key] = kv.value;
+            }
+            this.collection.source.push(item);
+            //this.collection.source.sort();
+            //this.collection.refresh();
+            //this.collection.itemUpdated(item);
             this.playerIndexes[playerName] = this.collection.length - 1;
-            console.log(this.collection.length);
         } else {
-            var item = this.collection.getItemAt(this.playerIndexes[playerName]);
-            item[key] = value;
-            this.collection.replaceItemAt(item, this.playerIndexes[playerName]);
+            var item = this.collection.source[this.playerIndexes[playerName]];
+            for(var i in keyValues) {
+                var kv: any = keyValues[i];
+                item[kv.key] = kv.value;
+                console.log(keyValues);
+            }
+            this.collection.itemUpdated(item);
         }
     }
     
@@ -53,7 +62,8 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.playerWidget = new Player();
         this.addChild(this.playerWidget);
     }
-    protected dataChanged():void {
+    protected dataChanged(): void {
+        console.log(this.data);
         this.playerWidget.update(this.data);
     }
 }

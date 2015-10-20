@@ -67,6 +67,7 @@ class Player extends egret.DisplayObjectContainer {
             Battle.myY = item.y;
             this.nameText.textColor = 0xff0000;
         } else {
+            this.nameText.textColor = 0x00ff00;
         }
         
         this.hpBar.value = item.hp;

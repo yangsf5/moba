@@ -53,34 +53,26 @@ class Net extends egret.DisplayObjectContainer {
         } else if(msgObj.Type == "RCPlayerInfos") {
             this.battle.switchToRoom();
             var cnt = msgObj.Data.Players.length;
-            if(cnt > 6) {
-                cnt = 6;
-            }
             for(var i = 0;i < cnt; i++) {
                 var player = msgObj.Data.Players[i];
-                this.battle.getPlayerGroup().updateField(player.Name, "hp", player.CurrentHP);
-                this.battle.getPlayerGroup().updateField(player.Name, "x", player.X);
-                this.battle.getPlayerGroup().updateField(player.Name, "y", player.Y);
+                this.battle.getPlayerGroup().updateField(player.Name,[{ key: "hp",value: player.CurrentHP },{ key: "x",value: player.X },{key:"y", value:player.Y}]);
             }
         } else if(msgObj.Type == "RCShoot") {
             var targetName = msgObj.Data.Target;
             var targetX, targetY = 0;
-            if(targetName != null) {
-                this.battle.getPlayerGroup().updateField(targetName, "hp", msgObj.Data.Harm);
-                targetX = this.battle.getPlayerGroup().getField(targetName, "x");
-                targetY = this.battle.getPlayerGroup().getField(targetName, "y");
-                
-            }
+
+            this.battle.getPlayerGroup().updateField(targetName, [{ key: "hp",value: msgObj.Data.Harm }]);
+            targetX = this.battle.getPlayerGroup().getField(targetName, "x");
+            targetY = this.battle.getPlayerGroup().getField(targetName, "y");
+
             
             var sourceName = msgObj.Data.Source;
-            if(sourceName != null) {
-                var sourceX = this.battle.getPlayerGroup().getField(sourceName, "x");
-                var sourceY = this.battle.getPlayerGroup().getField(sourceName, "y");
-                
-                var shoot: Shoot = new Shoot();
-                shoot.action({x: sourceX+25, y: sourceY+25},{x: targetX+25, y: targetY+25}, 0xff0000);
-                this.addChild(shoot);
-            }
+            var sourceX = this.battle.getPlayerGroup().getField(sourceName, "x");
+            var sourceY = this.battle.getPlayerGroup().getField(sourceName, "y");
+            
+            var shoot: Shoot = new Shoot();
+            shoot.action({x: sourceX+25, y: sourceY+25},{x: targetX+25, y: targetY+25}, 0xff0000);
+            this.addChild(shoot);
         } else if(msgObj.Type == "RCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);
         }
