@@ -75,6 +75,9 @@ class Net extends egret.DisplayObjectContainer {
             this.addChild(shoot);
         } else if(msgObj.Type == "RCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);
+        } else if(msgObj.Type == "RCMove") {
+            var data = msgObj.Data;
+            this.battle.getPlayerGroup().updateField(data.Name,[{ key: "x",value: data.X },{key:"y", vaule:data.Y}]);
         }
         console.log(msg);
     }

@@ -1,6 +1,7 @@
 package room
 
 import (
+	"fmt"
 	"github.com/golang/glog"
 	"math/rand"
 
@@ -29,5 +30,13 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		mobaUser.SetHP(hp)
 		shootMsg := &proto.RCShoot{u.Name(), targetName, hp}
 		r.Broadcast(proto.Encode(r.serviceName, shootMsg))
+	case "move":
+		position := msgData.(string)
+		var x, y int
+		fmt.Sscanf(position, "%d,%d", &x, &y)
+		// TODO check x, y
+		u.SetPosition(x, y)
+		moveMsg := &proto.RCMove{u.Name(), x, y}
+		r.Broadcast(proto.Encode(r.serviceName, moveMsg))
 	}
 }

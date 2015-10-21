@@ -10,7 +10,7 @@ class MessageCenter {
         this.net = net;
     }
 	
-    public static sendShoot(msg:any):void {
+    public static send(msg:any):void {
         this.net.sendData(JSON.stringify(msg));
     }
 }

@@ -40,15 +40,9 @@ class Battle extends egret.DisplayObjectContainer {
         this.battleStatusText.text = "waiting";
 	}
 	
-	private initPlayers():void {
+    private initPlayers(): void {
         this.playerGroup = new PlayerGroup();
-	}
-	
-	private onPlayerAttacked(event) {
-        var shoot: Shoot = new Shoot();
-        shoot.action({ x: 200,y: 400 },{x:event.stageX, y:event.stageY}, 0xff0000);
-        event.target.stage.addChild(shoot);
-	}
+    }
 	
 	public switchToHall(roomInfos:any):void {
         if(this.currentRoomText.parent) {
@@ -75,6 +69,11 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.currentRoomText);
         this.addChild(this.battleStatusText);
         this.addChild(this.playerGroup);
+        
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
+            console.log(event);
+            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
+        }, this);
 	}
 	
 	public getRoomCount():number {

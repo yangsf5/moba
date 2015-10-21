@@ -30,12 +30,17 @@ type RCPlayerInfos struct {
 	Players []PlayerInfo
 }
 
+type RCBattleStatus struct {
+	Status string
+}
+
 type RCShoot struct {
 	Source string
 	Target string
 	Harm   int
 }
 
-type RCBattleStatus struct {
-	Status string
+type RCMove struct {
+	Name string
+	X, Y int
 }
