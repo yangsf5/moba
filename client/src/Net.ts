@@ -48,12 +48,13 @@ class Net extends egret.DisplayObjectContainer {
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
-        console.log(msg);
+        console.log("the receive msg: ",msg);
                 
         if(msgObj.Type == "HCRoomInfos") {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
-            this.battle.switchToRoom();
+            // TODO (重新处理) 这里当前处理不好，就暂时将所有的清除，包括离开的玩家
+            this.battle.getPlayerGroup().clearAll();
             var cnt = msgObj.Data.Players.length;
             for(var i = 0;i < cnt; i++) {
                 var player = msgObj.Data.Players[i];

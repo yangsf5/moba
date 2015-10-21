@@ -60,10 +60,12 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.roomList);
    	}
 	
-	public switchToRoom() {
+	public switchToRoom(service:string) {
         if(this.roomList.parent) {
             this.roomList.parent.removeChild(this.roomList);
         }
+        
+        this.setRoomService(service);
         
         this.currentRoomText.text = this.roomService;
         this.addChild(this.currentRoomText);
