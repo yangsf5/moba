@@ -71,7 +71,6 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.playerGroup);
         
         this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
-            console.log(event);
             MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
         }, this);
 	}

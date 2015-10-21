@@ -48,6 +48,8 @@ class Net extends egret.DisplayObjectContainer {
     private onReceiveMessage(e:egret.Event):void {
         var msg:string = this.socket.readUTF();
         var msgObj = JSON.parse(msg);
+        console.log(msg);
+                
         if(msgObj.Type == "HCRoomInfos") {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
@@ -77,8 +79,7 @@ class Net extends egret.DisplayObjectContainer {
             this.battle.setBattleStatus(msgObj.Data.Status);
         } else if(msgObj.Type == "RCMove") {
             var data = msgObj.Data;
-            this.battle.getPlayerGroup().updateField(data.Name,[{ key: "x",value: data.X },{key:"y", vaule:data.Y}]);
+            this.battle.getPlayerGroup().updateField(data.Name, [{ key: "x",value: data.X },{key:"y", value: data.Y}]);
         }
-        console.log(msg);
     }
 }
