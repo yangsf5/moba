@@ -72,10 +72,12 @@ class PlayerRenderer extends eui.ItemRenderer {
         }).to({
             x: this.data.x - lastPosition.x,
             y: this.data.y - lastPosition.y,
-        },2000).call(this.onComplete, this);
+        },1000).call(this.onComplete, this);
+        
+        this.playerWidget.update(this.data);
     }
     
     private onComplete():void {
-        this.playerWidget.update(this.data);
+        
     }
 }
