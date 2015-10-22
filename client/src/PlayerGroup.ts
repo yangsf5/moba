@@ -64,6 +64,18 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.addChild(this.playerWidget);
     }
     protected dataChanged(): void {
+        var lastPosition: any = this.playerWidget.getPosition();
+        var newX: number = this.data.x - lastPosition.x;
+        var newY: number = this.data.y - lastPosition.y;
+        egret.Tween.get(this.playerWidget,{
+            loop: false
+        }).to({
+            x: this.data.x - lastPosition.x,
+            y: this.data.y - lastPosition.y,
+        },2000).call(this.onComplete, this);
+    }
+    
+    private onComplete():void {
         this.playerWidget.update(this.data);
     }
 }

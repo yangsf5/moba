@@ -1,7 +1,5 @@
 class Battle extends egret.DisplayObjectContainer {
     public static myName: string;
-    public static myX: number;
-    public static myY: number;
     
     private roomList: RoomList;
     private roomCount: number;

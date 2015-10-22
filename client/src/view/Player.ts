@@ -10,6 +10,8 @@ class Player extends egret.DisplayObjectContainer {
         this.initHPBar();
         
         this.initTank();
+        
+        this.setPosition(this.tank.x, this.tank.y);
     }
     
     private initTank():void {
@@ -59,19 +61,19 @@ class Player extends egret.DisplayObjectContainer {
         this.hpBar.y = y - 25;
     }
     
+    public getPosition():any {
+        return {x: this.tank.x, y: this.tank.y};
+    }
+    
     public update(item:any):void {
         this.nameText.text = item.name;
         if(item.name == Battle.myName) {
             // 高亮自己的名字
-            Battle.myX = item.x;
-            Battle.myY = item.y;
             this.nameText.textColor = 0xff0000;
         } else {
             this.nameText.textColor = 0x00ff00;
         }
         
         this.hpBar.value = item.hp;
-        
-        this.setPosition(item.x, item.y);
     }
 }
