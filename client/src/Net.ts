@@ -53,8 +53,6 @@ class Net extends egret.DisplayObjectContainer {
         if(msgObj.Type == "HCRoomInfos") {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
-            // TODO (重新处理) 这里当前处理不好，就暂时将所有的清除，包括离开的玩家
-            this.battle.getPlayerGroup().clearAll();
             var cnt = msgObj.Data.Players.length;
             for(var i = 0;i < cnt; i++) {
                 var player = msgObj.Data.Players[i];

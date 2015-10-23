@@ -16,14 +16,10 @@ class PlayerGroup extends eui.Group {
         dataGroup.dataProvider = this.collection;
         dataGroup.percentWidth = 100;
         dataGroup.percentHeight = 100;
+        dataGroup.useVirtualLayout = false;
         this.addChild(dataGroup);
         
         dataGroup.itemRenderer = PlayerRenderer;
-    }
-    
-    public clearAll():void {
-        this.collection.removeAll();
-        this.playerIndexes = [];
     }
     
     public updateField(playerName:string, keyValues:any[]):void {
@@ -73,11 +69,12 @@ class PlayerRenderer extends eui.ItemRenderer {
             x: this.data.x - lastPosition.x,
             y: this.data.y - lastPosition.y,
         },1000).call(this.onComplete, this);
-        
+                        
         this.playerWidget.update(this.data);
     }
-    
+            
     private onComplete():void {
-        
+                        
+        }
     }
-}
+    
