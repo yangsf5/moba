@@ -80,14 +80,22 @@ class Player extends egret.DisplayObjectContainer {
         
         if(item.flee) {
             this.hpBar.value = 0;
-            var fightResultText = new egret.TextField();
-            fightResultText.text = "已逃离战场";
-            fightResultText.size = 20;
-            fightResultText.x = this.tank.x;
-            fightResultText.y = this.tank.y+40;
-            this.addChild(fightResultText);
-        } else {
-            this.hpBar.value = item.hp;
+            this.showFightResult("已逃离战场");
+            return;
         }
+        
+        this.hpBar.value = item.hp;
+        if(item.hp == 0) {
+            this.showFightResult("已阵亡");
+        }
+    }
+    
+    private showFightResult(result:string):void {
+        var fightResultText = new egret.TextField();
+        fightResultText.text = result;
+        fightResultText.size = 20;
+        fightResultText.x = this.tank.x;
+        fightResultText.y = this.tank.y+40;
+        this.addChild(fightResultText);
     }
 }
