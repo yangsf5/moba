@@ -53,8 +53,7 @@ class Net extends egret.DisplayObjectContainer {
         if(msgObj.Type == "HCRoomInfos") {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
-            var cnt = msgObj.Data.Players.length;
-            for(var i = 0;i < cnt; i++) {
+            for(var i = 0;i < msgObj.Data.Players.length; i++) {
                 var player = msgObj.Data.Players[i];
                 this.battle.getPlayerGroup().updateField(player.Name,[{ key: "hp",value: player.CurrentHP },{ key: "x",value: player.X },{key:"y", value:player.Y}]);
             }

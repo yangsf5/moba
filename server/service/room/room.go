@@ -66,11 +66,11 @@ func (r *Room) Enter(session int, u User) bool {
 		u.EnterService(r.serviceName)
 		r.sessions[session] = u
 
-		r.NotifyHCPlayerInfos()
+		r.NotifyRCPlayerInfos()
 
 		if len(r.sessions) >= 2 {
 			r.battleStatus = "firing"
-			r.NotifyHCBattleStatus()
+			r.NotifyRCBattleStatus()
 		}
 	}
 

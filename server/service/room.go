@@ -31,7 +31,7 @@ func (s *Room) ClawCallback(session int, source string, msgType int, msg interfa
 		if msg, ok := msg.(string); ok {
 			if msg == "LEAVE" {
 				s.logicRoom.Leave(session)
-				s.logicRoom.NotifyHCPlayerInfos()
+				s.logicRoom.NotifyRCPlayerInfos()
 				center.Send(s.name, "MobaHall", 0, center.MsgTypeSystem, &proto.RoomInfo{s.logicRoom.GetMaxPlayerCount(), s.logicRoom.GetCurrentPlayerCount()})
 			}
 		}

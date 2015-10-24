@@ -4,7 +4,7 @@ import (
 	"github.com/yangsf5/moba/server/proto"
 )
 
-func (r *Room) NotifyHCPlayerInfos() {
+func (r *Room) NotifyRCPlayerInfos() {
 	players := []proto.PlayerInfo{}
 	for _, user := range r.sessions {
 		x, y := user.GetPosition()
@@ -20,7 +20,7 @@ func (r *Room) NotifyHCPlayerInfos() {
 	r.Broadcast(proto.Encode(r.serviceName, msg))
 }
 
-func (r *Room) NotifyHCBattleStatus() {
+func (r *Room) NotifyRCBattleStatus() {
 	msg := &proto.RCBattleStatus{r.battleStatus}
 	r.Broadcast(proto.Encode(r.serviceName, msg))
 }
