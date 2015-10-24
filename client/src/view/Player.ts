@@ -78,6 +78,16 @@ class Player extends egret.DisplayObjectContainer {
             this.nameText.textColor = 0x00ff00;
         }
         
-        this.hpBar.value = item.hp;
+        if(item.flee) {
+            this.hpBar.value = 0;
+            var fightResultText = new egret.TextField();
+            fightResultText.text = "已逃离战场";
+            fightResultText.size = 20;
+            fightResultText.x = this.tank.x;
+            fightResultText.y = this.tank.y+40;
+            this.addChild(fightResultText);
+        } else {
+            this.hpBar.value = item.hp;
+        }
     }
 }

@@ -81,6 +81,8 @@ func (r *Room) Leave(session int) {
 	if u, ok := r.sessions[session]; ok {
 		r.group.DelPeer(u.Name())
 		delete(r.sessions, session)
+
+		r.NotifyRCPlayerLeave(u.Name())
 	}
 }
 

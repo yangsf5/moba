@@ -20,6 +20,11 @@ func (r *Room) NotifyRCPlayerInfos() {
 	r.Broadcast(proto.Encode(r.serviceName, msg))
 }
 
+func (r *Room) NotifyRCPlayerLeave(userName string) {
+	msg := &proto.RCPlayerLeave{userName}
+	r.Broadcast(proto.Encode(r.serviceName, msg))
+}
+
 func (r *Room) NotifyRCBattleStatus() {
 	msg := &proto.RCBattleStatus{r.battleStatus}
 	r.Broadcast(proto.Encode(r.serviceName, msg))
