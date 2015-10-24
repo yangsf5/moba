@@ -72,7 +72,7 @@ class Net extends egret.DisplayObjectContainer {
             var sourceY = this.battle.getPlayerGroup().getField(sourceName, "y");
             
             var shoot: Shoot = new Shoot();
-            shoot.action({x: sourceX+25, y: sourceY+25},{x: targetX+25, y: targetY+25}, 0xff0000);
+            shoot.action({x: sourceX, y: sourceY},{x: targetX, y: targetY}, 0xff0000);
             this.addChild(shoot);
         } else if(msgObj.Type == "RCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);

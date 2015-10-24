@@ -3,6 +3,8 @@ class Player extends egret.DisplayObjectContainer {
     private nameText:egret.TextField;
     private tank:egret.Bitmap = new egret.Bitmap();
     
+    private centerPositon: any = {};
+    
     public constructor() {
         super();
 
@@ -53,16 +55,18 @@ class Player extends egret.DisplayObjectContainer {
     }
     
     private setPosition(x:number, y:number):void {
-        this.tank.x = x;
-        this.tank.y = y;
-        this.nameText.x = x;
-        this.nameText.y = y - 50;
-        this.hpBar.x = x;
-        this.hpBar.y = y - 25;
+        this.centerPositon.x = x;
+        this.centerPositon.y = y;
+        this.tank.x = x - 50;
+        this.tank.y = y - 50;
+        this.nameText.x = this.tank.x;
+        this.nameText.y = this.tank.y - 50;
+        this.hpBar.x = this.tank.x;
+        this.hpBar.y = this.tank.y - 25;
     }
     
     public getPosition():any {
-        return {x: this.tank.x, y: this.tank.y};
+        return {x: this.centerPositon.x, y: this.centerPositon.y};
     }
     
     public update(item:any):void {
