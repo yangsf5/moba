@@ -1,4 +1,3 @@
-var __define = this.__define || function (o, p, g, s) {   Object.defineProperty(o, p, { configurable:true, enumerable:true, get:g,set:s }) };
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-2015, Egret Technology Inc.
@@ -41,12 +40,6 @@ var egret;
      */
     egret.ISocket;
 })(egret || (egret = {}));
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-2015, Egret Technology Inc.
@@ -99,7 +92,7 @@ var egret;
      * @event egret.Event.CONNECT 连接服务器成功。
      * @event egret.ProgressEvent.SOCKET_DATA 接收服务器数据。
      * @event egret.Event.CLOSE 在服务器关闭连接时调度。
-     * @event egret.ProgressEvent.IO_ERROR 在出现输入/输出错误并导致发送或加载操作失败时调度。。
+     * @event egret.IOErrorEvent.IO_ERROR 在出现输入/输出错误并导致发送或加载操作失败时调度。。
      * @see http://edn.egret.com/cn/index.php/article/index/id/164 WebSocket
      * @version Egret 2.4
      * @platform Web,Native

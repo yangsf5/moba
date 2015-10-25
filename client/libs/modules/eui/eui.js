@@ -26,7 +26,6 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var __define = this.__define || function (o, p, g, s) {   Object.defineProperty(o, p, { configurable:true, enumerable:true, get:g,set:s }) };
 var eui;
 (function (eui) {
     /**
@@ -730,12 +729,6 @@ var eui;
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 /// <reference path="../utils/registerproperty.ts" />
 /// <reference path="../utils/registerbindable.ts" />
 var eui;
@@ -1757,9 +1750,13 @@ var eui;
                 var values = this.$UIComponent;
                 if (values[22 /* oldWidth */] != values[10 /* width */] || values[23 /* oldHeight */] != values[11 /* height */]) {
                     this.dispatchEventWith(egret.Event.RESIZE);
+                    values[22 /* oldWidth */] = values[10 /* width */];
+                    values[23 /* oldHeight */] = values[11 /* height */];
                 }
                 if (values[20 /* oldX */] != this.$getX() || values[21 /* oldY */] != this.$getY()) {
                     eui.UIEvent.dispatchUIEvent(this, eui.UIEvent.MOVE);
+                    values[20 /* oldX */] = this.$getX();
+                    values[21 /* oldY */] = this.$getY();
                 }
             };
             /**
@@ -2704,6 +2701,315 @@ var eui;
         sys.implementUIComponent = implementUIComponent;
     })(sys = eui.sys || (eui.sys = {}));
 })(eui || (eui = {}));
+/// <reference path="../core/uicomponent.ts" />
+var eui;
+(function (eui) {
+    var UIImpl = eui.sys.UIComponentImpl;
+    var BitmapLabel = (function (_super) {
+        __extends(BitmapLabel, _super);
+        function BitmapLabel(text) {
+            _super.call(this);
+            this.$createChildrenCalled = false;
+            this.$fontChanged = false;
+            /**
+             * @private
+             */
+            this._widthConstraint = NaN;
+            this.initializeUIValues();
+            this.text = text;
+        }
+        var d = __define,c=BitmapLabel;p=c.prototype;
+        /**
+         * @private
+         *
+         */
+        p.$invalidateContentBounds = function () {
+            _super.prototype.$invalidateContentBounds.call(this);
+            this.invalidateSize();
+        };
+        /**
+         * @private
+         *
+         * @param value
+         */
+        p.$setWidth = function (value) {
+            var result1 = _super.prototype.$setWidth.call(this, value);
+            var result2 = UIImpl.prototype.$setWidth.call(this, value);
+            return result1 && result2;
+        };
+        /**
+         * @private
+         *
+         * @param value
+         */
+        p.$setHeight = function (value) {
+            var result1 = _super.prototype.$setHeight.call(this, value);
+            var result2 = UIImpl.prototype.$setHeight.call(this, value);
+            return result1 && result2;
+        };
+        /**
+         * @private
+         *
+         * @param value
+         */
+        p.$setText = function (value) {
+            var result = _super.prototype.$setText.call(this, value);
+            eui.PropertyEvent.dispatchPropertyEvent(this, eui.PropertyEvent.PROPERTY_CHANGE, "text");
+            return result;
+        };
+        p.$setFont = function (value) {
+            var values = this.$BitmapText;
+            if (this.$font == value) {
+                return false;
+            }
+            this.$font = value;
+            if (this.$createChildrenCalled) {
+                this.$parseFont();
+            }
+            else {
+                this.$fontChanged = true;
+            }
+            this.$BitmapText[6 /* fontStringChanged */] = true;
+            return true;
+        };
+        /**
+         * 解析source
+         */
+        p.$parseFont = function () {
+            this.$fontChanged = false;
+            if (this.$font && typeof this.$font == "string") {
+                var adapter = this.$stage.getImplementation("eui.IAssetAdapter");
+                if (!adapter) {
+                    adapter = new eui.DefaultAssetAdapter();
+                }
+                adapter.getAsset(this.$font, this.$onFontChanged, this);
+            }
+            else {
+                this.$setFontData(this.$font);
+            }
+        };
+        /**
+         * 皮肤发生改变
+         */
+        p.$onFontChanged = function (bitmapFont, font) {
+            if (font !== this.$font) {
+                return;
+            }
+            this.$setFontData(bitmapFont);
+        };
+        p.$setFontData = function (value) {
+            if (value == this.$BitmapText[5 /* font */]) {
+                return false;
+            }
+            this.$BitmapText[5 /* font */] = value;
+            this.$invalidateContentBounds();
+            return true;
+        };
+        /**
+         * @copy eui.UIComponent#createChildren
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.createChildren = function () {
+            if (this.$fontChanged) {
+                this.$parseFont();
+            }
+            this.$createChildrenCalled = true;
+        };
+        /**
+         * @copy eui.UIComponent#childrenCreated
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.childrenCreated = function () {
+        };
+        /**
+         * @copy eui.UIComponent#commitProperties
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.commitProperties = function () {
+        };
+        /**
+         * @copy eui.UIComponent#measure
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.measure = function () {
+            var values = this.$UIComponent;
+            var textValues = this.$BitmapText;
+            var oldWidth = textValues[8 /* textWidth */];
+            var availableWidth = NaN;
+            if (!isNaN(this._widthConstraint)) {
+                availableWidth = this._widthConstraint;
+                this._widthConstraint = NaN;
+            }
+            else if (!isNaN(values[8 /* explicitWidth */])) {
+                availableWidth = values[8 /* explicitWidth */];
+            }
+            else if (values[13 /* maxWidth */] != 100000) {
+                availableWidth = values[13 /* maxWidth */];
+            }
+            _super.prototype.$setWidth.call(this, availableWidth);
+            this.setMeasuredSize(this.textWidth, this.textHeight);
+            _super.prototype.$setWidth.call(this, oldWidth);
+        };
+        /**
+         * @copy eui.UIComponent#updateDisplayList
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.updateDisplayList = function (unscaledWidth, unscaledHeight) {
+            _super.prototype.$setWidth.call(this, unscaledWidth);
+            _super.prototype.$setHeight.call(this, unscaledHeight);
+        };
+        /**
+         * @copy eui.UIComponent#invalidateParentLayout
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.invalidateParentLayout = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.setMeasuredSize = function (width, height) {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.invalidateProperties = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.validateProperties = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.invalidateSize = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.validateSize = function (recursive) {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.invalidateDisplayList = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.validateDisplayList = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.validateNow = function () {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.setLayoutBoundsSize = function (layoutWidth, layoutHeight) {
+            UIImpl.prototype.setLayoutBoundsSize.call(this, layoutWidth, layoutHeight);
+            if (isNaN(layoutWidth) || layoutWidth === this._widthConstraint || layoutWidth == 0) {
+                return;
+            }
+            var values = this.$UIComponent;
+            if (!isNaN(values[9 /* explicitHeight */])) {
+                return;
+            }
+            if (layoutWidth == values[16 /* measuredWidth */]) {
+                return;
+            }
+            this._widthConstraint = layoutWidth;
+            this.invalidateSize();
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.setLayoutBoundsPosition = function (x, y) {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.getLayoutBounds = function (bounds) {
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.getPreferredBounds = function (bounds) {
+        };
+        return BitmapLabel;
+    })(egret.BitmapText);
+    eui.BitmapLabel = BitmapLabel;
+    egret.registerClass(BitmapLabel,"eui.BitmapLabel",["eui.UIComponent","eui.IDisplayText"]);
+    eui.sys.implementUIComponent(BitmapLabel, egret.BitmapText);
+    eui.registerBindable(BitmapLabel.prototype, "text");
+})(eui || (eui = {}));
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-2015, Egret Technology Inc.
@@ -2846,7 +3152,18 @@ var eui;
                 values[5 /* skinNameExplicitlySet */] = true;
                 if (values[1 /* skinName */] == value)
                     return;
-                values[1 /* skinName */] = value;
+                if (value) {
+                    values[1 /* skinName */] = value;
+                }
+                else if (this.$stage) {
+                    var theme = this.$stage.getImplementation("eui.Theme");
+                    if (theme) {
+                        var skinName = theme.getSkinName(this);
+                        if (skinName) {
+                            values[1 /* skinName */] = skinName;
+                        }
+                    }
+                }
                 this.$parseSkinName();
             }
         );
@@ -2898,7 +3215,6 @@ var eui;
             }
             var skin = new clazz();
             this.setSkin(skin);
-            this.dispatchEventWith(egret.Event.COMPLETE);
         };
         d(p, "skin"
             /**
@@ -2982,6 +3298,7 @@ var eui;
             }
             this.invalidateSize();
             this.invalidateDisplayList();
+            this.dispatchEventWith(egret.Event.COMPLETE);
         };
         /**
          * @language en_US
@@ -4324,6 +4641,8 @@ var eui;
 //
 //////////////////////////////////////////////////////////////////////////////////////
 /// <reference path="../states/State.ts" />
+/// <reference path="../core/uicomponent.ts" />
+/// <reference path="../utils/registerproperty.ts" />
 var eui;
 (function (eui) {
     /**
@@ -4344,6 +4663,7 @@ var eui;
      * Group 是自动布局的容器基类。如果包含的子项内容太大需要滚动显示，可以在在 Group 外部包裹一层 Scroller 组件
      * (将 Group 实例赋值给 Scroller 组件的 viewport 属性)。Scroller 会为 Group 添加滚动的触摸操作功能，并显示垂直或水平的滚动条。
      *
+     * @see http://edn.egret.com/cn/index.php/article/index/id/608 简单容器
      * @defaultProperty elementsContent
      * @includeExample  extension/eui/components/GroupExample.ts
      * @version Egret 2.4
@@ -4655,6 +4975,9 @@ var eui;
          */
         p.getElementAt = function (index) {
             return this.$children[index];
+        };
+        p.getVirtualElementAt = function (index) {
+            return this.getElementAt(index);
         };
         /**
          * @language en_US
@@ -5006,6 +5329,8 @@ var eui;
      * 尽管此容器可以包含可视元素，但它通常仅用于包含作为子项的数据项目。
      *
      * @see eui.Group
+     * @see http://edn.egret.com/cn/index.php/article/index/id/527 数据容器
+     * @see http://edn.egret.com/cn/index.php/article/index/id/528 数组集合
      * @defaultProperty dataProvider
      * @includeExample  extension/eui/components/DataGroupExample.ts
      * @version Egret 2.4
@@ -5150,6 +5475,16 @@ var eui;
          * @platform Web,Native
          */
         p.getElementAt = function (index) {
+            return this.$indexToRenderer[index];
+        };
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.5.2
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        p.getVirtualElementAt = function (index) {
             index = +index | 0;
             if (index < 0 || index >= this.$dataProvider.length)
                 return null;
@@ -5235,10 +5570,10 @@ var eui;
             if (!egret.is(renderer, "eui.IItemRenderer")) {
                 return null;
             }
+            this.addChild(renderer);
             if (values[13 /* itemRendererSkinName */]) {
                 this.setItemRenderSkinName(renderer, values[13 /* itemRendererSkinName */]);
             }
-            this.addChild(renderer);
             return renderer;
         };
         /**
@@ -5248,8 +5583,10 @@ var eui;
         p.setItemRenderSkinName = function (renderer, skinName) {
             if (renderer && renderer instanceof eui.Component) {
                 var comp = renderer;
-                if (!comp.$Component[5 /* skinNameExplicitlySet */])
+                if (!comp.$Component[5 /* skinNameExplicitlySet */]) {
                     comp.skinName = skinName;
+                    comp.$Component[5 /* skinNameExplicitlySet */] = false;
+                }
             }
         };
         d(p, "dataProvider"
@@ -5575,7 +5912,7 @@ var eui;
                 if (values[13 /* itemRendererSkinName */] == value)
                     return;
                 values[13 /* itemRendererSkinName */] = value;
-                if (value && this.$UIComponent[29 /* initialized */]) {
+                if (this.$UIComponent[29 /* initialized */]) {
                     values[14 /* itemRendererSkinNameChange */] = true;
                     this.invalidateProperties();
                 }
@@ -11908,11 +12245,11 @@ var eui;
         d(p, "scrollPolicyV"
             /**
              * @language en_US
-             * Indicates under what conditions the vertical scroll bar is displayed.
-             * <p><code>ScrollPolicy.ON</code> - the scroll bar is always displayed.</p>
-             * <p><code>ScrollPolicy.OFF</code> - the scroll bar is never displayed.</p>
-             * <p><code>ScrollPolicy.AUTO</code> - the scroll bar is displayed when
-             *  the viewport's contentHeight is larger than its height.
+             * Indicates under what conditions the scroller can be moved and the vertical scroll bar is displayed.
+             * <p><code>ScrollPolicy.ON</code> - the scroller can be moved, and the scroll bar is displayed when it's move.</p>
+             * <p><code>ScrollPolicy.OFF</code> - the scroller can not be moved, the scroll bar is never displayed.</p>
+             * <p><code>ScrollPolicy.AUTO</code> - the scroller can not be moved when
+             *  the viewport's contentHeight is larger than its height. the scroll bar is displayed when it's move.
              *
              * @default ScrollPolicy.AUTO
              *
@@ -11922,10 +12259,10 @@ var eui;
              */
             /**
              * @language zh_CN
-             * 指示在哪些条件下会显示垂直滑动条。
-             * <p><code>ScrollPolicy.ON</code> - 始终显示滚动条。</p>
-             * <p><code>ScrollPolicy.OFF</code> - 从不显示滚动条。</p>
-             * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentHeight 大于其自身的高度时显示滚动条。</p>
+             * 指示在哪些条件可以滚动并且显示垂直滑动条。
+             * <p><code>ScrollPolicy.ON</code> - 可以滚动，滚动时显示滚动条。</p>
+             * <p><code>ScrollPolicy.OFF</code> - 不可以滚动并且不显示滚动条。</p>
+             * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentHeight 大于其自身的高度时可以滚动，滚动时显示滚动条。</p>
              *
              * @default ScrollPolicy.AUTO
              *
@@ -11948,11 +12285,11 @@ var eui;
         d(p, "scrollPolicyH"
             /**
              * @language en_US
-             * Indicates under what conditions the horizontal scroll bar is displayed.
-             * <p><code>ScrollPolicy.ON</code> - the scroll bar is always displayed.</p>
-             * <p><code>ScrollPolicy.OFF</code> - the scroll bar is never displayed.</p>
-             * <p><code>ScrollPolicy.AUTO</code> - the scroll bar is displayed when
-             *  the viewport's contentWidth is larger than its width.
+             * Indicates under what conditions the scroller can be moved and the horizontal scroll bar is displayed.
+             * <p><code>ScrollPolicy.ON</code> - the scroller can be moved, and the scroll bar is displayed when it's move.</p>
+             * <p><code>ScrollPolicy.OFF</code> - the scroller can not be moved, the scroll bar is never displayed.</p>
+             * <p><code>ScrollPolicy.AUTO</code> - the can not be moved  when
+             *  the viewport's contentWidth is larger than its width. the scroll bar is displayed when it's move.
              *
              * @default ScrollPolicy.AUTO
              *
@@ -11962,10 +12299,10 @@ var eui;
              */
             /**
              * @language zh_CN
-             * 指示在哪些条件下会显示水平滑动条。
-             * <p><code>ScrollPolicy.ON</code> - 始终显示滚动条。</p>
-             * <p><code>ScrollPolicy.OFF</code> - 从不显示滚动条。</p>
-             * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentWidth 大于其自身的宽度时显示滚动条。</p>
+             * 指示在哪些条件下可以滚动并且显示水平滑动条。
+             * <p><code>ScrollPolicy.ON</code> - 可以滚动，滚动时显示滚动条。</p>
+             * <p><code>ScrollPolicy.OFF</code> - 不可以滚动并且不显示滚动条。</p>
+             * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentWidth 大于其自身的宽度时可以滚动，滚动时显示滚动条。</p>
              *
              * @default ScrollPolicy.AUTO
              *
@@ -13829,6 +14166,81 @@ var eui;
 //////////////////////////////////////////////////////////////////////////////////////
 var eui;
 (function (eui) {
+    /**
+     * @language en_US
+     * Default instance of interface <code>IThemeAdapter</code>.
+     * @version Egret 2.4
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    /**
+     * @language zh_CN
+     * 默认的IThemeAdapter接口实现。
+     * @version Egret 2.4
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    var DefaultThemeAdapter = (function () {
+        function DefaultThemeAdapter() {
+        }
+        var d = __define,c=DefaultThemeAdapter;p=c.prototype;
+        /**
+         * 解析主题
+         * @param url 待解析的主题url
+         * @param compFunc 解析完成回调函数，示例：compFunc(e:egret.Event):void;
+         * @param errorFunc 解析失败回调函数，示例：errorFunc():void;
+         * @param thisObject 回调的this引用
+         */
+        p.getTheme = function (url, compFunc, errorFunc, thisObject) {
+            function onGet(event) {
+                var loader = (event.target);
+                compFunc.call(thisObject, loader.response);
+            }
+            function onError(event) {
+                errorFunc.call(thisObject);
+            }
+            var loader = new egret.HttpRequest();
+            loader.addEventListener(egret.Event.COMPLETE, onGet, thisObject);
+            loader.addEventListener(egret.IOErrorEvent.IO_ERROR, onError, thisObject);
+            loader.responseType = egret.HttpResponseType.TEXT;
+            loader.open(url);
+            loader.send();
+        };
+        return DefaultThemeAdapter;
+    })();
+    eui.DefaultThemeAdapter = DefaultThemeAdapter;
+    egret.registerClass(DefaultThemeAdapter,"eui.DefaultThemeAdapter",["eui.IThemeAdapter"]);
+})(eui || (eui = {}));
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
+var eui;
+(function (eui) {
     var sys;
     (function (sys) {
         /**
@@ -14375,6 +14787,34 @@ var eui;
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-2015, Egret Technology Inc.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 var eui;
 (function (eui) {
     /**
@@ -14537,8 +14977,10 @@ var eui;
             this.skinMap = {};
             this.initialized = !configURL;
             if (stage) {
+                this.$stage = stage;
                 stage.registerImplementation("eui.Theme", this);
             }
+            this.$configURL = configURL;
             this.load(configURL);
         }
         var d = __define,c=Theme;p=c.prototype;
@@ -14548,26 +14990,30 @@ var eui;
          * @param url
          */
         p.load = function (url) {
-            var request = new egret.HttpRequest();
-            request.addEventListener(egret.Event.COMPLETE, this.onConfigLoaded, this);
-            request.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onConfigLoaded, this);
-            request.open(url);
-            request.send();
+            var adapter = this.$stage ? this.$stage.getImplementation("eui.IThemeAdapter") : null;
+            if (!adapter) {
+                adapter = new eui.DefaultThemeAdapter();
+            }
+            adapter.getTheme(url, this.onConfigLoaded, this.onConfigLoaded, this);
         };
         /**
          * @private
          *
-         * @param event
+         * @param str
          */
-        p.onConfigLoaded = function (event) {
-            var request = event.target;
-            try {
-                var data = JSON.parse(request.response);
-            }
-            catch (e) {
-                if (DEBUG) {
-                    egret.error(e.message);
+        p.onConfigLoaded = function (str) {
+            if (str) {
+                try {
+                    var data = JSON.parse(str);
                 }
+                catch (e) {
+                    if (DEBUG) {
+                        egret.$error(3000);
+                    }
+                }
+            }
+            else if (DEBUG) {
+                egret.$error(3000, this.$configURL);
             }
             if (data && data.skins) {
                 var skinMap = this.skinMap;
@@ -17862,6 +18308,17 @@ var EXML;
     var requestPool = [];
     var callBackMap = {};
     var parsedClasses = {};
+    var $prefixURL = "";
+    Object.defineProperty(EXML, "prefixURL", {
+        get: function () {
+            return $prefixURL;
+        },
+        set: function (value) {
+            $prefixURL = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * @language en_US
      * Parsing a text of EXML file for a definition of class. You can declare the <code>class</code> property in the root
@@ -18023,7 +18480,11 @@ var EXML;
         };
         request.addEventListener(egret.Event.COMPLETE, onRequestLoaded, null);
         request.addEventListener(egret.IOErrorEvent.IO_ERROR, onRequestLoaded, null);
-        request.open(url);
+        var openUrl = url;
+        if (url.indexOf("://") == -1) {
+            openUrl = $prefixURL + url;
+        }
+        request.open(openUrl);
         request.responseType = egret.HttpResponseType.TEXT;
         request.send();
     }
@@ -18061,6 +18522,7 @@ var eui;
     egret.$locale_strings = egret.$locale_strings || {};
     egret.$locale_strings["en_US"] = egret.$locale_strings["en_US"] || {};
     var locale_strings = egret.$locale_strings["en_US"];
+    //2000-2999
     locale_strings[2001] = "EXML parsing error {0}: EXML file can't be found ";
     locale_strings[2002] = "EXML parsing error : invalid XML file:\n{0}";
     locale_strings[2003] = "EXML parsing error {0}: the class definitions corresponding to nodes can't be found  \n {1}";
@@ -18123,6 +18585,7 @@ var eui;
     egret.$locale_strings = egret.$locale_strings || {};
     egret.$locale_strings["zh_CN"] = egret.$locale_strings["zh_CN"] || {};
     var locale_strings = egret.$locale_strings["zh_CN"];
+    //2000-2999
     //EXML报错信息
     locale_strings[2001] = "EXML解析错误 {0}: 找不到EXML文件";
     locale_strings[2002] = "EXML解析错误: 不是有效的XML文件:\n{0}";
@@ -20024,7 +20487,7 @@ var eui;
             var oldMaxH = Math.max(typicalHeight, this.maxElementSize);
             if (contentJustify) {
                 for (var index = this.startIndex; index <= endIndex; index++) {
-                    layoutElement = (target.getElementAt(index));
+                    layoutElement = (target.getVirtualElementAt(index));
                     if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                         continue;
                     }
@@ -20041,7 +20504,7 @@ var eui;
             var elementSizeTable = this.elementSizeTable;
             for (var i = this.startIndex; i <= endIndex; i++) {
                 var exceesHeight = 0;
-                layoutElement = (target.getElementAt(i));
+                layoutElement = (target.getVirtualElementAt(i));
                 if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
@@ -21243,7 +21706,7 @@ var eui;
             var count = numElements;
             for (var index = 0; index < count; index++) {
                 var layoutElement = (target.getElementAt(index));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (layoutElement && (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout)) {
                     numElements--;
                     continue;
                 }
@@ -21343,7 +21806,7 @@ var eui;
             var target = this.$target;
             if ((startIndex != -1) && (endIndex != -1)) {
                 for (var index = startIndex; index <= endIndex; index++) {
-                    var elt = target.getElementAt(index);
+                    var elt = target.getVirtualElementAt(index);
                     if (!egret.is(elt, UIComponentClass) || !elt.$includeInLayout) {
                         continue;
                     }
@@ -21500,7 +21963,12 @@ var eui;
             var columnWidth = this._columnWidth;
             var rowHeight = this._rowHeight;
             for (var i = this.startIndex; i <= endIndex; i++) {
-                elt = target.getElementAt(i);
+                if (this.$useVirtualLayout) {
+                    elt = (this.target.getVirtualElementAt(i));
+                }
+                else {
+                    elt = (this.target.getElementAt(i));
+                }
                 if (!egret.is(elt, UIComponentClass) || !elt.$includeInLayout) {
                     continue;
                 }
@@ -22047,7 +22515,7 @@ var eui;
             var oldMaxW = Math.max(typicalWidth, this.maxElementSize);
             if (contentJustify) {
                 for (var index = this.startIndex; index <= endIndex; index++) {
-                    layoutElement = (target.getElementAt(index));
+                    layoutElement = (target.getVirtualElementAt(index));
                     if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                         continue;
                     }
@@ -22064,7 +22532,7 @@ var eui;
             var elementSizeTable = this.elementSizeTable;
             for (var i = this.startIndex; i <= endIndex; i++) {
                 var exceesWidth = 0;
-                layoutElement = (target.getElementAt(i));
+                layoutElement = (target.getVirtualElementAt(i));
                 if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }

@@ -26,7 +26,6 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var __define = this.__define || function (o, p, g, s) {   Object.defineProperty(o, p, { configurable:true, enumerable:true, get:g,set:s }) };
 var RES;
 (function (RES) {
     /**
@@ -145,12 +144,14 @@ var RES;
          * Animation configuration file. Currently supports Egret MovieClip file format.
          * @version Egret 2.4
          * @platform Web,Native
+         * @private
          */
         /**
          * @language zh_CN
          * Animation 配置文件。目前支持 Egret MovieClip 文件格式。
          * @version Egret 2.4
          * @platform Web,Native
+         * @private
          */
         ResourceItem.TYPE_ANIMATION = "animation";
         /**
@@ -232,14 +233,12 @@ var RES;
          */
         ResourceItem.TYPE_SHEET = "sheet";
         /**
-         * @private
          * @language en_US
          * BitmapTextSpriteSheet file.
          * @version Egret 2.4
          * @platform Web,Native
          */
         /**
-         * @private
          * @language zh_CN
          * BitmapTextSpriteSheet 文件。
          * @version Egret 2.4
@@ -375,7 +374,7 @@ var RES;
                             group.push(item);
                     }
                     else {
-                        egret.$warn(2000, key);
+                        egret.$warn(3200, key);
                     }
                 }
             }
@@ -529,12 +528,6 @@ var RES;
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var RES;
 (function (RES) {
     /**
@@ -627,7 +620,7 @@ var RES;
             if (this.itemListDic[groupName] || !groupName)
                 return;
             if (!list || list.length == 0) {
-                egret.$warn(2001, groupName);
+                egret.$warn(3201, groupName);
                 var event = new RES.ResourceEvent(RES.ResourceEvent.GROUP_LOAD_ERROR);
                 event.groupName = groupName;
                 this.dispatchEvent(event);
@@ -1565,7 +1558,7 @@ var RES;
                 res = this.fileDic[prefix];
                 if (res) {
                     var tail = RES.AnalyzerBase.getStringTail(name);
-                    res = res[tail];
+                    res = res.getTexture(tail);
                 }
             }
             return res;
@@ -1879,7 +1872,9 @@ var RES;
             sound.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             this.resItemDic[sound.$hashCode] = { item: resItem, func: callBack, thisObject: thisObject };
             sound.load(RES.$getVirtualUrl(resItem.url));
-            sound.type = resItem.data.soundType;
+            if (resItem.data) {
+                sound.type = resItem.data.soundType;
+            }
         };
         /**
          * 一项加载结束
@@ -2810,7 +2805,7 @@ var RES;
                 var clazz = this.analyzerClassMap[type];
                 if (!clazz) {
                     if (DEBUG) {
-                        egret.$error(2003, type);
+                        egret.$error(3203, type);
                     }
                     return null;
                 }
@@ -3099,7 +3094,7 @@ var RES;
             if (!type)
                 type = this.getTypeByUrl(url);
             if (this._loadedUrlTypes[url] != null && this._loadedUrlTypes[url] != type) {
-                egret.$warn(2002);
+                egret.$warn(3202);
             }
             this._loadedUrlTypes[url] = type;
             var analyzer = this.$getAnalyzerByType(type);
@@ -3475,20 +3470,20 @@ var egret;
     egret.$locale_strings = egret.$locale_strings || {};
     egret.$locale_strings["en_US"] = egret.$locale_strings["en_US"] || {};
     var locale_strings = egret.$locale_strings["en_US"];
-    //RES
-    locale_strings[2000] = "RES.createGroup() passed in non-existed key value in configuration: {0}";
-    locale_strings[2001] = "RES loaded non-existed or empty resource group:\"{0}\"";
-    locale_strings[2002] = "Do not use the different types of ways to load the same material!";
-    locale_strings[2003] = "Can't find the analyzer of the specified file type:{0}。 Please register the specified analyzer in the initialization of the project first,then start the resource loading process。";
+    //RES 3200-3299
+    locale_strings[3200] = "RES.createGroup() passed in non-existed key value in configuration: {0}";
+    locale_strings[3201] = "RES loaded non-existed or empty resource group:\"{0}\"";
+    locale_strings[3202] = "Do not use the different types of ways to load the same material!";
+    locale_strings[3203] = "Can't find the analyzer of the specified file type:{0}。 Please register the specified analyzer in the initialization of the project first,then start the resource loading process。";
 })(egret || (egret = {}));
 var egret;
 (function (egret) {
     egret.$locale_strings = egret.$locale_strings || {};
     egret.$locale_strings["zh_CN"] = egret.$locale_strings["zh_CN"] || {};
     var locale_strings = egret.$locale_strings["zh_CN"];
-    //RES
-    locale_strings[2000] = "RES.createGroup()传入了配置中不存在的键值: {0}";
-    locale_strings[2001] = "RES加载了不存在或空的资源组:\"{0}\"";
-    locale_strings[2002] = "请不要使用不同的类型方式来加载同一个素材！";
-    locale_strings[2003] = "找不到指定文件类型的解析器:{0}。 请先在项目初始化里注册指定文件类型的解析器，再启动资源加载。";
+    //RES 3200-3299
+    locale_strings[3200] = "RES.createGroup()传入了配置中不存在的键值: {0}";
+    locale_strings[3201] = "RES加载了不存在或空的资源组:\"{0}\"";
+    locale_strings[3202] = "请不要使用不同的类型方式来加载同一个素材！";
+    locale_strings[3203] = "找不到指定文件类型的解析器:{0}。 请先在项目初始化里注册指定文件类型的解析器，再启动资源加载。";
 })(egret || (egret = {}));

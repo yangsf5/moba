@@ -53,6 +53,8 @@ declare module egret {
      */
     function registerClass(classDefinition: any, className: string, interfaceNames?: string[]): void;
 }
+declare function __extends(d: any, b: any): void;
+declare var __define: any;
 declare module egret {
     /**
      * @language en_US
@@ -73,12 +75,14 @@ declare module egret {
          * a unique identification number assigned to this instance.
          * @version Egret 2.4
          * @platform Web,Native
+         * @readOnly
          */
         /**
          * @language zh_CN
          * 返回此对象唯一的哈希值,用于唯一确定一个对象。hashCode为大于等于1的整数。
          * @version Egret 2.4
          * @platform Web,Native
+         * @readOnly
          */
         hashCode: number;
     }
@@ -2698,18 +2702,18 @@ declare module egret {
         /**
          * @language en_US
          * Initializes a Bitmap object to refer to the specified BitmapData|Texture object.
-         * @param bitmapData The BitmapData object being referenced.
+         * @param value The BitmapData|Texture object being referenced.
          * @version Egret 2.4
          * @platform Web,Native
          */
         /**
          * @language zh_CN
          * 创建一个引用指定 BitmapData|Texture 实例的 Bitmap 对象
-         * @param bitmapData 被引用的 BitmapData 实例
+         * @param value 被引用的 BitmapData|Texture 实例
          * @version Egret 2.4
          * @platform Web,Native
          */
-        constructor(bitmapData?: BitmapData | Texture);
+        constructor(value?: BitmapData | Texture);
         /**
          * @private
          */
@@ -2726,23 +2730,34 @@ declare module egret {
         $onRemoveFromStage(): void;
         /**
          * @language en_US
-         * The BitmapData|Texture object being referenced.
+         * The BitmapData object being referenced.
+         * If you pass the constructor of type Texture or last set for texture, this value returns null.
          * @version Egret 2.4
          * @platform Web,Native
          */
         /**
          * @language zh_CN
-         * 被引用的 BitmapData|Texture 对象。
+         * 被引用的 BitmapData 对象。
+         * 如果传入构造函数的类型为 Texture 或者最后设置的为 texture，则此值返回 null。
          * @version Egret 2.4
          * @platform Web,Native
          */
-        bitmapData: BitmapData | Texture;
+        bitmapData: BitmapData;
         /**
-         * @copy #bitmapData
+         * @language en_US
+         * The Texture object being referenced.
+         * If you pass the constructor of type BitmapData or last set for bitmapData, this value returns null.
          * @version Egret 2.4
          * @platform Web,Native
          */
-        texture: BitmapData | Texture;
+        /**
+         * @language zh_CN
+         * 被引用的 Texture 对象。
+         * 如果传入构造函数的类型为 BitmapData 或者最后设置的为 bitmapData，则此值返回 null。
+         * @version Egret 2.4
+         * @platform Web,Native
+         */
+        texture: Texture;
         /**
          * @private
          */
@@ -2945,6 +2960,19 @@ declare module egret {
          * @platform Web,Native
          */
         static SCALE: string;
+        /**
+         * @language en_US
+         * The bitmap ends at the edge of the region.
+         * @version Egret 2.4
+         * @platform Web,Native
+         */
+        /**
+         * @language zh_CN
+         * 在区域的边缘处截断不显示位图。
+         * @version Egret 2.4
+         * @platform Web,Native
+         */
+        static CLIP: string;
     }
 }
 declare module egret {
@@ -4992,7 +5020,8 @@ declare module egret {
      * @includeExample egret/display/RenderTexture.ts
      */
     class RenderTexture extends egret.Texture {
-        protected context: any;
+        protected context: sys.RenderContext;
+        private rootDisplayList;
         constructor();
         /**
          * @language en_US
@@ -5013,11 +5042,15 @@ declare module egret {
          * @platform Web,Native
          */
         drawToTexture(displayObject: egret.DisplayObject, clipBounds?: Rectangle, scale?: number): boolean;
+        private $displayListMap;
+        private $saveParentDisplayList(displayObject);
         private $update(displayObject);
-        protected drawDisplayObject(displayObject: DisplayObject, context: sys.RenderContext): number;
-        private drawWithClip(displayObject, context);
-        private drawWithScrollRect(displayObject, context);
-        private createRenderContext(width, height);
+        private $reset(displayObject);
+        protected drawDisplayObject(displayObject: DisplayObject, context: sys.RenderContext, rootMatrix: Matrix): number;
+        private drawWithClip(displayObject, context, rootMatrix);
+        private drawWithScrollRect(displayObject, context, rootMatrix);
+        protected createRenderContext(width: number, height: number): sys.RenderContext;
+        dispose(): void;
     }
 }
 declare module egret {
@@ -8804,6 +8837,7 @@ declare module egret {
      * @language zh_CN
      * Sound 允许您在应用程序中使用声音。使用 Sound 类可以创建 Sound 对象、将外部音频文件加载到该对象并播放该文件。
      * 可通过 SoundChannel 对声音执行更精细的控制，如控制音量和监控播放进度。
+     * @see http://edn.egret.com/cn/index.php/article/index/id/156 音频系统
      *
      * @event egret.Event.COMPLETE 音频加载完成时抛出
      * @event egret.IOErrorEvent.IO_ERROR 音频加载失败时抛出
@@ -9000,23 +9034,24 @@ declare module egret {
      *
      * @event egret.Event.COMPLETE Dispatch when the video resource is loaded and ready to play
      * @event egret.Event.ENDED Dispatch when the video playback ended
-     * @event egret.Event.IO_ERROR when the video is failed to load
+     * @event egret.IOErrorEvent.IO_ERROR when the video is failed to load
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/media/Video.ts
      */
     /**
      * @language zh_CN
      * Video 允许您在应用程序中使用视频。使用 Video 类可以创建 Video 对象、将外部视频文件加载到该对象并播放该文件。<br/>
      * 注意: 在大多数移动设备中，视频是强制全屏播放的，所以你可以直接调用 play() 方法全屏播放视频，不用将它绘制在Stage中。
+     * @see http://edn.egret.com/cn/index.php/article/index/id/657 视频系统
      *
      * @param url 要播放的视频的URL，如果url不为空，Video会立即加载这个视频
      *
      * @event egret.Event.COMPLETE 视频加载完成时抛出
      * @event egret.Event.ENDED 视频播放完成时抛出
-     * @event egret.Event.IO_ERROR 视频加载失败市触发
+     * @event egret.IOErrorEvent.IO_ERROR 视频加载失败时触发
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/media/Video.ts
      */
     interface Video extends DisplayObject {
@@ -9025,14 +9060,14 @@ declare module egret {
          * Initiates loading of an external video file from the specified URL.
          * @param url Audio file URL
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 启动从指定 URL 加载外部视频文件的过程。
          * @param url 需要加载的视频文件URL
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         load(url: string): void;
         /**
@@ -9042,7 +9077,7 @@ declare module egret {
          * @param loop Defines should play the video again when the video is ended. (default = false)
          * @param fullscreen Defines should play the video in fullscreen mode. (default = false)
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
@@ -9051,72 +9086,74 @@ declare module egret {
          * @param loop 是否需要循环播放，默认值是 false
          * @param fullscreen 是否需要全屏播放，默认值是 false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         play(startTime?: number, loop?: boolean): any;
         /**
          * @language en_US
          * Closes the stream, causing any download of data to cease
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 关闭该流，从而停止所有数据的下载。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         close(): void;
         /**
          * @language en_US
          * The URL of the video you want to play.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 想要播放的视频的URL
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         src: string;
         /**
          * @language en_US
          * The URL of an image you want to display before the video is loaded or video cannot been draw on the canvas on some mobile device.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 视频加载前，或者在不支持将 video 画在 canvas 的设备上，想要显示的视频截图地址。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         poster: string;
         /**
          * @language en_US
          * Should play the video in fullscreen mode (default = true).
+         * Currently only supports full-screen mobile terminal web.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 是否全屏播放这个视频（默认值是 true）。
+         * 目前移动端 web 只支持全屏。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         fullscreen: boolean;
         /**
          * @language en_US
          * The volume, ranging from 0 (silent) to 1 (full volume).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 音量范围从 0（静音）至 1（最大音量）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         volume: number;
         /**
@@ -9124,26 +9161,26 @@ declare module egret {
          * When the video is playing, the position property indicates
          * in seconds the current point that is being played in the video file.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 当播放视频时，position 属性表示视频文件中当前播放的位置（以秒为单位）
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         position: number;
         /**
          * @language en_US
          * Pause the video playing.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          * 暂停播放。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         pause(): void;
         /**
@@ -9152,16 +9189,31 @@ declare module egret {
          * Note: On most mobile device, the video is playback in the full screen mode.
          * So you can just use the play() method instead of draw it on the Stage
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         /**
          * @language zh_CN
          *  获取视频的 bitmapData, 你可以将视频绘制到舞台上。
          * 注意： 在大多数移动设备中，视频是全屏播放的，所以你可以直接调用 play() 方法全屏播放视频，不用将它绘制在Stage中。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         bitmapData: BitmapData;
+        /**
+         * @language en_US
+         * Whether current video is paused.
+         * @version Egret 2.4
+         * @platform Web
+         * @readOnly
+         */
+        /**
+         * @language zh_CN
+         * 当前视频是否在暂停状态。
+         * @version Egret 2.4
+         * @platform Web
+         * @readOnly
+         */
+        paused: boolean;
     }
     /**
      * @copy egret.Video
@@ -9186,6 +9238,7 @@ declare module egret_native {
     function startGame(): void;
     function loglevel(logType: any): void;
     function callRender(): void;
+    function setScreenCanvas(canvas: Canvas): void;
     function setFrameRate(frameRate: number): void;
     function onTouchesBegin(num: number, ids: Array<any>, xs_array: Array<any>, ys_array: Array<any>): any;
     function onTouchesMove(num: number, ids: Array<any>, xs_array: Array<any>, ys_array: Array<any>): any;
@@ -9200,13 +9253,14 @@ declare module egret_native {
     function pauseApp(): void;
     function resumeApp(): void;
     function readXML(filepath: string): any;
+    function xmlStr2JsonStr(text: string): any;
     function isFileExists(filepath: string): boolean;
     function isRecordExists(filepath: string): boolean;
-    function readFileSync(filepath: string): any;
+    function readFileSync(filepath: string, type?: string): any;
     function readResourceFileSync(filepath: string): any;
     function readUpdateFileSync(filepath: string): any;
     function deleteUpdateFile(filepath: string): void;
-    function readFileAsync(filepath: string, promise: egret.PromiseObject): any;
+    function readFileAsync(filepath: string, promise: egret.PromiseObject, type?: string): any;
     function writeFileSync(filepath: string, fileContent: string): any;
     function requireHttpSync(url: string, callback: Function): void;
     function requireHttp(url: string, param: any, callback: Function): void;
@@ -9219,9 +9273,9 @@ declare module egret_native {
         function preloadBackgroundMusic(path: string): void;
         function playBackgroundMusic(path: string, loop: boolean): void;
         function setBackgroundMusicVolume(value: number): void;
-        function setEffectVolume(value: number): void;
+        function setEffectsVolume(value: number): void;
         function getBackgroundMusicVolume(): number;
-        function getEffectVolume(): number;
+        function getEffectsVolume(): number;
         function stopBackgroundMusic(isRelease: boolean): void;
         function preloadEffect(path: string): void;
         function preloadEffectAsync(path: string, promise: egret.PromiseObject): void;
@@ -9707,7 +9761,7 @@ declare module egret {
      * The Loader class is used to load image (JPG, PNG, or GIF) files. Use the load() method to initiate loading.
      * The loaded image data is in the data property of ImageLoader.
      * @event egret.Event.COMPLETE Dispatched when the net request is complete.
-     * @event egret.Event.IO_ERROR Dispatched when the net request is failed.
+     * @event egret.IOErrorEvent.IO_ERROR Dispatched when the net request is failed.
      * @see egret.HttpRequest
      * @version Egret 2.4
      * @platform Web,Native
@@ -9717,7 +9771,7 @@ declare module egret {
      * @language zh_CN
      * ImageLoader 类可用于加载图像（JPG、PNG 或 GIF）文件。使用 load() 方法来启动加载。被加载的图像对象数据将存储在 ImageLoader.data 属性上 。
      * @event egret.Event.COMPLETE 加载完成
-     * @event egret.Event.IO_ERROR 加载失败
+     * @event egret.IOErrorEvent.IO_ERROR 加载失败
      * @see egret.HttpRequest
      * @version Egret 2.4
      * @platform Web,Native
@@ -9995,7 +10049,7 @@ declare module egret.sys {
         updateStageSize(stageWidth: number, stageHeight: number, pixelRatio?: number): void;
         /**
          * @private
-         * 显示FPS，仅在DEBUG模式下有效。
+         * 显示FPS。
          */
         displayFPS: (showFPS: boolean, showLog: boolean, logFilter: string, fpsStyles: Object) => void;
         /**
@@ -10012,7 +10066,7 @@ declare module egret.sys {
         private fpsDisplay;
         /**
          * @private
-         * 是否显示脏矩形重绘区，仅在DEBUG模式下有效。
+         * 是否显示脏矩形重绘区。
          */
         showPaintRect: (value: boolean) => void;
         /**
@@ -11088,6 +11142,53 @@ declare module egret {
         private getConfigByKey(configText, key);
     }
 }
+declare module egret.sys {
+    /**
+     * @private
+     */
+    const enum BitmapTextKeys {
+        /**
+         * @private 外部设定的值
+         */
+        textFieldWidth = 0,
+        /**
+         * @private 外部设定的值
+         */
+        textFieldHeight = 1,
+        /**
+         * @private
+         */
+        text = 2,
+        /**
+         * @private
+         */
+        lineSpacing = 3,
+        /**
+         * @private
+         */
+        letterSpacing = 4,
+        /**
+         * @private
+         */
+        font = 5,
+        /**
+         * @private
+         */
+        fontStringChanged = 6,
+        /**
+         * @private
+         */
+        textLinesChanged = 7,
+        /**
+         * @private 测量的值
+         */
+        textWidth = 8,
+        /**
+         * @private 测量的值
+         */
+        textHeight = 9,
+    }
+}
 declare module egret {
     /**
      * @language en_US
@@ -11160,20 +11261,20 @@ declare module egret {
         $setHeight(value: number): boolean;
         /**
          * @language en_US
-         * The name of the font to use, or a comma-separated list of font names.
+         * The name of the font to use, or a comma-separated list of font names, the type of value must be BitmapFont.
          * @default null
          * @version Egret 2.4
          * @platform Web,Native
          */
         /**
          * @language zh_CN
-         * 要使用的字体的名称或用逗号分隔的字体名称列表。
+         * 要使用的字体的名称或用逗号分隔的字体名称列表，类型必须是 BitmapFont。
          * @default null
          * @version Egret 2.4
          * @platform Web,Native
          */
-        font: BitmapFont;
-        $setFont(value: BitmapFont): boolean;
+        font: Object;
+        $setFont(value: any): boolean;
         /**
         /**
          * @language en_US
@@ -11225,19 +11326,37 @@ declare module egret {
         /**
          * @private
          */
-        $render(context: egret.sys.RenderContext): void;
+        $render(context: sys.RenderContext): void;
         /**
          * @private
          */
         $measureContentBounds(bounds: Rectangle): void;
         /**
-         * @private
+         * @language en_US
+         * Get the BitmapText measured width
+         * @version Egret 2.4
+         * @platform Web,Native
          */
-        private textWidth;
         /**
-         * @private
+         * @language zh_CN
+         * 获取位图文本测量宽度
+         * @version Egret 2.4
+         * @platform Web,Native
          */
-        private textHeight;
+        textWidth: number;
+        /**
+         * @language en_US
+         * Get Text BitmapText height
+         * @version Egret 2.4
+         * @platform Web,Native
+         */
+        /**
+         * @language zh_CN
+         * 获取位图文本测量高度
+         * @version Egret 2.4
+         * @platform Web,Native
+         */
+        textHeight: number;
         /**
          * @private
          */
@@ -13472,6 +13591,21 @@ declare module egret {
         writeUnsignedInt(value: number): void;
         /**
          * @language en_US
+         * Write a 16-bit unsigned integer into the byte stream
+         * @param value An unsigned integer to be written into the byte stream
+         * @version Egret 2.5
+         * @platform Web,Native
+         */
+        /**
+         * @language zh_CN
+         * 在字节流中写入一个无符号的 16 位整数
+         * @param value 要写入字节流的无符号整数
+         * @version Egret 2.5
+         * @platform Web,Native
+         */
+        writeUnsignedShort(value: number): void;
+        /**
+         * @language en_US
          * Write a UTF-8 string into the byte stream. The length of the UTF-8 string in bytes is written first, as a 16-bit integer, followed by the bytes representing the characters of the string
          * @param value Character string value to be written
          * @version Egret 2.4
@@ -14202,7 +14336,6 @@ declare module egret {
      */
     function $callAsync(method: Function, thisObject: any, ...args: any[]): void;
 }
-declare function __extends(d: any, b: any): void;
 declare module egret {
     /**
      * @language en_US
@@ -14212,7 +14345,7 @@ declare module egret {
      * @param type Setter property names need to call
      * @param values Value passed to the parent class
      *
-     * @exmaple egret.superSetter(this, "alpha", 1);
+     * @exmaple egret.superSetter(egret.Sprite, this, "alpha", 1);
      */
     /**
      * @language zh_CN
@@ -14222,7 +14355,7 @@ declare module egret {
      * @param type 需要调用的setter属性名称
      * @param values 传给父类的值
      *
-     * @exmaple egret.superSetter(this, "alpha", 1);
+     * @exmaple egret.superSetter(egret.Sprite, this, "alpha", 1);
      */
     function superSetter(currentClass: any, thisObj: any, type: string, ...values: any[]): any;
     /**
@@ -14233,7 +14366,7 @@ declare module egret {
      * @param type Setter property names need to call
      * @returns {any} The value returned by the parent
      *
-     * @exmaple egret.superGetter(this, "alpha");
+     * @exmaple egret.superGetter(egret.Sprite, this, "alpha");
      */
     /**
      * @language zh_CN
@@ -14243,7 +14376,7 @@ declare module egret {
      * @param type 需要调用的setter属性名称
      * @returns {any} 父类返回的值
      *
-     * @exmaple egret.superGetter(this, "alpha");
+     * @exmaple egret.superGetter(egret.Sprite, this, "alpha");
      */
     function superGetter(currentClass: any, thisObj: any, type: string): any;
 }
