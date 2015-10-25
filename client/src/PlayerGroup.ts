@@ -37,6 +37,7 @@ class PlayerGroup extends eui.Group {
                 var kv: any = keyValues[i];
                 item[kv.key] = kv.value;
             }
+            
             this.collection.itemUpdated(item);
         }
     }
@@ -49,6 +50,10 @@ class PlayerGroup extends eui.Group {
         var item = this.collection.getItemAt(this.playerIndexes[playerName]);
         return item[key];
     }
+    
+    public getCollection():eui.ArrayCollection{
+        return this.collection;
+    }
 }
 
 class PlayerRenderer extends eui.ItemRenderer {
@@ -60,21 +65,18 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.addChild(this.playerWidget);
     }
     protected dataChanged(): void {
-        var lastPosition: any = this.playerWidget.getPosition();
-        var newX: number = this.data.x - lastPosition.x;
-        var newY: number = this.data.y - lastPosition.y;
         egret.Tween.get(this.playerWidget,{
             loop: false
-        }).to({
-            x: this.data.x - lastPosition.x,
-            y: this.data.y - lastPosition.y,
-        },1000).call(this.onComplete, this);
+        })
+        .to({ x: this.data.x,y: this.data.y,},1000)
+        .call(this.onComplete,this)
+        .wait(500,true);
                         
         this.playerWidget.update(this.data);
     }
             
     private onComplete():void {
-                        
-        }
+        egret.Tween.removeTweens(this.playerWidget);           
     }
+}
     

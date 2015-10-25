@@ -23,10 +23,12 @@ class Player extends egret.DisplayObjectContainer {
         this.tank.height = 100;
         this.addChild(this.tank);
         this.tank.touchEnabled = true;
-        this.tank.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
-            MessageCenter.send({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: this.nameText.text});
-        }, this);
+  //      this.tank.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
+  //          MessageCenter.send({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: this.nameText.text});
+  //      }, this);
     }
+    
+    
     
     private initNameText():void {
         this.nameText = new egret.TextField();

@@ -70,10 +70,24 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.battleStatusText);
         this.addChild(this.playerGroup);
         
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
-            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
-        }, this);
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
 	}
+	
+    private shootOrMove(event:egret.TouchEvent):void {
+        var playerNum = this.playerGroup.getCollection().length;
+        for(var playerIndex = 0;playerIndex < playerNum;playerIndex ++){
+            var player = this.playerGroup.getCollection().getItemAt(playerIndex);
+            if(player.name != Battle.myName){
+                if(player.x - 50 < event.stageX && player.x + 50 > event.stageX
+                    && player.y - 50< event.stageY && player.y + 50 > event.stageY ){
+                       MessageCenter.send({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: player.name});
+                       return;
+                 }
+            }
+        }
+        MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
+  
+    }
 	
 	public getRoomCount():number {
         return this.roomCount;
