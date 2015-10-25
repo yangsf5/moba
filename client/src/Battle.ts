@@ -70,10 +70,25 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.battleStatusText);
         this.addChild(this.playerGroup);
         
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
-            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
-        }, this);
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
 	}
+	
+    private shootOrMove(event:egret.TouchEvent):void {
+        var isShoot: boolean = false;
+        this.playerGroup.walkPlayers(function(target: any) {
+            if(null != target && target.hp > 0 && !target.flee && target.name != Battle.myName) {
+                if(Math.abs(target.x - event.stageX) < Player.TANK_OFFSET
+                    && Math.abs(target.y - event.stageY) < Player.TANK_OFFSET) {
+                    MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "shoot",Data: target.name });
+                    isShoot = true;//点击到其他坦克的区域则视为攻打坦克
+                }
+            }          
+        });
+        //没有攻打到坦克，则移动.已阵亡的玩家不再移动
+        if(!isShoot && this.playerGroup.isMyselfAlive()){
+            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
+        }
+    }
 	
 	public getRoomCount():number {
         return this.roomCount;

@@ -37,11 +37,12 @@ class PlayerGroup extends eui.Group {
                 var kv: any = keyValues[i];
                 item[kv.key] = kv.value;
             }
+            
             this.collection.itemUpdated(item);
         }
     }
     
-    public getField(playerName:number, key:string):any {
+    public getField(playerName:string, key:string):any {
         if(this.playerIndexes[playerName] == null) {
             return null;
         }
@@ -49,6 +50,22 @@ class PlayerGroup extends eui.Group {
         var item = this.collection.getItemAt(this.playerIndexes[playerName]);
         return item[key];
     }
+    
+    public walkPlayers(func:Function):void{
+        var playerNum = this.collection.length;
+        for(var playerIndex = 0;playerIndex < playerNum;playerIndex++) {
+            var player = this.collection.getItemAt(playerIndex);
+            func(player);
+        }
+    }
+    
+    public isMyselfAlive():boolean{
+        if(this.getField(Battle.myName,"hp") > 0){
+            return true;
+        }
+        return false;
+    }
+    
 }
 
 class PlayerRenderer extends eui.ItemRenderer {
@@ -60,21 +77,17 @@ class PlayerRenderer extends eui.ItemRenderer {
         this.addChild(this.playerWidget);
     }
     protected dataChanged(): void {
-        var lastPosition: any = this.playerWidget.getPosition();
-        var newX: number = this.data.x - lastPosition.x;
-        var newY: number = this.data.y - lastPosition.y;
         egret.Tween.get(this.playerWidget,{
             loop: false
-        }).to({
-            x: this.data.x - lastPosition.x,
-            y: this.data.y - lastPosition.y,
-        },1000).call(this.onComplete, this);
+        })
+            .to({ x: this.data.x,y: this.data.y },1000)
+            .call(this.onComplete,this);
                         
         this.playerWidget.update(this.data);
     }
             
     private onComplete():void {
-                        
-        }
+                     
     }
+}
     
