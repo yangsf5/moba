@@ -15,6 +15,7 @@ var game_file_list = [
 	"bin-debug/MessageCenter.js",
 	"bin-debug/Net.js",
 	"bin-debug/PlayerGroup.js",
+	"bin-debug/ThemeAdapter.js",
 	"bin-debug/view/Player.js",
 	"bin-debug/view/RoomList.js",
 	"bin-debug/view/Shoot.js",

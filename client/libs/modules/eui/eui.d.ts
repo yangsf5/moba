@@ -1855,6 +1855,328 @@ declare module eui.sys {
      */
     function implementUIComponent(descendant: any, base: any, isContainer?: boolean): void;
 }
+declare module eui {
+    class BitmapLabel extends egret.BitmapText implements UIComponent, IDisplayText {
+        constructor(text?: string);
+        /**
+         * @private
+         *
+         */
+        $invalidateContentBounds(): void;
+        /**
+         * @private
+         *
+         * @param value
+         */
+        $setWidth(value: number): boolean;
+        /**
+         * @private
+         *
+         * @param value
+         */
+        $setHeight(value: number): boolean;
+        /**
+         * @private
+         *
+         * @param value
+         */
+        $setText(value: string): boolean;
+        private $font;
+        $setFont(value: any): boolean;
+        private $createChildrenCalled;
+        private $fontChanged;
+        /**
+         * 解析source
+         */
+        private $parseFont();
+        /**
+         * 皮肤发生改变
+         */
+        private $onFontChanged(bitmapFont, font);
+        $setFontData(value: egret.BitmapFont): boolean;
+        /**
+         * @private
+         */
+        private _widthConstraint;
+        /**
+         * @private
+         * UIComponentImpl 定义的所有变量请不要添加任何初始值，必须统一在此处初始化。
+         */
+        private initializeUIValues;
+        /**
+         * @copy eui.UIComponent#createChildren
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        protected createChildren(): void;
+        /**
+         * @copy eui.UIComponent#childrenCreated
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        protected childrenCreated(): void;
+        /**
+         * @copy eui.UIComponent#commitProperties
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        protected commitProperties(): void;
+        /**
+         * @copy eui.UIComponent#measure
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        protected measure(): void;
+        /**
+         * @copy eui.UIComponent#updateDisplayList
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        protected updateDisplayList(unscaledWidth: number, unscaledHeight: number): void;
+        /**
+         * @copy eui.UIComponent#invalidateParentLayout
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        protected invalidateParentLayout(): void;
+        /**
+         * @private
+         */
+        $UIComponent: Object;
+        /**
+         * @private
+         */
+        $includeInLayout: boolean;
+        /**
+         * @copy eui.UIComponent#includeInLayout
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        includeInLayout: boolean;
+        /**
+         * @copy eui.UIComponent#left
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        left: number;
+        /**
+         * @copy eui.UIComponent#right
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        right: number;
+        /**
+         * @copy eui.UIComponent#top
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        top: number;
+        /**
+         * @copy eui.UIComponent#bottom
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        bottom: number;
+        /**
+         * @copy eui.UIComponent#horizontalCenter
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        horizontalCenter: number;
+        /**
+         * @copy eui.UIComponent#verticalCenter
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        verticalCenter: number;
+        /**
+         * @copy eui.UIComponent#percentWidth
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        percentWidth: number;
+        /**
+         * @copy eui.UIComponent#percentHeight
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        percentHeight: number;
+        /**
+         * @copy eui.UIComponent#explicitWidth
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        explicitWidth: number;
+        /**
+         * @copy eui.UIComponent#explicitHeight
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        explicitHeight: number;
+        /**
+         * @copy eui.UIComponent#minWidth
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        minWidth: number;
+        /**
+         * @copy eui.UIComponent#maxWidth
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        maxWidth: number;
+        /**
+         * @copy eui.UIComponent#minHeight
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        minHeight: number;
+        /**
+         * @copy eui.UIComponent#maxHeight
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        maxHeight: number;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        setMeasuredSize(width: number, height: number): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        invalidateProperties(): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        validateProperties(): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        invalidateSize(): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        validateSize(recursive?: boolean): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        invalidateDisplayList(): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        validateDisplayList(): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        validateNow(): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        setLayoutBoundsSize(layoutWidth: number, layoutHeight: number): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        setLayoutBoundsPosition(x: number, y: number): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        getLayoutBounds(bounds: egret.Rectangle): void;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        getPreferredBounds(bounds: egret.Rectangle): void;
+    }
+}
 declare module eui.sys {
     /**
      * @private
@@ -3028,6 +3350,7 @@ declare module eui {
      * Group 是自动布局的容器基类。如果包含的子项内容太大需要滚动显示，可以在在 Group 外部包裹一层 Scroller 组件
      * (将 Group 实例赋值给 Scroller 组件的 viewport 属性)。Scroller 会为 Group 添加滚动的触摸操作功能，并显示垂直或水平的滚动条。
      *
+     * @see http://edn.egret.com/cn/index.php/article/index/id/608 简单容器
      * @defaultProperty elementsContent
      * @includeExample  extension/eui/components/GroupExample.ts
      * @version Egret 2.4
@@ -3210,6 +3533,7 @@ declare module eui {
          * @platform Web,Native
          */
         getElementAt(index: number): egret.DisplayObject;
+        getVirtualElementAt(index: number): egret.DisplayObject;
         /**
          * @language en_US
          * Set the index range of the sub Visual element in container which support virtual layout.
@@ -3622,6 +3946,8 @@ declare module eui {
      * 尽管此容器可以包含可视元素，但它通常仅用于包含作为子项的数据项目。
      *
      * @see eui.Group
+     * @see http://edn.egret.com/cn/index.php/article/index/id/527 数据容器
+     * @see http://edn.egret.com/cn/index.php/article/index/id/528 数组集合
      * @defaultProperty dataProvider
      * @includeExample  extension/eui/components/DataGroupExample.ts
      * @version Egret 2.4
@@ -3682,6 +4008,14 @@ declare module eui {
          * @platform Web,Native
          */
         getElementAt(index: number): egret.DisplayObject;
+        /**
+         * @inheritDoc
+         *
+         * @version Egret 2.5.2
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        getVirtualElementAt(index: number): UIComponent;
         /**
          * @private
          * 释放指定索引处的项呈示器
@@ -8204,11 +8538,11 @@ declare module eui {
         verticalScrollBar: eui.VScrollBar;
         /**
          * @language en_US
-         * Indicates under what conditions the vertical scroll bar is displayed.
-         * <p><code>ScrollPolicy.ON</code> - the scroll bar is always displayed.</p>
-         * <p><code>ScrollPolicy.OFF</code> - the scroll bar is never displayed.</p>
-         * <p><code>ScrollPolicy.AUTO</code> - the scroll bar is displayed when
-         *  the viewport's contentHeight is larger than its height.
+         * Indicates under what conditions the scroller can be moved and the vertical scroll bar is displayed.
+         * <p><code>ScrollPolicy.ON</code> - the scroller can be moved, and the scroll bar is displayed when it's move.</p>
+         * <p><code>ScrollPolicy.OFF</code> - the scroller can not be moved, the scroll bar is never displayed.</p>
+         * <p><code>ScrollPolicy.AUTO</code> - the scroller can not be moved when
+         *  the viewport's contentHeight is larger than its height. the scroll bar is displayed when it's move.
          *
          * @default ScrollPolicy.AUTO
          *
@@ -8218,10 +8552,10 @@ declare module eui {
          */
         /**
          * @language zh_CN
-         * 指示在哪些条件下会显示垂直滑动条。
-         * <p><code>ScrollPolicy.ON</code> - 始终显示滚动条。</p>
-         * <p><code>ScrollPolicy.OFF</code> - 从不显示滚动条。</p>
-         * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentHeight 大于其自身的高度时显示滚动条。</p>
+         * 指示在哪些条件可以滚动并且显示垂直滑动条。
+         * <p><code>ScrollPolicy.ON</code> - 可以滚动，滚动时显示滚动条。</p>
+         * <p><code>ScrollPolicy.OFF</code> - 不可以滚动并且不显示滚动条。</p>
+         * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentHeight 大于其自身的高度时可以滚动，滚动时显示滚动条。</p>
          *
          * @default ScrollPolicy.AUTO
          *
@@ -8232,11 +8566,11 @@ declare module eui {
         scrollPolicyV: string;
         /**
          * @language en_US
-         * Indicates under what conditions the horizontal scroll bar is displayed.
-         * <p><code>ScrollPolicy.ON</code> - the scroll bar is always displayed.</p>
-         * <p><code>ScrollPolicy.OFF</code> - the scroll bar is never displayed.</p>
-         * <p><code>ScrollPolicy.AUTO</code> - the scroll bar is displayed when
-         *  the viewport's contentWidth is larger than its width.
+         * Indicates under what conditions the scroller can be moved and the horizontal scroll bar is displayed.
+         * <p><code>ScrollPolicy.ON</code> - the scroller can be moved, and the scroll bar is displayed when it's move.</p>
+         * <p><code>ScrollPolicy.OFF</code> - the scroller can not be moved, the scroll bar is never displayed.</p>
+         * <p><code>ScrollPolicy.AUTO</code> - the can not be moved  when
+         *  the viewport's contentWidth is larger than its width. the scroll bar is displayed when it's move.
          *
          * @default ScrollPolicy.AUTO
          *
@@ -8246,10 +8580,10 @@ declare module eui {
          */
         /**
          * @language zh_CN
-         * 指示在哪些条件下会显示水平滑动条。
-         * <p><code>ScrollPolicy.ON</code> - 始终显示滚动条。</p>
-         * <p><code>ScrollPolicy.OFF</code> - 从不显示滚动条。</p>
-         * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentWidth 大于其自身的宽度时显示滚动条。</p>
+         * 指示在哪些条件下可以滚动并且显示水平滑动条。
+         * <p><code>ScrollPolicy.ON</code> - 可以滚动，滚动时显示滚动条。</p>
+         * <p><code>ScrollPolicy.OFF</code> - 不可以滚动并且不显示滚动条。</p>
+         * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentWidth 大于其自身的宽度时可以滚动，滚动时显示滚动条。</p>
          *
          * @default ScrollPolicy.AUTO
          *
@@ -9249,6 +9583,32 @@ declare module eui.sys {
         private doInterval(currentTime);
     }
 }
+declare module eui {
+    /**
+     * @language en_US
+     * Default instance of interface <code>IThemeAdapter</code>.
+     * @version Egret 2.4
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    /**
+     * @language zh_CN
+     * 默认的IThemeAdapter接口实现。
+     * @version Egret 2.4
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    class DefaultThemeAdapter implements IThemeAdapter {
+        /**
+         * 解析主题
+         * @param url 待解析的主题url
+         * @param compFunc 解析完成回调函数，示例：compFunc(e:egret.Event):void;
+         * @param errorFunc 解析失败回调函数，示例：errorFunc():void;
+         * @param thisObject 回调的this引用
+         */
+        getTheme(url: string, compFunc: Function, errorFunc: Function, thisObject: any): void;
+    }
+}
 declare module eui.sys {
     /**
      * @private
@@ -9617,6 +9977,60 @@ declare module eui {
 declare module eui {
     /**
      * @language en_US
+     * Interface of theme adapter.
+     * If your project need to custom the theme rule, you need to implement the <code>IThemeAdapter</code>.
+     * And use the following code to inject it to the system:
+     * <pre>
+     *      var themeAdapter = new YourThemeAdapter();
+     *      Stage.registerImplementation("eui.IThemeAdapter",themeAdapter);
+     * </pre>
+     *
+     * @version Egret 2.4
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    /**
+     * @language zh_CN
+     * 主题适配器接口。
+     * 若项目需要自定义主题需要实现这个接口，
+     * 然后调用如下代码注入自定义实现到框架即可：
+     * <pre>
+     *      var themeAdapter = new YourThemeAdapter();
+     *      Stage.registerImplementation("eui.IThemeAdapter",themeAdapter);
+     * </pre>
+     * @version Egret 2.4
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    interface IThemeAdapter {
+        /**
+         * @language en_US
+         * Resolves theme
+         * @param url theme url
+         * @param compFunc compFunc，example：compFunc(e:egret.Event):void;
+         * @param errorFunc errorFunc，example：errorFunc():void;
+         * @param thisObject thisObject
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        /**
+         * @language zh_CN
+         * 解析主题
+         * @param url 待解析的主题url
+         * @param compFunc 解析完成回调函数，示例：compFunc(e:egret.Event):void;
+         * @param errorFunc 解析失败回调函数，示例：errorFunc():void;
+         * @param thisObject 回调的this引用
+         * @version Egret 2.4
+         * @version eui 1.0
+         * @platform Web,Native
+         */
+        getTheme(url: string, compFunc: Function, errorFunc: Function, thisObject: any): void;
+    }
+}
+declare module eui {
+    /**
+     * @language en_US
      * The IViewport interface is implemented by components that support a viewport.
      *
      * If a component's children are larger than the component,
@@ -9855,6 +10269,8 @@ declare module eui {
      * @includeExample  extension/eui/core/ThemeExample.ts
      */
     class Theme extends egret.EventDispatcher {
+        private $stage;
+        private $configURL;
         /**
          * @language en_US
          * Create an instance of Theme
@@ -9892,9 +10308,9 @@ declare module eui {
         /**
          * @private
          *
-         * @param event
+         * @param str
          */
-        private onConfigLoaded(event);
+        private onConfigLoaded(str);
         private onLoaded(classes?, urls?);
         /**
          * @private
@@ -11369,6 +11785,25 @@ declare module eui.sys {
     }
 }
 declare module EXML {
+    /**
+     * @language en_US
+     * Set a prefix url.
+     * The prefix url will add to the front of the Exml file path when it’s loading.
+     * @param text the text of a EXML file.
+     *
+     * @version Egret 2.5.3
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    /**
+     * @language zh_CN
+     * 设置 EXML 文件加载的根路径。
+     * 设置后，再加载 EXML 文件时会自动把根路径加到文件路径前面
+     * @version Egret 2.5.3
+     * @version eui 1.0
+     * @platform Web,Native
+     */
+    var prefixURL: string;
     /**
      * @language en_US
      * Parsing a text of EXML file for a definition of class. You can declare the <code>class</code> property in the root
