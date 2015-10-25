@@ -18,6 +18,7 @@ type User interface {
 
 	GetHP() int
 	SetHP(hp int)
+	IsDead() bool
 
 	GetPosition() (x, y int)
 	SetPosition(x, y int)
