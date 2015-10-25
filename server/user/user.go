@@ -95,6 +95,10 @@ func (u *User) SetHP(hp int) {
 	u.hp = hp
 }
 
+func (u *User) IsDead() bool {
+	return u.hp == 0
+}
+
 func (u *User) GetPosition() (x, y int) {
 	return u.x, u.y
 }

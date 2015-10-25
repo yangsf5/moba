@@ -17,6 +17,9 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 
 	switch msgType {
 	case "shoot":
+		if u.IsDead() {
+			break
+		}
 		targetName := msgData.(string)
 		targetUser := r.group.GetPeer(targetName)
 		if targetUser == nil {
@@ -26,7 +29,7 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 			break
 		}
 		mobaUser := targetUser.(User)
-		if mobaUser.GetHP() == 0 {
+		if mobaUser.IsDead() {
 			break
 		}
 
@@ -38,6 +41,9 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		shootMsg := &proto.RCShoot{u.Name(), targetName, hp}
 		r.Broadcast(proto.Encode(r.serviceName, shootMsg))
 	case "move":
+		if u.IsDead() {
+			break
+		}
 		position := msgData.(string)
 		var x, y int
 		fmt.Sscanf(position, "%d,%d", &x, &y)
