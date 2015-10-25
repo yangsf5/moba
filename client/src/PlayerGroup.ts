@@ -51,12 +51,11 @@ class PlayerGroup extends eui.Group {
         return item[key];
     }
     
-    public iteratorPlayers(func:any):void{
+    public walkPlayers(func:Function):void{
         var playerNum = this.collection.length;
         for(var playerIndex = 0;playerIndex < playerNum;playerIndex++) {
             var player = this.collection.getItemAt(playerIndex);
-            if(player.hp > 0 && !player.flee)
-                func(player);
+            func(player);
         }
     }
     

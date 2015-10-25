@@ -75,10 +75,10 @@ class Battle extends egret.DisplayObjectContainer {
 	
     private shootOrMove(event:egret.TouchEvent):void {
         var isShoot: boolean = false;
-        this.playerGroup.iteratorPlayers(function(target: any) {
-            if(target.name != Battle.myName) {
-                if(Math.abs(target.x - event.stageX) < Player.tankOffset
-                    && Math.abs(target.y - event.stageY) < Player.tankOffset) {
+        this.playerGroup.walkPlayers(function(target: any) {
+            if(null != target && target.hp > 0 && !target.flee && target.name != Battle.myName) {
+                if(Math.abs(target.x - event.stageX) < Player.TANK_OFFSET
+                    && Math.abs(target.y - event.stageY) < Player.TANK_OFFSET) {
                     MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "shoot",Data: target.name });
                     isShoot = true;//点击到其他坦克的区域则视为攻打坦克
                 }

@@ -1,5 +1,5 @@
 class Player extends egret.DisplayObjectContainer {
-    public static tankOffset:number = 50;
+    public static TANK_OFFSET:number = 50;
     private hpBar:eui.ProgressBar;
     private nameText:egret.TextField;
     private tank:egret.Bitmap = new egret.Bitmap();
@@ -24,9 +24,6 @@ class Player extends egret.DisplayObjectContainer {
         this.tank.height = 100;
         this.addChild(this.tank);
         this.tank.touchEnabled = true;
-  //      this.tank.addEventListener(egret.TouchEvent.TOUCH_TAP, function(event) {
-  //          MessageCenter.send({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: this.nameText.text});
-  //      }, this);
     }
     
     
@@ -61,8 +58,8 @@ class Player extends egret.DisplayObjectContainer {
     private setPosition(x:number, y:number):void {
         this.centerPositon.x = x;
         this.centerPositon.y = y;
-        this.tank.x = x - Player.tankOffset;
-        this.tank.y = y - Player.tankOffset;
+        this.tank.x = x - Player.TANK_OFFSET;
+        this.tank.y = y - Player.TANK_OFFSET;
         this.nameText.x = this.tank.x;
         this.nameText.y = this.tank.y - 50;
         this.hpBar.x = this.tank.x;
