@@ -38,6 +38,7 @@ class Player extends egret.DisplayObjectContainer {
         var exml =
             `<s:ProgressBar xmlns:s="http://ns.egret.com/eui">
                 <s:Skin>
+                    <s:Image id="track" width="100%" height="100%" source="resource/assets/track.png" scale9Grid="1,1,4,4"/>
                     <s:Image id="thumb" width="100%" height="100%" source="resource/assets/thumb.png" scale9Grid="1,1,4,4"/>
                     <s:Label id="labelDisplay" textColor="0xff0000" size="20" horizontalCenter="0" verticalCenter="0" percentHeight="100%" percentWidth="100%"/>
                 </s:Skin>
