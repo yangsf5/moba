@@ -30,6 +30,10 @@ type RCPlayerInfos struct {
 	Players []PlayerInfo
 }
 
+type RCPlayerLeave struct {
+	Name string
+}
+
 type RCBattleStatus struct {
 	Status string
 }

@@ -26,7 +26,14 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 			break
 		}
 		mobaUser := targetUser.(User)
-		hp := mobaUser.GetHP() - rand.Intn(3)
+		if mobaUser.GetHP() == 0 {
+			break
+		}
+
+		hp := mobaUser.GetHP() - (1 + rand.Intn(10))
+		if hp <= 0 {
+			hp = 0
+		}
 		mobaUser.SetHP(hp)
 		shootMsg := &proto.RCShoot{u.Name(), targetName, hp}
 		r.Broadcast(proto.Encode(r.serviceName, shootMsg))

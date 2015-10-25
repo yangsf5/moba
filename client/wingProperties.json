@@ -5,13 +5,38 @@
 	{
 		"configs":[
 		{
-			"configPath":"resource/resource.json",
+			"configPath":"resource/default.res.json",
 			"relativePath":"resource/"
 		}],
 		"id":"org.egret-labs.resource",
 		"library":
 		{
-			"children":[]
+			"children":[
+			{
+				"isFolder":false,
+				"key":"tank1",
+				"name":"tank1"
+			},
+			{
+				"isFolder":false,
+				"key":"tank2",
+				"name":"tank2"
+			},
+			{
+				"isFolder":false,
+				"key":"tank3",
+				"name":"tank3"
+			},
+			{
+				"isFolder":false,
+				"key":"tank4",
+				"name":"tank4"
+			},
+			{
+				"isFolder":false,
+				"key":"tank5",
+				"name":"tank5"
+			}]
 		}
 	},
 	"theme":"resource/theme.thm"
