@@ -1,4 +1,5 @@
 class Player extends egret.DisplayObjectContainer {
+    public static tankOffset:number = 50;
     private hpBar:eui.ProgressBar;
     private nameText:egret.TextField;
     private tank:egret.Bitmap = new egret.Bitmap();
@@ -60,8 +61,8 @@ class Player extends egret.DisplayObjectContainer {
     private setPosition(x:number, y:number):void {
         this.centerPositon.x = x;
         this.centerPositon.y = y;
-        this.tank.x = x - 50;
-        this.tank.y = y - 50;
+        this.tank.x = x - Player.tankOffset;
+        this.tank.y = y - Player.tankOffset;
         this.nameText.x = this.tank.x;
         this.nameText.y = this.tank.y - 50;
         this.hpBar.x = this.tank.x;

@@ -42,7 +42,7 @@ class PlayerGroup extends eui.Group {
         }
     }
     
-    public getField(playerName:number, key:string):any {
+    public getField(playerName:string, key:string):any {
         if(this.playerIndexes[playerName] == null) {
             return null;
         }
@@ -51,9 +51,22 @@ class PlayerGroup extends eui.Group {
         return item[key];
     }
     
-    public getCollection():eui.ArrayCollection{
-        return this.collection;
+    public iteratorPlayers(func:any):void{
+        var playerNum = this.collection.length;
+        for(var playerIndex = 0;playerIndex < playerNum;playerIndex++) {
+            var player = this.collection.getItemAt(playerIndex);
+            if(player.hp > 0 && !player.flee)
+                func(player);
+        }
     }
+    
+    public isMyselfAlive():boolean{
+        if(this.getField(Battle.myName,"hp") > 0){
+            return true;
+        }
+        return false;
+    }
+    
 }
 
 class PlayerRenderer extends eui.ItemRenderer {
@@ -68,15 +81,14 @@ class PlayerRenderer extends eui.ItemRenderer {
         egret.Tween.get(this.playerWidget,{
             loop: false
         })
-        .to({ x: this.data.x,y: this.data.y,},1000)
-        .call(this.onComplete,this)
-        .wait(500,true);
+            .to({ x: this.data.x,y: this.data.y },1000)
+            .call(this.onComplete,this);
                         
         this.playerWidget.update(this.data);
     }
             
     private onComplete():void {
-        egret.Tween.removeTweens(this.playerWidget);           
+                     
     }
 }
     

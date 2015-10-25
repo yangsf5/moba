@@ -74,19 +74,20 @@ class Battle extends egret.DisplayObjectContainer {
 	}
 	
     private shootOrMove(event:egret.TouchEvent):void {
-        var playerNum = this.playerGroup.getCollection().length;
-        for(var playerIndex = 0;playerIndex < playerNum;playerIndex ++){
-            var player = this.playerGroup.getCollection().getItemAt(playerIndex);
-            if(player.name != Battle.myName){
-                if(player.x - 50 < event.stageX && player.x + 50 > event.stageX
-                    && player.y - 50< event.stageY && player.y + 50 > event.stageY ){
-                       MessageCenter.send({Service:MessageCenter.battle.getRoomService(), Type:"shoot", Data: player.name});
-                       return;
-                 }
-            }
+        var isShoot: boolean = false;
+        this.playerGroup.iteratorPlayers(function(target: any) {
+            if(target.name != Battle.myName) {
+                if(Math.abs(target.x - event.stageX) < Player.tankOffset
+                    && Math.abs(target.y - event.stageY) < Player.tankOffset) {
+                    MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "shoot",Data: target.name });
+                    isShoot = true;//点击到其他坦克的区域则视为攻打坦克
+                }
+            }          
+        });
+        //没有攻打到坦克，则移动.已阵亡的玩家不再移动
+        if(!isShoot && this.playerGroup.isMyselfAlive()){
+            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
         }
-        MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
-  
     }
 	
 	public getRoomCount():number {
