@@ -38,6 +38,11 @@ type RCBattleStatus struct {
 	Status string
 }
 
+type RCPlayerChooseHero struct {
+	Name   string
+	HeroID int
+}
+
 type RCShoot struct {
 	Source string
 	Target string

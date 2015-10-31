@@ -16,6 +16,18 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 	}
 
 	switch msgType {
+	case "chooseHero":
+		if r.battleStatus != "waiting" {
+			break
+		}
+		heroID := msgData.(int)
+		// TODO check heroID
+
+		// TODO set user heroID
+
+		retMsg := &proto.RCPlayerChooseHero{u.Name(), heroID}
+
+		r.Broadcast(proto.Encode(r.serviceName, retMsg))
 	case "shoot":
 		if u.IsDead() {
 			break
@@ -51,5 +63,9 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		u.SetPosition(x, y)
 		moveMsg := &proto.RCMove{u.Name(), x, y}
 		r.Broadcast(proto.Encode(r.serviceName, moveMsg))
+	case "skill":
+		if r.battleStatus != "firing" {
+			break
+		}
 	}
 }
