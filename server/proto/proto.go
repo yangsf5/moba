@@ -38,9 +38,8 @@ type RCBattleStatus struct {
 	Status string
 }
 
-type RCPlayerChooseHero struct {
-	Name   string
-	HeroID int
+type RCChooseHeroRet struct {
+	Result int
 }
 
 type RCShoot struct {

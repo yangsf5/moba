@@ -20,14 +20,15 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		if r.battleStatus != "waiting" {
 			break
 		}
-		heroID := msgData.(int)
+		//heroID := msgData.(int)
 		// TODO check heroID
 
 		// TODO set user heroID
 
-		retMsg := &proto.RCPlayerChooseHero{u.Name(), heroID}
+		retMsg := &proto.RCChooseHeroRet{1}
+		u.Send([]byte(proto.Encode(r.serviceName, retMsg)))
 
-		r.Broadcast(proto.Encode(r.serviceName, retMsg))
+		r.NotifyRCPlayerInfos()
 	case "shoot":
 		if u.IsDead() {
 			break

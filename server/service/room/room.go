@@ -24,10 +24,6 @@ type User interface {
 	SetPosition(x, y int)
 }
 
-type RoomUser interface {
-	net.Peer
-}
-
 type Room struct {
 	ID          int
 	serviceName string
@@ -66,8 +62,6 @@ func (r *Room) Enter(session int, u User) bool {
 
 		u.EnterService(r.serviceName)
 		r.sessions[session] = u
-
-		r.NotifyRCPlayerInfos()
 
 		if len(r.sessions) >= 2 {
 			r.battleStatus = "firing"
