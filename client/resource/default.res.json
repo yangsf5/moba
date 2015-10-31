@@ -24,12 +24,21 @@
 			"name": "tank5",
 			"type": "image",
 			"url": "assets/tank/tank5.png"
+		},
+		{
+			"name": "heroConfig",
+			"type": "json",
+			"url": "config/hero.json"
 		}
 	],
 	"groups": [
 		{
 			"name": "tank",
 			"keys": "tank1,tank2,tank3,tank4,tank5"
+		},
+		{
+			"name": "room",
+			"keys": "heroConfig"
 		}
 	]
 }

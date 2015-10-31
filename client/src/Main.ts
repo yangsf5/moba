@@ -10,15 +10,16 @@ class Main extends egret.DisplayObjectContainer {
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
         RES.loadGroup("tank");
+        RES.loadGroup("room");
         
-        this.createGameScene();
-        
-        this.battle = new Battle();
-        this.stage.addChild(this.battle);
+        this.createGameScene();        
     }
 
     private onConfigComplete(event:RES.ResourceEvent):void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
+        
+        this.battle = new Battle();
+        this.stage.addChild(this.battle);
     }
     
     private createGameScene():void {
