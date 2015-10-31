@@ -53,10 +53,13 @@ class Net extends egret.DisplayObjectContainer {
         if(msgObj.Type == "HCRoomInfos") {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
+            this.battle.enterWar();
             for(var i = 0;i < msgObj.Data.Players.length;i++) {
                 var player = msgObj.Data.Players[i];
                 this.battle.getPlayerGroup().updateField(player.Name, [{ key: "hp", value: player.CurrentHP }, { key: "x", value: player.X }, { key: "y", value: player.Y }]);
             }
+        } else if(msgObj.Type == "RCChooseHeroRet") {
+            
         } else if(msgObj.Type == "RCPlayerLeave") {
             this.battle.getPlayerGroup().updateField(msgObj.Data.Name, [{ key: "flee", value: true }]);
         } else if(msgObj.Type == "RCShoot") {
