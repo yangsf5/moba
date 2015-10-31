@@ -28,6 +28,8 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		retMsg := &proto.RCChooseHeroRet{1}
 		u.Send([]byte(proto.Encode(r.serviceName, retMsg)))
 
+		// 每当有人选好英雄就计算是否够人开打
+		r.UpdateBattleStatus()
 		r.NotifyRCPlayerInfos()
 	case "shoot":
 		if u.IsDead() {
