@@ -1,5 +1,6 @@
 class Battle extends egret.DisplayObjectContainer {
     public static myName: string;
+    public static myHeroID: string;
     
     private roomList: RoomList;
     private roomCount: number;
@@ -11,6 +12,9 @@ class Battle extends egret.DisplayObjectContainer {
     
     private currentRoomText: egret.TextField;
     private battleStatusText: egret.TextField;
+    
+    private chooseHeroPanel: ChooseHero;
+    private chooseHeroButton: eui.Button;
     
 	public constructor() {
         super();
@@ -55,8 +59,11 @@ class Battle extends egret.DisplayObjectContainer {
              
         this.roomCount = Object.keys(roomInfos).length;
         this.roomList = new RoomList(this, roomInfos);
-        this.addChild(this.roomList);
+            
+        this.addChild(this.roomList);     
    	}
+   	
+
 	
 	public switchToRoom(service:string) {
         if(this.roomList.parent) {
@@ -67,11 +74,46 @@ class Battle extends egret.DisplayObjectContainer {
         
         this.currentRoomText.text = this.roomService;
         this.addChild(this.currentRoomText);
-        this.addChild(this.battleStatusText);
+        this.addChild(this.battleStatusText);     
+
+        this.addChooseButton();
+	}
+	
+	public enterWar():void{
+        this.chooseHeroButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.loadChooseHero, this);
+        this.removeChild(this.chooseHeroButton);
         this.addChild(this.playerGroup);
-        
         this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
 	}
+	
+	private addChooseButton():void{
+        var buttonSkin =
+            `<s:Skin class="skins.ButtonSkin" states="up,down,disabled" minHeight="50" minWidth="100" xmlns:s="http://ns.egret.com/eui">
+            <s:Image width="100%" height="100%" scale9Grid="1,3,8,8" alpha.disabled="0.5"
+            source="resource/assets/button/button_up.png"
+            source.down="resource/assets/button/button_down.png"/>
+            <s:Label id="labelDisplay" top="8" bottom="8" left="8" right="8"
+            textColor="0xFFFFFF" verticalAlign="middle" textAlign="center"/>
+            <s:Image id="iconDisplay" horizontalCenter="0" verticalCenter="0"/>
+            </s:Skin>`;
+        
+        this.chooseHeroButton = new eui.Button();
+        this.chooseHeroButton.height = 100;
+        this.chooseHeroButton.width = 100;
+        this.chooseHeroButton.label = "选择英雄";
+        this.chooseHeroButton.x = 400;
+        this.chooseHeroButton.y = 400;
+        this.chooseHeroButton.skinName = buttonSkin;
+        this.addChild(this.chooseHeroButton);
+        this.chooseHeroButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.loadChooseHero, this);
+	}
+	
+    private loadChooseHero(event:egret.TouchEvent):void{
+        this.chooseHeroPanel = new ChooseHero();
+        this.chooseHeroPanel.x = 100;
+        this.chooseHeroPanel.y = 50;
+        this.addChild(this.chooseHeroPanel);
+    }
 	
     private shootOrMove(event:egret.TouchEvent):void {
         var isShoot: boolean = false;
