@@ -1,6 +1,7 @@
 {
 	"1": {
 		"name": "疯哥",
+		"skin": "assets/hero/3mad.png",
 		"skills":
 		[
 			{
@@ -20,6 +21,7 @@
 
 	"2": {
 		"name": "疯哥媳妇",
+		"skin": "assets/hero/3mad_wife.png",
 		"skills":
 		[
 			{
@@ -39,6 +41,7 @@
 
 	"3": {
 		"name": "严山头老五",
+		"skin": "assets/hero/yan_brother_wu.png",
 		"skills":
 		[
 			{
@@ -58,6 +61,7 @@
 
 	"4": {
 		"name": "赣州熊猫",
+		"skin": "assets/hero/ganzhou_panda.png",
 		"skills":
 		[
 			{
@@ -77,6 +81,7 @@
 
 	"5": {
 		"name": "屈作家",
+		"skin": "assets/hero/qu_writer.png",
 		"skills":
 		[
 			{

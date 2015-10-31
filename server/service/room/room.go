@@ -55,6 +55,13 @@ func (r *Room) GetCurrentPlayerCount() int {
 	return len(r.sessions)
 }
 
+func (r *Room) UpdateBattleStatus() {
+	if len(r.sessions) >= 2 {
+		r.battleStatus = "firing"
+		r.NotifyRCBattleStatus()
+	}
+}
+
 func (r *Room) Enter(session int, u User) bool {
 	ret := r.group.AddPeer(u.Name(), u)
 	if ret {
@@ -62,11 +69,6 @@ func (r *Room) Enter(session int, u User) bool {
 
 		u.EnterService(r.serviceName)
 		r.sessions[session] = u
-
-		if len(r.sessions) >= 2 {
-			r.battleStatus = "firing"
-			r.NotifyRCBattleStatus()
-		}
 	}
 
 	return ret
