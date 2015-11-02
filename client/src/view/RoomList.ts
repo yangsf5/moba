@@ -24,6 +24,16 @@ class RoomList extends egret.Sprite {
 	}
 	
     private initRadioButtonWithGroup(): void {
+        var scrollerSkin =
+            `<s:Skin xmlns:s="http://ns.egret.com/eui">
+                <s:VScrollBar id="verticalScrollBar" width="30" height="100%" right="0">
+                <s:Skin>
+                <s:Image width="100%" height="100%" source="resource/assets/track.png" scale9Grid="1,1,4,4"/>
+                <s:Image id="thumb" width="30" height="30" source="resource/assets/thumb.png"  scale9Grid="1,1,4,4"/>
+                </s:Skin>
+                </s:VScrollBar>
+            </s:Skin>`;
+        var group = new eui.Group();
         var radioGroup: eui.RadioButtonGroup = new eui.RadioButtonGroup();
         radioGroup.addEventListener(eui.UIEvent.CHANGE, this.radioChangeHandler, this);
         
@@ -32,12 +42,22 @@ class RoomList extends egret.Sprite {
             var item: eui.RadioButton = new eui.RadioButton();
             item.x = 50;
             item.y = i * 30;
+            item.setMeasuredSize(40,30);
             item.label = "room" + i + "  (" + roomInfo.CurrentCount + "/" + roomInfo.MaxCount + ")";
             item.skinName = this.skin;
             item.value = i;
             item.group = radioGroup;
-            this.addChild(item);
+            group.addChild(item);
         }
+        var scrollar = new eui.Scroller();
+        scrollar.width = 400;
+        scrollar.height = 600;
+        scrollar.viewport = group;
+        scrollar.skinName = scrollerSkin;
+        scrollar.throwSpeed = 100;
+        scrollar.scrollPolicyV = eui.ScrollPolicy.ON;
+        scrollar.scrollPolicyH = eui.ScrollPolicy.OFF;
+        this.addChild(scrollar);
     }
     
     private radioChangeHandler(evt:eui.UIEvent):void {
