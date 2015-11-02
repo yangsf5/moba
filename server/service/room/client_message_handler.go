@@ -20,10 +20,10 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		if r.battleStatus != "waiting" {
 			break
 		}
-		//heroID := msgData.(int)
+		heroID := int(msgData.(float64))
 		// TODO check heroID
 
-		// TODO set user heroID
+		u.SetHeroID(heroID)
 
 		retMsg := &proto.RCChooseHeroRet{1}
 		u.Send([]byte(proto.Encode(r.serviceName, retMsg)))

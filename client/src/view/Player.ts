@@ -89,6 +89,8 @@ class Player extends egret.DisplayObjectContainer {
         if(item.hp == 0) {
             this.showFightResult("已阵亡");
         }
+        
+        this.tank.texture = RES.getRes(item.skin);
     }
     
     private showFightResult(result:string):void {

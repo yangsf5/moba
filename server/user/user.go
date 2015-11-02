@@ -22,6 +22,8 @@ type User struct {
 
 	hp   int
 	x, y int
+
+	heroID int
 }
 
 func NewUser(sessionId int, name string, recv <-chan string, send chan<- string, recvErr, sendErr <-chan error) *User {
@@ -106,4 +108,12 @@ func (u *User) GetPosition() (x, y int) {
 func (u *User) SetPosition(x, y int) {
 	u.x = x
 	u.y = y
+}
+
+func (u *User) GetHeroID() int {
+	return u.heroID
+}
+
+func (u *User) SetHeroID(id int) {
+	u.heroID = id
 }
