@@ -42,7 +42,6 @@ class RoomList extends egret.Sprite {
             var item: eui.RadioButton = new eui.RadioButton();
             item.x = 50;
             item.y = i * 30;
-            item.setMeasuredSize(40,30);
             item.label = "room" + i + "  (" + roomInfo.CurrentCount + "/" + roomInfo.MaxCount + ")";
             item.skinName = this.skin;
             item.value = i;
@@ -54,7 +53,6 @@ class RoomList extends egret.Sprite {
         scrollar.height = 600;
         scrollar.viewport = group;
         scrollar.skinName = scrollerSkin;
-        scrollar.throwSpeed = 100;
         scrollar.scrollPolicyV = eui.ScrollPolicy.ON;
         scrollar.scrollPolicyH = eui.ScrollPolicy.OFF;
         this.addChild(scrollar);
