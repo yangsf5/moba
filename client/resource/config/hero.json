@@ -1,7 +1,7 @@
 {
 	"1": {
 		"name": "疯哥",
-		"skin": "assets/hero/3mad.png",
+		"skin": "assets/hero/3mad.jpg",
 		"skills":
 		[
 			{
@@ -20,8 +20,8 @@
 	},
 
 	"2": {
-		"name": "疯哥媳妇",
-		"skin": "assets/hero/3mad_wife.png",
+		"name": "小丫",
+		"skin": "assets/hero/cony.jpg",
 		"skills":
 		[
 			{
