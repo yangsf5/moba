@@ -1,6 +1,6 @@
 class ChooseHero extends eui.Group {
     private myPannel: eui.Panel;
-    private choosenHero: string = null;
+    private choosenHero: number = null;
     private select = new eui.Image();
     private herosContainer: any = [];
     private heroConfig: any;
@@ -40,12 +40,12 @@ class ChooseHero extends eui.Group {
         for(var key in this.heroConfig){
             try {
                 var hero = new Hero();
-                hero.setHero(this.heroConfig[key].name, this.heroConfig[key].skin);
+                hero.setHero(parseInt(key), this.heroConfig[key].skin);
                 hero.addEventListener(egret.TouchEvent.TOUCH_TAP, this.chooseHero, this);
                 hero.x = 10 + 160 * (iHero ++);
                 hero.y = 50;
                 
-                this.herosContainer[this.heroConfig[key].name] = hero;
+                this.herosContainer[key] = hero;
                 this.myPannel.addChild(hero);
             }catch(e){
                             
@@ -76,7 +76,7 @@ class ChooseHero extends eui.Group {
     }
           
     private chooseHero(event:egret.TouchEvent):void{
-        this.choosenHero = event.target.name;
+        this.choosenHero = event.target.parent.getHeroID();
         this.removeAllChoosen();
         this.select.x = 120;
         this.select.y = 120;
@@ -85,37 +85,37 @@ class ChooseHero extends eui.Group {
           
     private removeAllChoosen():void{
         for(var key in this.heroConfig){
-            if(this.herosContainer[this.heroConfig[key].name].numChildren > 1)
-                this.herosContainer[this.heroConfig[key].name].removeChild(this.select);
+            if(this.herosContainer[key].numChildren > 1)
+                this.herosContainer[key].removeChild(this.select);
             }
         }
     private saveHero(event:egret.TouchEvent):void{
-        if(null != this.choosenHero){
-            if(this.herosContainer[this.choosenHero] != null){
-                MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "chooseHero",Data: 1});
-                Battle.myHeroID = this.choosenHero;
-                this.myPannel.removeChildren();
-                this.myPannel.close();
-                this.parent.removeChild(this);
-            }
+        if(this.herosContainer[this.choosenHero] != null){
+            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "chooseHero",Data: this.choosenHero});
+            Battle.myHeroID = this.choosenHero;
+            this.myPannel.removeChildren();
+            this.myPannel.close();
+            this.parent.removeChild(this);
         }
     }
 }
     
 class Hero extends egret.DisplayObjectContainer{
     private heroImage: eui.Image;
-    private heroName: string;
+    private heroID: number;
     public constructor() {
         super();
     }
-    public setHero(heroName:string, skin:string):void{
+    public setHero(heroID:number, skin:string):void{
         this.heroImage = new eui.Image();
         this.heroImage.source = skin;
         this.heroImage.width = 150;
         this.heroImage.height = 150;
-        this.heroImage.name = heroName;
         this.addChild(this.heroImage);
-        this.heroName = heroName;
+        this.heroID = heroID;
+    }
+    public getHeroID():number {
+        return this.heroID;
     }
 }
     

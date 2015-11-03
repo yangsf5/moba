@@ -1,0 +1,240 @@
+I1024 22:53:43.074133   19513 moba.go:19] MOBA server start!
+I1024 22:53:43.074880   19513 web.go:16] Claw.Web service start
+I1024 22:53:43.074905   19513 room.go:48] MobaRoom1 service start
+I1024 22:53:43.074918   19513 hall.go:15] Service.MobaHall recv session=0 type=4 msg=&{6 0}
+I1024 22:53:43.074989   19513 room.go:48] MobaRoom2 service start
+I1024 22:53:43.075000   19513 room.go:48] MobaRoom3 service start
+I1024 22:53:43.075015   19513 hall.go:15] Service.MobaHall recv session=0 type=4 msg=&{6 0}
+I1024 22:53:43.075049   19513 hall.go:15] Service.MobaHall recv session=0 type=4 msg=&{6 0}
+panic: open ./view: no such file or directory
+
+goroutine 49 [running]:
+github.com/yangsf5/claw/service/web.checkError(0x6080000, 0xc8201ae000)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/service/web/web.go:95 +0x4b
+github.com/yangsf5/claw/service/web.cacheTemplate()
+	/Users/cony/code/go/src/github.com/yangsf5/claw/service/web/web.go:74 +0x9c
+github.com/yangsf5/claw/service/web.Start()
+	/Users/cony/code/go/src/github.com/yangsf5/claw/service/web/web.go:32 +0x7e
+created by github.com/yangsf5/claw/service.(*Web).ClawStart
+	/Users/cony/code/go/src/github.com/yangsf5/claw/service/web.go:17 +0x55
+
+goroutine 1 [runnable]:
+github.com/yangsf5/claw/center.Use(0xc820194200, 0x1d, 0x20)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:58 +0x118
+main.main()
+	/Users/cony/code/go/src/github.com/yangsf5/moba/moba.go:32 +0x332
+
+goroutine 17 [syscall, locked to thread]:
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1696 +0x1
+
+goroutine 20 [chan receive]:
+github.com/golang/glog.(*loggingT).flushDaemon(0x46f08a0)
+	/Users/cony/code/go/src/github.com/golang/glog/glog.go:882 +0x67
+created by github.com/golang/glog.init.1
+	/Users/cony/code/go/src/github.com/golang/glog/glog.go:410 +0x297
+
+goroutine 3 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*RawGroup).tick(0xc82000a4b0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/raw_group.go:89 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewRawGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/raw_group.go:19 +0xf3
+
+goroutine 4 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000abd0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 5 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000b6b0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 6 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000b950)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 7 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000b9e0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 8 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000ba70)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 9 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bb00)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 10 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bb90)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 11 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bc20)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 12 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bcb0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 13 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bd40)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 14 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bdd0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 15 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000be60)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 16 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bef0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 34 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82000bf80)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 35 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a030)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 36 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a0c0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 37 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a150)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 38 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a1e0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 39 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a270)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 40 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a300)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 41 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a390)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 42 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a420)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 43 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a4b0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 44 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a540)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 45 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a5d0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 46 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a660)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 47 [chan receive]:
+github.com/yangsf5/claw/engine/net.(*Group).tick(0xc82018a6f0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:93 +0x5e
+created by github.com/yangsf5/claw/engine/net.NewGroup
+	/Users/cony/code/go/src/github.com/yangsf5/claw/engine/net/group.go:23 +0xf3
+
+goroutine 48 [chan receive]:
+github.com/yangsf5/claw/center.Use.func1(0xc8200170e0, 0x4c60640, 0x46e9b78)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:63 +0x7d
+created by github.com/yangsf5/claw/center.Use
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:71 +0x153
+
+goroutine 50 [chan receive]:
+github.com/yangsf5/claw/center.Use.func1(0xc820017140, 0x4c606d0, 0x46e9b78)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:63 +0x7d
+created by github.com/yangsf5/claw/center.Use
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:71 +0x153
+
+goroutine 51 [chan receive]:
+github.com/yangsf5/claw/center.Use.func1(0xc8200171a0, 0x4c60700, 0xc8200133d0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:63 +0x7d
+created by github.com/yangsf5/claw/center.Use
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:71 +0x153
+
+goroutine 52 [chan receive]:
+github.com/yangsf5/claw/center.Use.func1(0xc820017200, 0x4c60730, 0x46e9b78)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:63 +0x7d
+created by github.com/yangsf5/claw/center.Use
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:71 +0x153
+
+goroutine 53 [chan receive]:
+github.com/yangsf5/claw/center.Use.func1(0xc820017260, 0x4c60760, 0xc8200111a0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:63 +0x7d
+created by github.com/yangsf5/claw/center.Use
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:71 +0x153
+
+goroutine 54 [chan receive]:
+github.com/yangsf5/claw/center.Use.func1(0xc8200172c0, 0x4c60760, 0xc8200111c0)
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:63 +0x7d
+created by github.com/yangsf5/claw/center.Use
+	/Users/cony/code/go/src/github.com/yangsf5/claw/center/center.go:71 +0x153
+exit status 2
