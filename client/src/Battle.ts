@@ -1,6 +1,7 @@
 class Battle extends egret.DisplayObjectContainer {
     public static myName: string;
-    public static myHeroID: string;
+    public static myHeroID: number;
+    private isInWar: boolean = false;
     
     private roomList: RoomList;
     private roomCount: number;
@@ -80,10 +81,18 @@ class Battle extends egret.DisplayObjectContainer {
 	}
 	
 	public enterWar():void{
-        this.chooseHeroButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.loadChooseHero, this);
-        this.removeChild(this.chooseHeroButton);
-        this.addChild(this.playerGroup);
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
+    	  if(!this.isInWar){
+            if(this.chooseHeroButton.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
+                this.chooseHeroButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.loadChooseHero, this);
+            }
+            if(this.contains(this.chooseHeroButton)) {
+                this.removeChild(this.chooseHeroButton);
+            }
+            
+            this.addChild(this.playerGroup);
+            this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
+            this.isInWar = true;
+    	  }
 	}
 	
 	private addChooseButton():void{

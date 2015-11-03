@@ -2,7 +2,7 @@ class Player extends egret.DisplayObjectContainer {
     public static TANK_OFFSET:number = 50;
     private hpBar:eui.ProgressBar;
     private nameText:egret.TextField;
-    private tank:egret.Bitmap = new egret.Bitmap();
+    private tank:eui.Image= new eui.Image();
     
     private centerPositon: any = {};
     
@@ -18,12 +18,9 @@ class Player extends egret.DisplayObjectContainer {
     }
     
     private initTank():void {
-        this.tank.texture = RES.getRes("tank5");
-        this.tank.fillMode = egret.BitmapFillMode.SCALE;
         this.tank.width = 100;
         this.tank.height = 100;
         this.addChild(this.tank);
-        this.tank.touchEnabled = true;
     }
     
     
@@ -89,8 +86,8 @@ class Player extends egret.DisplayObjectContainer {
         if(item.hp == 0) {
             this.showFightResult("已阵亡");
         }
-        
-        this.tank.texture = RES.getRes(item.skin);
+
+        this.tank.source = item.skin;
     }
     
     private showFightResult(result:string):void {
