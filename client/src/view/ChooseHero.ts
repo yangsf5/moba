@@ -3,7 +3,7 @@ class ChooseHero extends eui.Group {
     private choosenHero: string = null;
     private select = new eui.Image();
     private herosContainer: any = [];
-    private herosNames: any[] = ['cony'];
+    private heroConfig: any;
         
     public constructor() {
         super();
@@ -23,6 +23,7 @@ class ChooseHero extends eui.Group {
         </s:Skin>
         </s:Button>
         </s:Skin>`;
+        this.heroConfig = RES.getRes("heroConfig");
         this.select.source = "resource/assets/select.png";
         this.myPannel = new eui.Panel();
         this.myPannel.skinName = exml;
@@ -35,15 +36,20 @@ class ChooseHero extends eui.Group {
     }
           
     private addHero():void{
-        for(var iHero = 0;iHero < this.herosNames.length;iHero ++){
-            var hero = new Hero();
-            hero.setHero(this.herosNames[iHero]);
-            hero.addEventListener(egret.TouchEvent.TOUCH_TAP, this.chooseHero, this);
-            hero.x = 10 + 160 * iHero;
-            hero.y = 50;
-                         
-            this.herosContainer[this.herosNames[iHero]] = hero;
-            this.myPannel.addChild(hero);
+        var iHero: number = 0;
+        for(var key in this.heroConfig){
+            try {
+                var hero = new Hero();
+                hero.setHero(this.heroConfig[key].name, this.heroConfig[key].skin);
+                hero.addEventListener(egret.TouchEvent.TOUCH_TAP, this.chooseHero, this);
+                hero.x = 10 + 160 * (iHero ++);
+                hero.y = 50;
+                
+                this.herosContainer[this.heroConfig[key].name] = hero;
+                this.myPannel.addChild(hero);
+            }catch(e){
+                            
+            }
         }
     }
           
@@ -78,9 +84,9 @@ class ChooseHero extends eui.Group {
     }
           
     private removeAllChoosen():void{
-        for(var iHero = 0;iHero < this.herosNames.length;iHero ++){
-            if(this.herosContainer[this.herosNames[iHero]].numChildren > 1)
-                this.herosContainer[this.herosNames[iHero]].removeChild(this.select);
+        for(var key in this.heroConfig){
+            if(this.herosContainer[this.heroConfig[key].name].numChildren > 1)
+                this.herosContainer[this.heroConfig[key].name].removeChild(this.select);
             }
         }
     private saveHero(event:egret.TouchEvent):void{
@@ -102,9 +108,9 @@ class Hero extends egret.DisplayObjectContainer{
     public constructor() {
         super();
     }
-    public setHero(heroName:string):void{
+    public setHero(heroName:string, skin:string):void{
         this.heroImage = new eui.Image();
-        this.heroImage.source = "resource/assets/hero/" + heroName + ".jpg";
+        this.heroImage.source = skin;
         this.heroImage.width = 150;
         this.heroImage.height = 150;
         this.heroImage.name = heroName;
