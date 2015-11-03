@@ -3,7 +3,11 @@ class ChooseHero extends eui.Group {
     private choosenHero: string = null;
     private select = new eui.Image();
     private herosContainer: any = [];
+<<<<<<< HEAD
     private heroConfig: any;
+=======
+    private herosNames: any[] = ['cony'];
+>>>>>>> 488b030c79af7684193afcf415eabfd770a467ff
         
     public constructor() {
         super();
@@ -96,7 +100,7 @@ class ChooseHero extends eui.Group {
                 Battle.myHeroID = this.choosenHero;
                 this.myPannel.removeChildren();
                 this.myPannel.close();
-                this.parent.removeChild(this);               
+                this.parent.removeChild(this);
             }
         }
     }

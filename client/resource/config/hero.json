@@ -1,7 +1,11 @@
 {
 	"1": {
 		"name": "疯哥",
+<<<<<<< HEAD
 		"skin": "resource/assets/hero/3mad.jpg",
+=======
+		"skin": "assets/hero/3mad.jpg",
+>>>>>>> 488b030c79af7684193afcf415eabfd770a467ff
 		"skills":
 		[
 			{
@@ -20,8 +24,13 @@
 	},
 
 	"2": {
+<<<<<<< HEAD
 		"name": "疯哥媳妇",
 		"skin": "resource/assets/hero/cony.jpg",
+=======
+		"name": "小丫",
+		"skin": "assets/hero/cony.jpg",
+>>>>>>> 488b030c79af7684193afcf415eabfd770a467ff
 		"skills":
 		[
 			{

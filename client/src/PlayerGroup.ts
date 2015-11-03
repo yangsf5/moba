@@ -24,7 +24,7 @@ class PlayerGroup extends eui.Group {
     
     public updateField(playerName:string, keyValues:any[]):void {
         if(this.playerIndexes[playerName] == null) {
-            var item:any = { name: playerName,x: 0,y: 0,color: 0,hp: 99, flee:false};
+            var item:any = { name: playerName,x: 0,y: 0,color: 0,hp: 99, flee:false, skin: "tank5"};
             for(var i in keyValues) {
                 var kv: any = keyValues[i];
                 item[kv.key] = kv.value;

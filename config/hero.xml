@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config name="hero config">
 	<hero id="1" name="疯哥">
-		<skill name="" value=""/>
+		<skill id="1" name="" effect=""/>
 	</hero>
 
 	<hero id="2" name="大爪">
-		<skill name="" value=""/>
+		<skill id="1" name="" effect=""/>
 	</hero>
 
 	<hero id="3" name="严山头老五">
-		<skill id="1" name="吟唱《后来》" effect="AOE"/>
+		<skill id="1" name="" effect=""/>
 	</hero>
 
 	<hero id="4" name="赣州熊猫">
-		<skill name="" value=""/>
+		<skill id="1" name="" effect=""/>
 	</hero>
 
 	<hero id="5" name="屈作家">
-		<skill name="" value=""/>
+		<skill id="1" name="" effect=""/>
 	</hero>
 </config>
 

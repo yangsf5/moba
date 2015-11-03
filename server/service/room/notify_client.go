@@ -11,6 +11,7 @@ func (r *Room) NotifyRCPlayerInfos() {
 		player := proto.PlayerInfo{
 			Name:      user.Name(),
 			CurrentHP: user.GetHP(),
+			HeroID:    user.GetHeroID(),
 			X:         x,
 			Y:         y,
 		}
