@@ -3,7 +3,15 @@ class ChooseHero extends eui.Group {
     private choosenHero: string = null;
     private select = new eui.Image();
     private herosContainer: any = [];
+<<<<<<< HEAD
     private heroConfig: any;
+=======
+<<<<<<< HEAD
+    private heroConfig: any;
+=======
+    private herosNames: any[] = ['cony'];
+>>>>>>> 488b030c79af7684193afcf415eabfd770a467ff
+>>>>>>> 9110e0fa52236a55ca82716dfe3ff34750686afa
         
     public constructor() {
         super();
