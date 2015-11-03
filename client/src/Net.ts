@@ -56,7 +56,6 @@ class Net extends egret.DisplayObjectContainer {
             this.battle.enterWar();
             for(var i = 0;i < msgObj.Data.Players.length;i++) {
                 var player = msgObj.Data.Players[i];
-                // TODO player.HeroID => skin
                 var skin = RES.getRes("heroConfig")[player.HeroID].skin;
                 this.battle.getPlayerGroup().updateField(player.Name, [
                     { key: "hp", value: player.CurrentHP },
