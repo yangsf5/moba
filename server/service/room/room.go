@@ -22,6 +22,9 @@ type User interface {
 
 	GetPosition() (x, y int)
 	SetPosition(x, y int)
+
+	GetHeroID() int
+	SetHeroID(int)
 }
 
 type Room struct {
