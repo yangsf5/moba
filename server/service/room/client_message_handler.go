@@ -5,7 +5,9 @@ import (
 	"github.com/golang/glog"
 	"math/rand"
 
+	"github.com/yangsf5/moba/server/hero"
 	"github.com/yangsf5/moba/server/proto"
+	"github.com/yangsf5/moba/server/user"
 )
 
 func (r *Room) HandleClientMessage(session int, msgType string, msgData interface{}) {
@@ -70,5 +72,8 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		if r.battleStatus != "firing" {
 			break
 		}
+		skillID := int(msgData.(float64))
+		heroID := u.GetHeroID()
+		hero.DoSkill(u.(*user.User), r.GetGroup(), heroID, skillID)
 	}
 }

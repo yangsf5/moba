@@ -117,3 +117,6 @@ func (u *User) GetHeroID() int {
 func (u *User) SetHeroID(id int) {
 	u.heroID = id
 }
+
+func (u *User) SetBuff() {
+}

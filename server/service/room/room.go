@@ -89,3 +89,8 @@ func (r *Room) Leave(session int) {
 func (r *Room) Broadcast(msg string) {
 	r.group.Broadcast([]byte(msg))
 }
+
+func (r *Room) GetGroup() *net.Group {
+	// TODO 这里暴露group不是个好主意，需要再设计下
+	return r.group
+}

@@ -53,3 +53,8 @@ type RCMove struct {
 	Name string
 	X, Y int
 }
+
+type RCSkill struct {
+	FromName      string
+	EffectedNames []string
+}
