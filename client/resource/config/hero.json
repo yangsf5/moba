@@ -6,7 +6,7 @@
 		[
 			{
 				"name": "严肃表情",
-				"desc": "疯哥7*24小时思考各种问题的解决办法，导致面部一直紧张，给人严肃的印象，使所有人望而生畏",
+				"desc": "疯哥7*24小时思考各种问题的解决办法，导致面部一直紧张，给人严肃的印象，使人冻僵",
 				"effectID": 1,
 				"effectParams": ""
 			},
@@ -41,7 +41,7 @@
 
 	"3": {
 		"name": "严山头老五",
-		"skin": "resource/assets/hero/yan_brother_wu.png",
+		"skin": "resource/assets/tank/tank1.png",
 		"skills":
 		[
 			{
@@ -61,7 +61,7 @@
 
 	"4": {
 		"name": "赣州熊猫",
-		"skin": "resource/assets/hero/ganzhou_panda.png",
+		"skin": "resource/assets/tank/tank2.png",
 		"skills":
 		[
 			{
@@ -81,7 +81,7 @@
 
 	"5": {
 		"name": "屈作家",
-		"skin": "resource/assets/hero/qu_writer.png",
+		"skin": "resource/assets/tank/tank4.png",
 		"skills":
 		[
 			{
