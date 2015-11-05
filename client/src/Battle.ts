@@ -77,49 +77,20 @@ class Battle extends egret.DisplayObjectContainer {
         this.addChild(this.currentRoomText);
         this.addChild(this.battleStatusText);     
 
-        this.addChooseButton();
+        this.loadChooseHero();
 	}
 	
 	public enterWar():void{
-    	  if(!this.isInWar){
-            if(this.chooseHeroButton.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
-                this.chooseHeroButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.loadChooseHero, this);
-            }
-            if(this.contains(this.chooseHeroButton)) {
-                this.removeChild(this.chooseHeroButton);
-            }
-            
+    	  if(!this.isInWar){         
             this.addChild(this.playerGroup);
             this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
             this.isInWar = true;
     	  }
 	}
 	
-	private addChooseButton():void{
-        var buttonSkin =
-            `<s:Skin class="skins.ButtonSkin" states="up,down,disabled" minHeight="50" minWidth="100" xmlns:s="http://ns.egret.com/eui">
-            <s:Image width="100%" height="100%" scale9Grid="1,3,8,8" alpha.disabled="0.5"
-            source="resource/assets/button/button_up.png"
-            source.down="resource/assets/button/button_down.png"/>
-            <s:Label id="labelDisplay" top="8" bottom="8" left="8" right="8"
-            textColor="0xFFFFFF" verticalAlign="middle" textAlign="center"/>
-            <s:Image id="iconDisplay" horizontalCenter="0" verticalCenter="0"/>
-            </s:Skin>`;
-        
-        this.chooseHeroButton = new eui.Button();
-        this.chooseHeroButton.height = 100;
-        this.chooseHeroButton.width = 100;
-        this.chooseHeroButton.label = "选择英雄";
-        this.chooseHeroButton.x = 400;
-        this.chooseHeroButton.y = 400;
-        this.chooseHeroButton.skinName = buttonSkin;
-        this.addChild(this.chooseHeroButton);
-        this.chooseHeroButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.loadChooseHero, this);
-	}
-	
-    private loadChooseHero(event:egret.TouchEvent):void{
+    private loadChooseHero():void{
         this.chooseHeroPanel = new ChooseHero();
-        this.chooseHeroPanel.x = 100;
+        this.chooseHeroPanel.x = 80;
         this.chooseHeroPanel.y = 50;
         this.addChild(this.chooseHeroPanel);
     }

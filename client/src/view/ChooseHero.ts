@@ -27,8 +27,8 @@ class ChooseHero extends eui.Group {
         this.select.source = "resource/assets/select.png";
         this.myPannel = new eui.Panel();
         this.myPannel.skinName = exml;
-        this.myPannel.width = 600;
-        this.myPannel.height = 400;
+        this.myPannel.width = 800;
+        this.myPannel.height = 600;
         this.addHero();
           
         this.addChild(this.myPannel);
@@ -36,14 +36,19 @@ class ChooseHero extends eui.Group {
     }
           
     private addHero():void{
-        var iHero: number = 0;
+        var xOffset: number = 0;
+        var yOffset: number = 0;
         for(var key in this.heroConfig){
             try {
                 var hero = new Hero();
-                hero.setHero(parseInt(key), this.heroConfig[key].skin);
+                hero.setHero(parseInt(key), this.heroConfig[key].name, this.heroConfig[key].skin);
                 hero.addEventListener(egret.TouchEvent.TOUCH_TAP, this.chooseHero, this);
-                hero.x = 10 + 160 * (iHero ++);
-                hero.y = 50;
+                if(10 + 160 * (xOffset + 1) > 800){//超出panel的width则换行
+                    xOffset = 0;
+                    yOffset++;
+                }
+                hero.x = 10 + 160 * (xOffset ++);
+                hero.y = 50 + 150 * yOffset;
                 
                 this.herosContainer[key] = hero;
                 this.myPannel.addChild(hero);
@@ -68,8 +73,8 @@ class ChooseHero extends eui.Group {
         chooseHero.height = 50;
         chooseHero.width = 100;
         chooseHero.label = "选择英雄";
-        chooseHero.x = 200;
-        chooseHero.y = 300;
+        chooseHero.x = 350;
+        chooseHero.y = 500;
         chooseHero.skinName = buttonSkin;
         this.myPannel.addChild(chooseHero);
         chooseHero.addEventListener(egret.TouchEvent.TOUCH_TAP, this.saveHero, this);
@@ -85,7 +90,7 @@ class ChooseHero extends eui.Group {
           
     private removeAllChoosen():void{
         for(var key in this.heroConfig){
-            if(this.herosContainer[key].numChildren > 1)
+            if(this.herosContainer[key].contains(this.select))
                 this.herosContainer[key].removeChild(this.select);
             }
         }
@@ -103,15 +108,30 @@ class ChooseHero extends eui.Group {
 class Hero extends egret.DisplayObjectContainer{
     private heroImage: eui.Image;
     private heroID: number;
+    private nameLable: eui.Label;
     public constructor() {
         super();
     }
-    public setHero(heroID:number, skin:string):void{
+    public setHero(heroID:number, heroName:string, skin:string):void{
         this.heroImage = new eui.Image();
         this.heroImage.source = skin;
         this.heroImage.width = 150;
         this.heroImage.height = 150;
+
+        this.nameLable = new eui.Label();
+        this.nameLable.text = heroName;
+        this.nameLable.x = 0;
+        this.nameLable.y = 150;
+        this.nameLable.width = 150;//设置宽度
+        this.nameLable.height = 50;//设置高度
+        this.nameLable.fontFamily = "Tahoma";//设置字体
+        this.nameLable.textColor = 0x000000;//设置颜色
+        this.nameLable.size = 15;//设置文本字号
+        this.nameLable.textAlign = egret.HorizontalAlign.CENTER;
+        
         this.addChild(this.heroImage);
+        this.addChild(this.nameLable);
+        
         this.heroID = heroID;
     }
     public getHeroID():number {
