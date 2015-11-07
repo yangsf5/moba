@@ -10,13 +10,13 @@ type Hurt struct {
 }
 
 func (e *Hurt) Calc(u *user.User, g *net.Group, params interface{}) error {
-	effUserNames := []string{}
+	//effUserNames := []string{}
 	effFn := func(peerId string, peer net.Peer) {
-		targetUser := peer.(*user.User)
+		//targetUser := peer.(*user.User)
 		// TODO check position
 		// TODO set HP
 		// targetUser.SetHP()
-		effUserNames = append(effUserNames, peerId)
+		//effUserNames = append(effUserNames, peerId)
 	}
 	g.Walk(effFn)
 
