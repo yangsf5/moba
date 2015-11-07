@@ -55,6 +55,7 @@ type RCMove struct {
 }
 
 type RCSkill struct {
-	FromName      string
-	EffectedNames []string
+	Source  string
+	Targets []string
+	SkillID int
 }

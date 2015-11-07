@@ -72,8 +72,15 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		if r.battleStatus != "firing" {
 			break
 		}
-		skillID := int(msgData.(float64))
+		msg := msgData.(string)
+		var skillID int
+		var targetName string
+		fmt.Sscanf(msg, "%d,%s", &skillID, targetName)
+
+		// 这里的目标玩家为空没关系，某些技能是非单体的，不需要单个目标
+		targetUser := r.group.GetPeer(targetName)
+
 		heroID := u.GetHeroID()
-		hero.DoSkill(u.(*user.User), r.GetGroup(), heroID, skillID)
+		hero.DoSkill(r.serviceName, u.(*user.User), targetUser.(*user.User), r.GetGroup(), heroID, skillID)
 	}
 }

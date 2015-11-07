@@ -4,6 +4,7 @@ import (
 	"github.com/yangsf5/claw/engine/net"
 
 	"github.com/yangsf5/moba/server/hero/effect"
+	"github.com/yangsf5/moba/server/proto"
 	"github.com/yangsf5/moba/server/user"
 )
 
@@ -20,11 +21,21 @@ func (h *Hero) CheckSkillID(heroID, skillID int) bool {
 	return true
 }
 
-func DoSkill(u *user.User, g *net.Group, heroID, skillID int) error {
+func DoSkill(serviceName string, srcUser, tarUser *user.User, g *net.Group, heroID, skillID int) error {
 	// TODO check skill ID
 
 	// TODO check CD time
 
-	effect.Calc("", u, g, "params TODO")
+	err, ret := effect.Calc("", srcUser, tarUser, g, "params TODO")
+	if err != nil {
+		return err
+	}
+
+	msg := &proto.RCSkill{
+		Source:  srcUser.Name(),
+		Targets: ret.Targets,
+		SkillID: skillID,
+	}
+	g.Broadcast([]byte(proto.Encode(serviceName, msg)))
 	return nil
 }

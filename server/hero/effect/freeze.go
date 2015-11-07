@@ -9,7 +9,7 @@ import (
 type Freeze struct {
 }
 
-func (e *Freeze) Calc(u *user.User, g *net.Group, params interface{}) error {
+func (e *Freeze) Calc(srcUser, tarUser *user.User, g *net.Group, params interface{}) (error, *Return) {
 	effUserNames := []string{}
 	effFn := func(peerId string, peer net.Peer) {
 		targetUser := peer.(*user.User)
@@ -20,6 +20,5 @@ func (e *Freeze) Calc(u *user.User, g *net.Group, params interface{}) error {
 	}
 	g.Walk(effFn)
 
-	// TODO broadcast effected
-	return nil
+	return nil, &Return{Targets: effUserNames}
 }

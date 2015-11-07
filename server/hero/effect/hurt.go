@@ -9,17 +9,17 @@ import (
 type Hurt struct {
 }
 
-func (e *Hurt) Calc(u *user.User, g *net.Group, params interface{}) error {
-	//effUserNames := []string{}
+func (e *Hurt) Calc(srcUser, tarUser *user.User, g *net.Group, params interface{}) (error, *Return) {
+	effUserNames := []string{}
 	effFn := func(peerId string, peer net.Peer) {
-		//targetUser := peer.(*user.User)
+		targetUser := peer.(*user.User)
 		// TODO check position
 		// TODO set HP
-		// targetUser.SetHP()
-		//effUserNames = append(effUserNames, peerId)
+		hp := targetUser.GetHP()
+		targetUser.SetHP(hp - 3) // TODO set from params
+		effUserNames = append(effUserNames, peerId)
 	}
 	g.Walk(effFn)
 
-	// TODO broadcast effected
-	return nil
+	return nil, &Return{Targets: effUserNames}
 }

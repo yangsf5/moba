@@ -7,8 +7,12 @@ import (
 	"github.com/yangsf5/moba/server/user"
 )
 
+type Return struct {
+	Targets []string
+}
+
 type Effect interface {
-	Calc(u *user.User, g *net.Group, params interface{}) error
+	Calc(srcUser, tarUser *user.User, g *net.Group, params interface{}) (error, *Return)
 }
 
 var (
@@ -20,11 +24,11 @@ func init() {
 	effects["freeze"] = &Freeze{}
 }
 
-func Calc(effectName string, u *user.User, g *net.Group, params interface{}) error {
+func Calc(effectName string, srcUser, tarUser *user.User, g *net.Group, params interface{}) (error, *Return) {
 	eff, ok := effects[effectName]
 	if !ok {
-		return errors.New("not found effect")
+		return errors.New("not found effect"), nil
 	}
 
-	return eff.Calc(u, g, params)
+	return eff.Calc(srcUser, tarUser, g, params)
 }
