@@ -1,91 +1,85 @@
 class Battle extends egret.DisplayObjectContainer {
     public static myName: string;
     public static myHeroID: number;
+    
     private isInWar: boolean = false;
+    private chooseHeroPanel: ChooseHero;
+    private functionBar: FunctionBar;
+    private fireBattle: FireBattle;
+
     
     private roomList: RoomList;
     private roomCount: number;
-    private roomService: string;
-    
+    private roomService: string;   
     private net: Net;
-    
-    private playerGroup: PlayerGroup;
-    
-    private currentRoomText: egret.TextField;
-    private battleStatusText: egret.TextField;
-    
-    private chooseHeroPanel: ChooseHero;
-    private chooseHeroButton: eui.Button;
     
 	public constructor() {
         super();
         
         MessageCenter.battle = this;
 
-        this.initPlayers();
         this.net = new Net(this);
         this.addChild(this.net);
         Battle.myName = this.net.connect();
         
-        this.initCurrentRoomText();
-        this.initBattleStatusText();
+        this.init();
 	}
 	
-	private initCurrentRoomText():void {
-        this.currentRoomText = new egret.TextField();
-        this.currentRoomText.text = "";
+	private init():void {
+        this.functionBar = new FunctionBar();
+        this.fireBattle = new FireBattle();
 	}
-	
-	private initBattleStatusText():void {
-        this.battleStatusText = new egret.TextField();
-        this.battleStatusText.x = 200;
-        this.battleStatusText.y = 50;
-        this.battleStatusText.text = "waiting";
-	}
-	
-    private initPlayers(): void {
-        this.playerGroup = new PlayerGroup();
-    }
 	
 	public switchToHall(roomInfos:any):void {
-        if(this.currentRoomText.parent) {
-            this.currentRoomText.parent.removeChild(this.currentRoomText);
-        }
-        if(this.battleStatusText.parent) {
-            this.battleStatusText.parent.removeChild(this.battleStatusText);
-        }
-    	  if(this.playerGroup.parent) {
-            this.playerGroup.parent.removeChild(this.playerGroup);
-        }
+    	
+    	  if(this.contains(this.functionBar)){
+            this.removeChild(this.functionBar);
+    	  }
+    	  if(this.contains(this.fireBattle)){
+            this.removeChild(this.fireBattle);
+    	  }
              
         this.roomCount = Object.keys(roomInfos).length;
         this.roomList = new RoomList(this, roomInfos);
             
         this.addChild(this.roomList);     
    	}
-   	
 
-	
 	public switchToRoom(service:string) {
+        this.addChild(this.functionBar);
         if(this.roomList.parent) {
             this.roomList.parent.removeChild(this.roomList);
         }
         
-        this.setRoomService(service);
-        
-        this.currentRoomText.text = this.roomService;
-        this.addChild(this.currentRoomText);
-        this.addChild(this.battleStatusText);     
-
+        this.setRoomService(service);     
+        this.functionBar.setCurrentRoomText(this.roomService);  
         this.loadChooseHero();
 	}
 	
-	public enterWar():void{
-    	  if(!this.isInWar){         
-            this.addChild(this.playerGroup);
-            this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shootOrMove, this);
+	public enterWar(msgObj:any):void{
+    	  if(!this.isInWar){     
+            if(!this.contains(this.functionBar)){
+                this.addChild(this.functionBar);
+            }
+            this.addChild(this.fireBattle);
+            this.fireBattle.enterWar();
+            this.functionBar.addSkillButton();
             this.isInWar = true;
     	  }
+        this.updatePlayer(msgObj);
+	}
+	
+	private updatePlayer(msgObj:any):void{
+        for(var i = 0;i < msgObj.Data.Players.length;i++) {
+            var player = msgObj.Data.Players[i];
+            var skin = RES.getRes("heroConfig")[player.HeroID].skin;
+            this.getPlayerGroup().updateField(player.Name, [
+                { key: "hp", value: player.CurrentHP },
+                { key: "x", value: player.X },
+                { key: "y", value: player.Y },
+                { key: "skin", value: skin }
+            ]);
+        }
 	}
 	
     private loadChooseHero():void{
@@ -94,22 +88,11 @@ class Battle extends egret.DisplayObjectContainer {
         this.chooseHeroPanel.y = 50;
         this.addChild(this.chooseHeroPanel);
     }
-	
-    private shootOrMove(event:egret.TouchEvent):void {
-        var isShoot: boolean = false;
-        this.playerGroup.walkPlayers(function(target: any) {
-            if(null != target && target.hp > 0 && !target.flee && target.name != Battle.myName) {
-                if(Math.abs(target.x - event.stageX) < Player.TANK_OFFSET
-                    && Math.abs(target.y - event.stageY) < Player.TANK_OFFSET) {
-                    MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "shoot",Data: target.name });
-                    isShoot = true;//点击到其他坦克的区域则视为攻打坦克
-                }
-            }          
-        });
-        //没有攻打到坦克，则移动.已阵亡的玩家不再移动
-        if(!isShoot && this.playerGroup.isMyselfAlive()){
-            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "move",Data: event.stageX + ',' + event.stageY});
-        }
+    
+    public shoot(sourceX:number, sourceY:number, targetX:number, targetY:number):void{
+        var shoot: Shoot = new Shoot();
+        shoot.action({x: sourceX, y: sourceY},{x: targetX, y: targetY}, 0xff0000);
+        this.addChild(shoot);
     }
 	
 	public getRoomCount():number {
@@ -117,7 +100,7 @@ class Battle extends egret.DisplayObjectContainer {
 	}
 	
 	public setBattleStatus(status:string):void {
-        this.battleStatusText.text = status;
+        this.functionBar.setBattleStatusText(status);
 	}
 	
 	public setRoomService(service:string):void {
@@ -129,6 +112,6 @@ class Battle extends egret.DisplayObjectContainer {
 	}
 	
 	public getPlayerGroup():PlayerGroup {
-        return this.playerGroup;
+        return this.fireBattle.getPlayerGroup();
 	}
 }
