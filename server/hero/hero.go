@@ -26,7 +26,8 @@ func DoSkill(serviceName string, srcUser, tarUser *user.User, g *net.Group, hero
 
 	// TODO check CD time
 
-	err, ret := effect.Calc("", srcUser, tarUser, g, "params TODO")
+	// TODO hurt暂时写死
+	err, ret := effect.Calc("hurt", srcUser, tarUser, g, "params TODO")
 	if err != nil {
 		return err
 	}

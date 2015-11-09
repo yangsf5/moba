@@ -56,7 +56,11 @@ class FunctionBar extends egret.DisplayObjectContainer{
             newButton.x = 800 - key * 100;
             newButton.y = 570;
             this.addChild(newButton);
-            this.skillButton["button"] = newButton;           
+            this.skillButton["button"] = newButton;
+            
+            newButton.addEventListener(egret.TouchEvent.TOUCH_TAP, function(e) {
+                MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "skill",Data: parseInt(key)});
+            }, this);
         }
     }
     

@@ -72,15 +72,23 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		if r.battleStatus != "firing" {
 			break
 		}
-		msg := msgData.(string)
-		var skillID int
-		var targetName string
-		fmt.Sscanf(msg, "%d,%s", &skillID, targetName)
+		skillID := int(msgData.(float64))
 
+		// TODO 根据离玩家为之最近或者伤害最低者来取目标玩家
+		targetName := ""
 		// 这里的目标玩家为空没关系，某些技能是非单体的，不需要单个目标
-		targetUser := r.group.GetPeer(targetName)
+		targetPeer := r.group.GetPeer(targetName)
+		var targetUser *user.User
+		if targetPeer == nil {
+			targetUser = nil
+		} else {
+			targetUser = targetPeer.(*user.User)
+		}
 
 		heroID := u.GetHeroID()
-		hero.DoSkill(r.serviceName, u.(*user.User), targetUser.(*user.User), r.GetGroup(), heroID, skillID)
+		err := hero.DoSkill(r.serviceName, u.(*user.User), targetUser, r.GetGroup(), heroID, skillID)
+		if err != nil {
+			glog.Errorf("RoomService-%s HallClientMessage do skill error, sessionId=%d error=%v", r.serviceName, session, err)
+		}
 	}
 }
