@@ -53,17 +53,7 @@ class Net extends egret.DisplayObjectContainer {
         if(msgObj.Type == "HCRoomInfos") {
             this.battle.switchToHall(msgObj.Data.Rooms);
         } else if(msgObj.Type == "RCPlayerInfos") {
-            this.battle.enterWar();
-            for(var i = 0;i < msgObj.Data.Players.length;i++) {
-                var player = msgObj.Data.Players[i];
-                var skin = RES.getRes("heroConfig")[player.HeroID].skin;
-                this.battle.getPlayerGroup().updateField(player.Name, [
-                    { key: "hp", value: player.CurrentHP },
-                    { key: "x", value: player.X },
-                    { key: "y", value: player.Y },
-                    { key: "skin", value: skin }
-                ]);
-            }
+            this.battle.enterWar(msgObj);
         } else if(msgObj.Type == "RCChooseHeroRet") {
             
         } else if(msgObj.Type == "RCPlayerLeave") {
@@ -73,17 +63,14 @@ class Net extends egret.DisplayObjectContainer {
             var targetX, targetY = 0;
 
             this.battle.getPlayerGroup().updateField(targetName, [{ key: "hp",value: msgObj.Data.Harm }]);
+            
             targetX = this.battle.getPlayerGroup().getField(targetName, "x");
             targetY = this.battle.getPlayerGroup().getField(targetName, "y");
-
             
             var sourceName = msgObj.Data.Source;
             var sourceX = this.battle.getPlayerGroup().getField(sourceName, "x");
             var sourceY = this.battle.getPlayerGroup().getField(sourceName, "y");
-            
-            var shoot: Shoot = new Shoot();
-            shoot.action({x: sourceX, y: sourceY},{x: targetX, y: targetY}, 0xff0000);
-            this.addChild(shoot);
+            this.battle.shoot(sourceX, sourceY, targetX, targetY);
         } else if(msgObj.Type == "RCBattleStatus") {
             this.battle.setBattleStatus(msgObj.Data.Status);
         } else if(msgObj.Type == "RCMove") {

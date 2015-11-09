@@ -21,7 +21,14 @@ class Player extends egret.DisplayObjectContainer {
         this.tank.width = 100;
         this.tank.height = 100;
         this.addChild(this.tank);
+        this.tank.addEventListener(egret.TouchEvent.TOUCH_TAP, this.shoot, this);
     }
+    
+    private shoot(event:egret.TouchEvent):void{
+        if(event.target.name != Battle.myName){
+            MessageCenter.send({ Service: MessageCenter.battle.getRoomService(),Type: "shoot",Data: event.target.name });
+        }
+     }
     
     
     
@@ -69,6 +76,7 @@ class Player extends egret.DisplayObjectContainer {
     
     public update(item:any):void {
         this.nameText.text = item.name;
+        this.tank.name = item.name;
         if(item.name == Battle.myName) {
             // 高亮自己的名字
             this.nameText.textColor = 0xff0000;

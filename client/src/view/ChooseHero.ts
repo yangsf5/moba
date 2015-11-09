@@ -17,11 +17,6 @@ class ChooseHero extends eui.Group {
         <s:Image width="100%" height="100%" source="resource/assets/thumb.png" scale9Grid="1,1,4,4"/>
         <s:Label id="titleDisplay" text="Title" textColor="0" horizontalCenter="0" verticalCenter="0"/>
         </s:Group>
-        <s:Button id="closeButton" right="0" y="0">
-        <s:Skin states="up,down,disabled">
-        <s:Image width="30" height="30" source="resource/assets/close.png" scaleX.up="1" scaleX.down="0.95" scaleY.up="1" scaleY.down="0.95"/>
-        </s:Skin>
-        </s:Button>
         </s:Skin>`;
         this.heroConfig = RES.getRes("heroConfig");
         this.select.source = "resource/assets/select.png";
