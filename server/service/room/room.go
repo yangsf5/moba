@@ -59,7 +59,7 @@ func (r *Room) GetCurrentPlayerCount() int {
 }
 
 func (r *Room) UpdateBattleStatus() {
-	if len(r.sessions) >= 2 {
+	if len(r.sessions) >= 3 {
 		r.battleStatus = "firing"
 		r.NotifyRCBattleStatus()
 	}
