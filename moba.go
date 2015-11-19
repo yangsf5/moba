@@ -9,6 +9,7 @@ import (
 	"github.com/yangsf5/claw/service"
 
 	"github.com/yangsf5/moba/server/handler"
+	"github.com/yangsf5/moba/server/hero"
 	myService "github.com/yangsf5/moba/server/service"
 	"github.com/yangsf5/moba/server/service/room"
 )
@@ -22,6 +23,8 @@ func main() {
 	myService.Register()
 
 	handler.RegisterHandler()
+
+	hero.ReadConfig("client/resource/config/hero.json")
 
 	willUseServices := []string{"Error", "Web", "MobaWebsocket", "MobaHall"}
 

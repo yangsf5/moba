@@ -15,7 +15,7 @@ type HeroConfig struct {
 type SkillConfig struct {
 	Name         string `json:"name"`
 	Desc         string `json:"desc"`
-	EffectID     int    `json:"effectID"`
+	EffectName   string `json:"effectName"`
 	EffectParams string `json:"effectParams"`
 }
 

@@ -88,7 +88,7 @@ func (r *Room) HandleClientMessage(session int, msgType string, msgData interfac
 		heroID := u.GetHeroID()
 		err := hero.DoSkill(r.serviceName, u.(*user.User), targetUser, r.GetGroup(), heroID, skillID)
 		if err != nil {
-			glog.Errorf("RoomService-%s HallClientMessage do skill error, sessionId=%d error=%v", r.serviceName, session, err)
+			glog.Errorf("RoomService-%s HallClientMessage do skill error, sessionId=%d error=[%v]", r.serviceName, session, err)
 		}
 	}
 }

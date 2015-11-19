@@ -1,6 +1,9 @@
 package hero
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/yangsf5/claw/engine/net"
 
 	"github.com/yangsf5/moba/server/hero/effect"
@@ -22,12 +25,19 @@ func (h *Hero) CheckSkillID(heroID, skillID int) bool {
 }
 
 func DoSkill(serviceName string, srcUser, tarUser *user.User, g *net.Group, heroID, skillID int) error {
-	// TODO check skill ID
+	strHeroID := fmt.Sprintf("%d", heroID)
+	heroConfig, ok := configs[strHeroID]
+	if !ok {
+		return errors.New(fmt.Sprintf("HeroID error, userName=%s heroID=%d", srcUser.Name(), heroID))
+	}
+
+	if skillID >= len(heroConfig.Skills) {
+		return errors.New(fmt.Sprintf("SkillID error, userName=%s heroID=%d skillID=%d", srcUser.Name(), heroID, skillID))
+	}
 
 	// TODO check CD time
 
-	// TODO hurt暂时写死
-	err, ret := effect.Calc("hurt", srcUser, tarUser, g, "params TODO")
+	err, ret := effect.Calc(heroConfig.Skills[skillID].EffectName, srcUser, tarUser, g, "params TODO")
 	if err != nil {
 		return err
 	}

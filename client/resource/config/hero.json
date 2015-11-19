@@ -7,13 +7,13 @@
 			{
 				"name": "严肃表情",
 				"desc": "疯哥7*24小时思考各种问题的解决办法，导致面部一直紧张，给人严肃的印象，使人冻僵",
-				"effectID": 1,
+				"effectName": "",
 				"effectParams": ""
 			},
 			{
 				"name": "热爱技术",
 				"desc": "专注技术为第一生产力，持续的激情学习，给队友极大的鼓舞",
-				"effectID": 2,
+				"effectName": "",
 				"effectParams": ""
 			}
 		]
@@ -27,13 +27,13 @@
 			{
 				"name": "",
 				"desc": "",
-				"effectID": 1,
+				"effectName": "",
 				"effectParams": ""
 			},
 			{
 				"name": "",
 				"desc": "",
-				"effectID": 2,
+				"effectName": "",
 				"effectParams": ""
 			}
 		]
@@ -47,13 +47,13 @@
 			{
 				"name": "吟唱《后来》",
 				"desc": "大学期间老五这首奶茶的《后来》，唱的大家肝肠寸断",
-				"effectID": 1,
+				"effectName": "hurt",
 				"effectParams": ""
 			},
 			{
 				"name": "慷慨解囊",
 				"desc": "认识咱严山头老五的英雄都知道，五爷家里没米也会卖血照顾朋友",
-				"effectID": 2,
+				"effectName": "",
 				"effectParams": ""
 			}
 		]
@@ -67,13 +67,13 @@
 			{
 				"name": "",
 				"desc": "",
-				"effectID": 1,
+				"effectName": "",
 				"effectParams": ""
 			},
 			{
 				"name": "",
 				"desc": "",
-				"effectID": 2,
+				"effectName": "",
 				"effectParams": ""
 			}
 		]
@@ -87,13 +87,13 @@
 			{
 				"name": "",
 				"desc": "",
-				"effectID": 1,
+				"effectName": "",
 				"effectParams": ""
 			},
 			{
 				"name": "",
 				"desc": "",
-				"effectID": 2,
+				"effectName": "",
 				"effectParams": ""
 			}
 		]
